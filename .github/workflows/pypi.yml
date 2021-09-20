@@ -1,12 +1,8 @@
-on:
-  push:
-    branches:
-      - 'master'
-
 jobs:
   build:
     runs-on: ubuntu-latest
     name: Publish package
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
