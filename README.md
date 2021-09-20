@@ -19,6 +19,6 @@ pip install monzo-api
 ## Basic Usage
 
 Prior to using the API you need to obtain a few details from Monzo. Please
-read [this](SETUP.md) document.
+read [this](https://github.com/petermcd/monzo-api/blob/main/SETUP.md) document.
 
 Please see the examples in the example directory.
