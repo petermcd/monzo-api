@@ -38,9 +38,7 @@ class HttpIO:
             data = {}
         if headers is None:
             headers = {}
-        parameters = None
-        if data:
-            parameters = urlencode(data)
+        parameters = urlencode(data) if data else None
         if parameters:
             path += f'?{parameters}'
         return self._perform_request(path, data=None, headers=headers, timeout=timeout)
@@ -68,9 +66,7 @@ class HttpIO:
             headers = {}
         if data is None:
             data = {}
-        parameters = None
-        if data:
-            parameters = urlencode(data).encode()
+        parameters = urlencode(data).encode() if data else None
         return self._perform_request(path, data=parameters, headers=headers, timeout=timeout)
 
     def _perform_request(
