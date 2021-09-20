@@ -7,8 +7,8 @@ from monzo import helpers
 from monzo.exceptions import MonzoAuthenticationError
 from monzo.httpio import DEFAULT_TIMEOUT, REQUEST_RESPONSE_TYPE, HttpIO
 
-MONZO_AUTH_URL = 'https://auth.monzo.com/'
-MONZO_API_URL = 'https://api.monzo.com/'
+MONZO_AUTH_URL = 'https://auth.monzo.com'
+MONZO_API_URL = 'https://api.monzo.com'
 
 
 class Authentication:

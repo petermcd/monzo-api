@@ -14,4 +14,4 @@ print(f'access token = {monzo.access_token}')
 print(f'expiry = {monzo.access_token_expiry}')
 print(f'refresh token = {monzo.refresh_token}')
 
-# Not authorise access in the Monzo app
+# Now authorise access in the Monzo app

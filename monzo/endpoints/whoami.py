@@ -64,7 +64,7 @@ class WhoAmI(Monzo):
             Instantiated WhoAmI object
         """
         res = auth.make_request(path='/ping/whoami')
-        return WhoAmI(
+        return cls(
             auth=auth,
             authenticated=res['data']['authenticated'],
             client_id=res['data']['client_id'],

@@ -10,7 +10,7 @@ Our first step is to obtain an access token from Monzo. To do this log into the
 * Click on "Sign in with your Monzo account"
 * Click "Continue to login"
 * Enter the email address registered with Monzo
-* This will send you an email, click on "Log in to Monzo"
+* You will receive an email, click on "Log in to Monzo"
 * Open the Monzo app and approve the request
 * Click on "Clients"
 * Click "New OAUTH Client"
@@ -34,7 +34,7 @@ steps should be taken to remove the client:
 * Click on "Sign in with your Monzo account"
 * Click "Continue to login"
 * Enter the email address registered with Monzo
-* This will send you an email, click on "Log in to Monzo"
+* You will receive an email, click on "Log in to Monzo"
 * Open the Monzo app and approve the request
 * Click on "Clients"
 * Click on the client you wish to revoke

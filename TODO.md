@@ -4,18 +4,19 @@
 
 | End Point             | Implemented | Version |
 |-----------------------|-------------|---------|
-| Authentication        | ✔           | 0.0.1   |
-| Refresh Access        | ✔           | 0.0.1   |
-| Logout                | ✔           | 0.0.1   |
-| List Accounts         | ❌           |         |
-| Read Balance          | ❌           |         |
+| Authentication        | ✔️        | 0.0.1   |
+| Refresh Access        | ✔️        | 0.0.1   |
+| Whoami                | ✔️        | 0.0.1   |
+| Logout                | ✔️        | 0.0.1   |
+| List Accounts         | ✔️        | 0.0.2   |
+| Read Balance          | ✔️        | 0.0.2   |
 | List Pots             | ❌           |         |
 | Deposit Into Pot      | ❌           |         |
 | Withdraw From Pot     | ❌           |         |
 | Get Transaction       | ❌           |         |
 | Get Transaction List  | ❌           |         |
 | Annotate Transaction  | ❌           |         |
-| Create Feed Item      | ❌           |         |
+| Create Feed Item      | ✔️        | 0.0.2   |
 | Upload Attachment     | ❌           |         |
 | Register Attachment   | ❌           |         |
 | Deregister Attachment | ❌           |         |

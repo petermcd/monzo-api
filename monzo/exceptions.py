@@ -4,3 +4,7 @@ class MonzoAuthenticationError(Exception):
 
 class MonzoHTTPError(Exception):
     pass
+
+
+class MonzoArgumentError(Exception):
+    pass
