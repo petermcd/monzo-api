@@ -6,7 +6,7 @@ The Monzo API package allows you to interact with the API provided by Monzo bank
 
 Before using this package it is important to understand that the Monzo API should only be
 used for non-public projects hosted securely. Please do not use this on a public server
-and do not use it for accessing other peoples accounts.
+and do not use it for accessing other users accounts.
 
 ## Installation
 
@@ -18,12 +18,7 @@ pip install monzo-api
 
 ## Basic Usage
 
-```python
-from monzo.monzo import Monzo
-```
+Prior to using the API you need to obtain a few details from Monzo. Please
+read [this](SETUP.md) document.
 
-## Coming Soon
-
-### CLI interface
-
-I plan on enhancing the package so that you can use a standard command line interface.
+Please see the examples in the example directory.
