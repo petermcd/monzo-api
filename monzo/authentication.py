@@ -102,9 +102,9 @@ class Authentication:
         method = method.lower()
         if method == 'delete':
             connection = conn.delete
-        if method == 'post':
+        elif method == 'post':
             connection = conn.post
-        if method == 'put':
+        elif method == 'put':
             connection = conn.put
         if authenticated:
             headers['Authorization'] = f'Bearer {self.access_token}'
