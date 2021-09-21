@@ -70,7 +70,7 @@ class Balance(Monzo):
 
         Args:
              auth: Monzo authentication object
-             account: Account to fetch the balance for
+             account_id: Account to fetch the balance for
 
         Returns:
             Balance object for the account

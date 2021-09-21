@@ -1,5 +1,6 @@
 import random
 import string
+from datetime import datetime
 
 
 def generate_random_token(length: int = 64, include_punctuation: bool = False) -> str:
@@ -17,3 +18,16 @@ def generate_random_token(length: int = 64, include_punctuation: bool = False) -
     if include_punctuation:
         letters += string.punctuation
     return ''.join(random.choice(letters) for _ in range(length))
+
+
+def create_date(date_str: str) -> datetime:
+    """
+    Converts a date and time received from Monzo into a DateTime object
+
+    Args:
+        date_str: Date and time as a string
+
+    Returns:
+        Converted date and time
+    """
+    return datetime.strptime(date_str[:19], '%Y-%m-%dT%H:%M:%S')
