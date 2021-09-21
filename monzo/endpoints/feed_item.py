@@ -29,7 +29,6 @@ FEED_ITEM_PARAMS = {
 class FeedItem(Monzo):
     __slots__ = [
         '_account_id',
-        '_auth',
         '_feed_type',
         '_params',
         '_url',
@@ -54,7 +53,6 @@ class FeedItem(Monzo):
             url: Optional URL for feed item
         """
         self._account_id: str = account_id
-        self._auth: Authentication = auth
         self._feed_type: str = feed_type
         self._params: Dict[str, str] = params
         self._url: Optional[str] = url
@@ -86,7 +84,7 @@ class FeedItem(Monzo):
 
         return parameters_clean
 
-    def _create(self):
+    def _create(self) -> None:
         """
         Creates the feed item record.
         """
@@ -99,7 +97,7 @@ class FeedItem(Monzo):
             data['url'] = self._url
         for parameter in parameters.keys():
             data[f'params[{parameter}]'] = parameters[parameter]
-        self._auth.make_request(path='/feed', method='POST', data=data)
+        self._monzo_auth.make_request(path='/feed', method='POST', data=data)
 
     @classmethod
     def create(

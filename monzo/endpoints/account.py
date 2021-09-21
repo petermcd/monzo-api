@@ -1,22 +1,31 @@
 from __future__ import annotations
 
+from datetime import datetime
 from typing import List, Optional
 
 from monzo.authentication import Authentication
 from monzo.endpoints.balance import Balance
 from monzo.endpoints.monzo import Monzo
 from monzo.exceptions import MonzoHTTPError
+from monzo.helpers import create_date
 
 ACCOUNT_TYPES = [
     'uk_retail',
     'uk_retail_joint',
 ]
 
+MONZO_ACCOUNT_TYPES = {
+    'user_': 'Current Account',
+    'monzoflex_': 'Flex',
+    'monzoflexbackingloan_': 'Loan (Flex)',
+    'loan_': 'Loan',
+}
+
 
 class Account(Monzo):
     __slots__ = ['_account_id', '_auth', '_balance', '_created', '_description', '_has_balance']
 
-    def __init__(self, auth: Authentication, account_id: str, description: str, created: str):
+    def __init__(self, auth: Authentication, account_id: str, description: str, created: datetime):
         """
         Standard init
 
@@ -25,11 +34,11 @@ class Account(Monzo):
             description: Description of the account
             created: Date and time the account was created
         """
-        self._auth = auth
-        self._account_id = account_id
+        self._auth: Authentication = auth
+        self._account_id: str = account_id
         self._balance: Optional[Balance] = None
-        self._created = created
-        self._description = description
+        self._created: datetime = created
+        self._description: str = description
         self._has_balance: bool = True
         super().__init__(auth=auth)
 
@@ -42,6 +51,18 @@ class Account(Monzo):
             Account ID for the account
         """
         return self._account_id
+
+    def account_type(self) -> str:
+        """
+        Property to identify the type of Monzo account.
+
+        Returns:
+            Type of account mapped from MONZO_ACCOUNT_TYPES, default to UNKNOWN
+        """
+        for account_type in MONZO_ACCOUNT_TYPES.keys():
+            if self.description.lower().startswith(account_type):
+                return MONZO_ACCOUNT_TYPES[account_type]
+        return 'UNKNOWN'
 
     @property
     def balance(self) -> Optional[Balance]:
@@ -59,7 +80,7 @@ class Account(Monzo):
         return self._balance
 
     @property
-    def created(self) -> str:
+    def created(self) -> datetime:
         """
         Property for created.
 
@@ -100,7 +121,7 @@ class Account(Monzo):
                 auth=auth,
                 account_id=account_item['id'],
                 description=account_item['description'],
-                created=account_item['created']
+                created=create_date(account_item['created'])
             )
             account_list.append(account)
         return account_list

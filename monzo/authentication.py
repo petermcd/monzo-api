@@ -84,7 +84,7 @@ class Authentication:
         Args:
             path: Path for the API call
             authenticated: True if authenticated request should be made otherwise False
-            method: Method for the API call (GET, POST)
+            method: Method for the API call (DELETE, GET, POST, PUT)
             data: Dictionary of data to be posted as form data or URL parameters
             headers: Dictionary of headers for the request
             timeout: Timeout in seconds for the request
@@ -99,8 +99,13 @@ class Authentication:
             headers = {}
         conn = HttpIO(MONZO_API_URL)
         connection = conn.get
-        if method.lower() == 'post':
+        method = method.lower()
+        if method == 'delete':
+            connection = conn.delete
+        if method == 'post':
             connection = conn.post
+        if method == 'put':
+            connection = conn.put
         if authenticated:
             headers['Authorization'] = f'Bearer {self.access_token}'
         return connection(path=path, data=data, headers=headers, timeout=timeout)

@@ -20,4 +20,4 @@ monzo = Authentication(
 accounts = Account.fetch(monzo)
 for account in accounts:
     _ = account.balance
-print(accounts)
+print(len(accounts))

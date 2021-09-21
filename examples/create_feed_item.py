@@ -25,4 +25,4 @@ params = {
     'image_url': 'https://monzo.com/static/images/favicon.png',
     'body': 'Off to Monzo you go',
 }
-FeedItem.create(monzo, account_id=accounts[0].account_id, feed_type='basic', params=params, url=url)
+FeedItem.create(auth=monzo, account_id=accounts[0].account_id, feed_type='basic', params=params, url=url)

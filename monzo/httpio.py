@@ -21,6 +21,28 @@ class HttpIO:
         """
         self._url = url
 
+    def delete(self, path: str, data=None, headers=None, timeout: int = DEFAULT_TIMEOUT) -> REQUEST_RESPONSE_TYPE:
+        """
+        Perform a DELETE request.
+
+        Args:
+            path: Path for the HTTP call
+            data: Data for the request to be passed as URL parameters
+            headers: Headers as a dictionary for the request
+            timeout: Timeout in seconds for the request
+
+        Returns:
+             Dictionary containing the response code, headers and content
+        """
+        if data is None:
+            data = {}
+        if headers is None:
+            headers = {}
+        parameters = urlencode(data) if data else None
+        if parameters:
+            path += f'?{parameters}'
+        return self._perform_request(method='DELETE', path=path, data=None, headers=headers, timeout=timeout)
+
     def get(self, path: str, data=None, headers=None, timeout: int = DEFAULT_TIMEOUT) -> REQUEST_RESPONSE_TYPE:
         """
         Perform a GET request.
@@ -41,7 +63,7 @@ class HttpIO:
         parameters = urlencode(data) if data else None
         if parameters:
             path += f'?{parameters}'
-        return self._perform_request(path, data=None, headers=headers, timeout=timeout)
+        return self._perform_request(method='GET', path=path, data=None, headers=headers, timeout=timeout)
 
     def post(
             self,
@@ -67,10 +89,37 @@ class HttpIO:
         if data is None:
             data = {}
         parameters = urlencode(data).encode() if data else None
-        return self._perform_request(path, data=parameters, headers=headers, timeout=timeout)
+        return self._perform_request(method='POST', path=path, data=parameters, headers=headers, timeout=timeout)
+
+    def put(
+            self,
+            path: str,
+            data=None,
+            headers=None,
+            timeout: int = DEFAULT_TIMEOUT
+    ) -> REQUEST_RESPONSE_TYPE:
+        """
+        Perform a PUT request.
+
+        Args:
+            path: Path for the HTTP call
+            data: Data for the request to be passed as form data
+            headers: Headers as a dictionary for the request
+            timeout: Timeout in seconds for the request
+
+        Returns:
+             Dictionary containing the response code, headers and content
+        """
+        if headers is None:
+            headers = {}
+        if data is None:
+            data = {}
+        parameters = urlencode(data).encode() if data else None
+        return self._perform_request(method='PUT', path=path, data=parameters, headers=headers, timeout=timeout)
 
     def _perform_request(
             self,
+            method: str,
             path: str,
             data: Optional[bytes],
             headers: Dict[str, Any],
@@ -80,6 +129,7 @@ class HttpIO:
         Perform a given request.
 
         Args:
+            method: HTTP method to use (DELETE, GET, POST, PUT)
             path: Path for the HTTP call
             data: Data for the request to be passed as form data
             headers: Headers as a dictionary for the request
@@ -91,6 +141,7 @@ class HttpIO:
         full_url = f'{self._url}{path}'
         try:
             request = Request(url=full_url, data=data, headers=headers)
+            request.method = method
             content: str = ''
             response = urlopen(request, timeout=timeout)
             with response as fh:

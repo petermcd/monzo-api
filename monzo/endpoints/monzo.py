@@ -19,4 +19,4 @@ class Monzo(ABC):
         """
         if not auth.access_token:
             raise MonzoAuthenticationError('Endpoint cannot be instantiated without a valid access token')
-        self._monzo_auth = Authentication
+        self._monzo_auth = auth

@@ -10,8 +10,8 @@ monzo = Authentication(client_id=client_id, client_secret=client_secret, redirec
 monzo.authenticate(authorization_token=code, state_token=state)
 
 # The following 3 items should be stored for future requests
-print(f'access token = {monzo.access_token}')
+print(f'access_token = {monzo.access_token}')
 print(f'expiry = {monzo.access_token_expiry}')
-print(f'refresh token = {monzo.refresh_token}')
+print(f'refresh_token = {monzo.refresh_token}')
 
 # Now authorise access in the Monzo app

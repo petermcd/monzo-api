@@ -8,3 +8,7 @@ class MonzoHTTPError(Exception):
 
 class MonzoArgumentError(Exception):
     pass
+
+
+class MonzoGeneralError(Exception):
+    pass
