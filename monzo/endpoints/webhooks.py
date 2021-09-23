@@ -7,6 +7,11 @@ from monzo.endpoints.monzo import Monzo
 
 
 class Webhook(Monzo):
+    """
+    Class to manage webhooks.
+
+    Class provides methods create, fetch and delete webhooks.
+    """
     __slots__ = ['_account_id', '_url', '_webhook_id']
 
     def __init__(self, auth: Authentication, account_id: str, url: str, webhook_id: str):
@@ -81,6 +86,9 @@ class Webhook(Monzo):
             auth: Monzo authentication object
             account_id: Account ID a webhook should be associated with
             url: URL transaction data should be sent too
+
+        Returns:
+            Created webhook
         """
         webhook = Webhook(auth=auth, account_id=account_id, url=url, webhook_id='NEW')
         webhook._create()
@@ -99,14 +107,14 @@ class Webhook(Monzo):
     @classmethod
     def fetch(cls, auth: Authentication, account_id: str) -> List[Webhook]:
         """
-        Implements and instantiates a Account object.
+        Fetches webhooks for an account.
 
         Args:
             auth: Monzo authentication object
-            account_id: Account to fetch the balance for
+            account_id: Account to fetch the webhooks for
 
         Returns:
-            Balance object for the account
+            List of webhook objects for the account
         """
         data = {'account_id': account_id}
         res = auth.make_request(path='/webhooks', data=data)

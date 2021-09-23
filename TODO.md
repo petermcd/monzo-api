@@ -13,8 +13,8 @@
 | List Pots             | ✔️        | 0.0.3   |
 | Deposit Into Pot      | ✔️        | 0.0.3   |
 | Withdraw From Pot     | ✔️        | 0.0.3   |
-| Get Transaction       | ❌           |         |
-| Get Transaction List  | ❌           |         |
+| Get Transaction       | ✔️        | 0.0.4   |
+| Get Transaction List  | ✔️        | 0.0.4   |
 | Annotate Transaction  | ❌           |         |
 | Create Feed Item      | ✔️        | 0.0.2   |
 | Upload Attachment     | ❌           |         |
@@ -35,3 +35,5 @@
 
 * Tidy exceptions and ensure scenarios are captured correctly
 * Implement testing
+* Facilitate receiving webhook calls
+* Test server for development
