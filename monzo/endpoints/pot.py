@@ -10,6 +10,11 @@ from monzo.helpers import create_date
 
 
 class Pot(Monzo):
+    """
+    Class to manage pots.
+
+    Class provides methods to fetch pots as well as depositing and withdrawing from pots.
+    """
     __slots__ = [
         '_pot_id',
         '_name',
@@ -112,7 +117,8 @@ class Pot(Monzo):
         """
         Property for pot id.
 
-        Returns: ID of the pot
+        Returns:
+            ID of the pot
         """
         return self._pot_id
 
@@ -124,6 +130,7 @@ class Pot(Monzo):
         Returns:
             Pot display style
         """
+        return self._style
 
     @property
     def updated(self) -> datetime:
@@ -149,6 +156,9 @@ class Pot(Monzo):
 
         Raises:
             MonzoGeneralError: On attempting to withdraw from a pot that does not have sufficient funds
+
+        Returns:
+            Updated pot
         """
         if amount > pot.balance:
             raise MonzoGeneralError('The pot does not contain enough funds')
@@ -194,7 +204,7 @@ class Pot(Monzo):
         return pot_list
 
     @classmethod
-    def withdraw(cls, auth: Authentication, pot: Pot, account_id: str, amount: int, dedupe_id: str):
+    def withdraw(cls, auth: Authentication, pot: Pot, account_id: str, amount: int, dedupe_id: str) -> Pot:
         """
         Withdraw funds from a pot into an account.
 
@@ -207,6 +217,9 @@ class Pot(Monzo):
 
         Raises:
             MonzoGeneralError: On attempting to withdraw from a pot that does not have sufficient funds
+
+        Returns:
+            Updated pot
         """
         if amount > pot.balance:
             raise MonzoGeneralError('The pot does not contain enough funds')

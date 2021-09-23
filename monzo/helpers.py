@@ -8,7 +8,7 @@ def generate_random_token(length: int = 64, include_punctuation: bool = False) -
     Creates a random token of the given length.
 
     Args:
-        length: The length of the rquired random string
+        length: The length of the required random string
         include_punctuation: True if punctuation should be included
 
     Returns:
@@ -22,7 +22,7 @@ def generate_random_token(length: int = 64, include_punctuation: bool = False) -
 
 def create_date(date_str: str) -> datetime:
     """
-    Converts a date and time received from Monzo into a DateTime object
+    Converts a date and time received from Monzo into a DateTime object.
 
     Args:
         date_str: Date and time as a string
@@ -31,3 +31,16 @@ def create_date(date_str: str) -> datetime:
         Converted date and time
     """
     return datetime.strptime(date_str[:19], '%Y-%m-%dT%H:%M:%S')
+
+
+def format_date(date: datetime) -> str:
+    """
+    Converts a datetime object to a format Monzo expects.
+
+    Args:
+        date: Date and time as a string
+
+    Returns:
+        Converted date and time
+    """
+    return date.strftime('%Y-%m-%dT%H:%M:%SZ')

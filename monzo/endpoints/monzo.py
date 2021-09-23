@@ -5,6 +5,11 @@ from monzo.exceptions import MonzoAuthenticationError
 
 
 class Monzo(ABC):
+    """
+    Abstract base class all endpoints will inherit from.
+
+    Class to provide basic functionality to all endpoints
+    """
     __slots__ = ['_monzo_auth', ]
 
     def __init__(self, auth: Authentication):

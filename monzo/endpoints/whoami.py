@@ -5,6 +5,12 @@ from monzo.endpoints.monzo import Monzo
 
 
 class WhoAmI(Monzo):
+    """
+    Class to manage whoami.
+
+    Class provides access to the whoami endpoint. This is usually used to test connectivity to the
+    API
+    """
     __slots__ = ['_authenticated', '_client_id', '_user_id']
 
     def __init__(self, auth: Authentication, authenticated: bool, client_id: str, user_id: str):

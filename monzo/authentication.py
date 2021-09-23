@@ -2,9 +2,11 @@ import os
 from pathlib import Path, PurePath
 from tempfile import gettempdir
 from time import time
+from typing import List
 
 from monzo import helpers
 from monzo.exceptions import MonzoAuthenticationError
+from monzo.handlers.storage import Storage
 from monzo.httpio import DEFAULT_TIMEOUT, REQUEST_RESPONSE_TYPE, HttpIO
 
 MONZO_AUTH_URL = 'https://auth.monzo.com'
@@ -12,12 +14,18 @@ MONZO_API_URL = 'https://api.monzo.com'
 
 
 class Authentication:
+    """
+    Class to manage authentication.
 
+    Class provides methods to authenticate to the Monzo API and to make relevant queries. An instantiated
+    copy of this class is usually passed to each action
+    """
     __slots__ = [
         '_access_token',
         '_access_token_expiry',
         '_client_id',
         '_client_secret',
+        '_handlers',
         '_redirect_url',
         '_refresh_token',
     ]
@@ -43,6 +51,7 @@ class Authentication:
         self._access_token_expiry: int = access_token_expiry
         self._client_id: str = client_id
         self._client_secret: str = client_secret
+        self._handlers: List[Storage] = []
         self._redirect_url: str = redirect_url
         self._refresh_token: str = refresh_token
 
@@ -102,9 +111,9 @@ class Authentication:
         method = method.lower()
         if method == 'delete':
             connection = conn.delete
-        if method == 'post':
+        elif method == 'post':
             connection = conn.post
-        if method == 'put':
+        elif method == 'put':
             connection = conn.put
         if authenticated:
             headers['Authorization'] = f'Bearer {self.access_token}'
@@ -230,5 +239,22 @@ class Authentication:
 
         self._access_token = response['data']['access_token']
         self.access_token_expiry = response['data']['expires_in']
+        self._refresh_token = ''
         if 'refresh_token' in response['data']:
             self._refresh_token = response['data']['refresh_token']
+
+        for handler in self._handlers:
+            handler.store(
+                access_token=self._access_token,
+                expiry=self._access_token_expiry,
+                refresh_token=self._refresh_token
+            )
+
+    def register_callback_handler(self, handler: Storage) -> None:
+        """
+        Registers a new callback handler for handling new token details.
+
+        Args:
+            handler: Credential handler implementing Storage
+        """
+        self._handlers.append(handler)

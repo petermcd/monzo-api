@@ -27,6 +27,12 @@ FEED_ITEM_PARAMS = {
 
 
 class FeedItem(Monzo):
+    """
+    Class to create  feed items.
+
+    Class provides the ability for creating feed items on a Monzo account. To accomplish this the create class
+    method should be utilised.
+    """
     __slots__ = [
         '_account_id',
         '_feed_type',
