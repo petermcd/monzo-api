@@ -5,7 +5,7 @@ from time import time
 from typing import List
 
 from monzo import helpers
-from monzo.exceptions import MonzoAuthenticationError
+from monzo.exceptions import MonzoAuthenticationError, MonzoError
 from monzo.handlers.storage import Storage
 from monzo.httpio import DEFAULT_TIMEOUT, REQUEST_RESPONSE_TYPE, HttpIO
 
@@ -13,7 +13,7 @@ MONZO_AUTH_URL = 'https://auth.monzo.com'
 MONZO_API_URL = 'https://api.monzo.com'
 
 
-class Authentication:
+class Authentication(object):
     """
     Class to manage authentication.
 
@@ -34,7 +34,7 @@ class Authentication:
             self,
             client_id: str,
             client_secret: str,
-            redirect_url: str = '',
+            redirect_url: str,
             access_token: str = '',
             access_token_expiry: int = 0,
             refresh_token: str = ''
@@ -44,8 +44,11 @@ class Authentication:
 
         Args:
             client_id: Client ID generated at https://developers.monzo.com
+            client_secret: Client Secret generated at https://developers.monzo.com
             redirect_url: Redirect URL for authentication
             access_token: Pre existing access token
+            access_token_expiry: Token expiry as a unix timestamp
+            refresh_token: Refresh token to renew access tokens
         """
         self._access_token: str = access_token
         self._access_token_expiry: int = access_token_expiry
@@ -62,6 +65,9 @@ class Authentication:
         Args:
             authorization_token: Authorization code provided by Monzo
             state_token: Pre agreed state token to validate against
+
+        Raises:
+            MonzoAuthenticationError On missing authorization token or mismatching state tokens
         """
         if not authorization_token:
             raise MonzoAuthenticationError('Code missing from response')
@@ -99,6 +105,7 @@ class Authentication:
             timeout: Timeout in seconds for the request
 
         Returns:
+            Dictionary containing headers and data from query response
         """
         if self._access_token and self._access_token_expiry - time() < 0:
             self.refresh_access()
@@ -117,6 +124,7 @@ class Authentication:
             connection = conn.put
         if authenticated:
             headers['Authorization'] = f'Bearer {self.access_token}'
+        # TODO capture exception
         return connection(path=path, data=data, headers=headers, timeout=timeout)
 
     def refresh_access(self) -> None:
@@ -126,7 +134,7 @@ class Authentication:
         Does not use make_request to avoid circular calls.
 
         Raises:
-            MonzoAuthenticationError: On lack of refresh token
+            MonzoAuthenticationError: On lack of refresh token or failure to refresh a token
         """
         if not self.refresh_token:
             raise MonzoAuthenticationError('Unable to refresh without a refresh token')
@@ -137,8 +145,11 @@ class Authentication:
             'refresh_token': self.refresh_token,
         }
         conn = HttpIO(MONZO_API_URL)
-        res = conn.post(path='/oauth2/token', data=data)
-        self._populate_tokens(res)
+        try:
+            res = conn.post(path='/oauth2/token', data=data)
+            self._populate_tokens(res)
+        except MonzoError:
+            raise MonzoAuthenticationError('Could not refresh the access token')
 
     @property
     def access_token(self) -> str:
@@ -216,6 +227,9 @@ class Authentication:
 
         Args
             authorization_token: Authorization token as received from Monzo
+
+        Raises:
+            MonzoAuthenticationError On failure to create a token
         """
         data = {
             'grant_type': 'authorization_code',
@@ -224,8 +238,11 @@ class Authentication:
             'redirect_uri': self._redirect_url,
             'code': authorization_token,
         }
-        res = self.make_request('/oauth2/token', authenticated=False, method='post', data=data)
-        self._populate_tokens(res)
+        try:
+            res = self.make_request('/oauth2/token', authenticated=False, method='post', data=data)
+            self._populate_tokens(res)
+        except MonzoError:
+            raise MonzoAuthenticationError('Could not fetch a valid access token')
 
     def _populate_tokens(self, response: REQUEST_RESPONSE_TYPE) -> None:
         """
@@ -234,9 +251,6 @@ class Authentication:
         Args:
             response: Response from an auth request.
         """
-        if response['code'] != 200:
-            raise MonzoAuthenticationError('Could not fetch a valid access token')
-
         self._access_token = response['data']['access_token']
         self.access_token_expiry = response['data']['expires_in']
         self._refresh_token = ''

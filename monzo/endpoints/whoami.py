@@ -74,5 +74,5 @@ class WhoAmI(Monzo):
             auth=auth,
             authenticated=res['data']['authenticated'],
             client_id=res['data']['client_id'],
-            user_id=res['data']['user_id']
+            user_id=res['data']['user_id'],
         )

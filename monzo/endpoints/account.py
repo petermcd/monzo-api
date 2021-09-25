@@ -127,7 +127,7 @@ class Account(Monzo):
                 auth=auth,
                 account_id=account_item['id'],
                 description=account_item['description'],
-                created=create_date(account_item['created'])
+                created=create_date(account_item['created']),
             )
             account_list.append(account)
         return account_list
