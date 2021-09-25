@@ -1,5 +1,6 @@
 from monzo.authentication import Authentication
 from monzo.endpoints.whoami import WhoAmI
+from monzo.exceptions import MonzoError
 
 client_id = ''  # Client ID obtained when creating Monzo client
 client_secret = ''  # Client secret obtained when creating Monzo client
@@ -16,8 +17,11 @@ monzo = Authentication(
     access_token_expiry=expiry,
     refresh_token=refresh_token
 )
-who = WhoAmI.fetch(monzo)
 
-print(who.user_id)
-print(who.client_id)
-print(who.authenticated)
+try:
+    who = WhoAmI.fetch(monzo)
+    print(who.user_id)
+    print(who.client_id)
+    print(who.authenticated)
+except MonzoError:
+    print('failed to fetch whoami endpoint')

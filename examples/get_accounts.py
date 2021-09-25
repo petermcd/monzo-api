@@ -1,5 +1,6 @@
 from monzo.authentication import Authentication
 from monzo.endpoints.account import Account
+from monzo.exceptions import MonzoError
 
 client_id = ''  # Client ID obtained when creating Monzo client
 client_secret = ''  # Client secret obtained when creating Monzo client
@@ -17,7 +18,10 @@ monzo = Authentication(
     refresh_token=refresh_token
 )
 
-accounts = Account.fetch(monzo)
-for account in accounts:
-    _ = account.balance
-print(len(accounts))
+try:
+    accounts = Account.fetch(monzo)
+    for account in accounts:
+        _ = account.balance
+    print(len(accounts))
+except MonzoError:
+    print('Failed to retrieve accounts')

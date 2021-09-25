@@ -198,7 +198,7 @@ class Pot(Monzo):
                 currency=pot_item['currency'],
                 created=create_date(pot_item['created']),
                 updated=create_date(pot_item['updated']),
-                deleted=pot_item['deleted']
+                deleted=pot_item['deleted'],
             )
             pot_list.append(pot)
         return pot_list
@@ -235,7 +235,7 @@ class Pot(Monzo):
     @classmethod
     def _update_pot(cls, pot: Pot, data: Dict[str, Any]) -> Pot:
         """
-        Updates a provided pot from a result recieved from a request.
+        Updates a provided pot from a result received from a request.
 
         Args:
             pot: Pot to be updated

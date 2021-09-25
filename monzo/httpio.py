@@ -1,14 +1,28 @@
 from json import loads
 from typing import Any, Dict, Optional
-from urllib.error import URLError
+from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from monzo.exceptions import MonzoHTTPError
+from monzo.exceptions import (MonzoAuthenticationError, MonzoGeneralError,
+                              MonzoHTTPError, MonzoPermissionsError,
+                              MonzoRateError, MonzoServerError)
 
 DEFAULT_TIMEOUT = 10
 
 REQUEST_RESPONSE_TYPE = Dict[str, Any]
+
+MONZO_ERROR_MAP = {
+    400: MonzoHTTPError,
+    401: MonzoAuthenticationError,
+    403: MonzoPermissionsError,
+    404: MonzoHTTPError,
+    405: MonzoGeneralError,
+    406: MonzoGeneralError,
+    429: MonzoRateError,
+    500: MonzoServerError,
+    504: MonzoServerError,
+}
 
 
 class HttpIO:
@@ -152,8 +166,8 @@ class HttpIO:
             response = urlopen(request, timeout=timeout)
             with response as fh:
                 content += fh.read().decode('utf-8')
-        except URLError:
-            raise MonzoHTTPError(f'{full_url} failed to load')
+        except HTTPError as error:
+            raise MONZO_ERROR_MAP[error.code]()
         return {
             'code': response.code,
             'headers': response.headers,
