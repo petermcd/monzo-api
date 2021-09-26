@@ -1,7 +1,12 @@
 Change Log
 =====================================
 
+**0.0.7**
+
+- Resolved a packaging issue. Previous versions now obsolete
+
 **0.0.6**
+
 - Started to implement an API viewer, currently can aid in getting an access token
 - Documentation improvements
 
