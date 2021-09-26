@@ -13,6 +13,10 @@ Converting our Client ID and Client Secret to an access token is a two step proc
 the first step will feel familiar, it is similar to the process wed to obtain
 access to the developer area.
 
+At this time you have 2 options for creating an access token. You can either
+follow the below manual steps, alternatively you can use the
+`viewer <viewer.html>`_ to help you do this.
+
 Creating A Request URL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -23,7 +27,7 @@ The code I am going to use here is available in the examples folder as
 auth_step_01.py.
 
 .. literalinclude:: ../../examples/auth_step_01.py
-  :language: python
+   :language: python
 
 In the above code you need to assign the Client ID and Client Secret and then
 execute the script. This will output a URL similar to:
@@ -71,8 +75,8 @@ Now that we have the URL you can safely click on it. The process here will look
 familiar:
 
 .. image:: images/api_authorize_login.png
-  :width: 400
-  :alt: Monzo Authorization Login
+   :width: 400
+   :alt: Monzo Authorization Login
 
 This will look identical to a page we visited when creating the client (the developer
 site uses the API just as we are). There is one thing to note, in the summary at the
@@ -84,8 +88,8 @@ click on "Submit".
 You will now receive an email like the following:
 
 .. image:: images/api_authorize_email.png
-  :width: 400
-  :alt: Monzo Authorization Email
+   :width: 400
+   :alt: Monzo Authorization Email
 
 Click on "Log In To Monzo". Once your browser opens you will likely find that you go
 to a page that does not exist (the redirect URL that you specified above) but with
@@ -119,7 +123,7 @@ We are almost there. We have all the details we need to create an access token.
 As you would expect, we have an example for that:
 
 .. literalinclude:: ../../examples/auth_step_02.py
-  :language: python
+   :language: python
 
 As you can see from the code above, there is a number of variables we need to
 populate:
@@ -171,8 +175,8 @@ app will have triggered an alert.
 Open the Monzo app and you will see something like:
 
 .. image:: images/api_authorize_alert.png
-  :width: 400
-  :alt: Monzo Authorization Email
+   :width: 400
+   :alt: Monzo Authorization Email
 
 Click on "Approve"
 

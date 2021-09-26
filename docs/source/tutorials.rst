@@ -1,4 +1,4 @@
-Tutorials!
+Tutorials
 =====================================
 
 Taking your first steps using any package can be daunting, here we will help you

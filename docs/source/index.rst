@@ -8,7 +8,7 @@ financials.
 The Monzo API package helps simplify usage of the API.
 
 Disclaimer
-=====================================
+-------------------------------------
 
 As per Monzo's documentation:
 
@@ -26,4 +26,7 @@ used on a private server.
    :caption: Contents:
 
    tutorials
+   viewer
+   todo
+   changelog
    license
