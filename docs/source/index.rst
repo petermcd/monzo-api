@@ -27,6 +27,7 @@ used on a private server.
 
    tutorials
    viewer
+   developers
    todo
    changelog
    license

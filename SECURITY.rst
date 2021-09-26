@@ -7,21 +7,18 @@ Supported Versions
 At present the following versions are supported for security update:
 
 .. list-table:: Supported Versions
-    :widths: 50 50
+    :widths: 25 25 50
     :header-rows: 1
 
     * - Version
       - Support Status
-    * - 0.0.1
+      - Notes
+    * - < 0.0.7
+      - No
+      - Previous version contained a packaging issue and are useless.
+    * - 0.0.7
       - Yes
-    * - 0.0.2
-      - Yes
-    * - 0.0.3
-      - Yes
-    * - 0.0.4
-      - Yes
-    * - 0.0.5
-      - Yes
+      -
 
 Reporting a Vulnerability
 -------------------------------------
