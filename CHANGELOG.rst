@@ -1,6 +1,10 @@
 Change Log
 =====================================
 
+**0.0.8**
+
+- Minor release resolving github actions issue
+
 **0.0.7**
 
 - Resolved a packaging issue. Previous versions now obsolete
