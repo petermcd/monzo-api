@@ -4,25 +4,27 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-# -- Path setup --------------------------------------------------------------
-
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-#
+import datetime
 import os
 import sys
+from configparser import ConfigParser
+
+# -- Path setup --------------------------------------------------------------
 
 sys.path.insert(0, os.path.abspath('monzo'))
+config = ConfigParser()
+config.read('../../setup.cfg')
 
 # -- Project information -----------------------------------------------------
 
-project = 'Monzo API'
-copyright = '2021, Peter McDonald'
-author = 'Peter McDonald'
+copyright_year = datetime.datetime.now().year
+author = config['metadata']['author']
+project = config['metadata']['name']
+copyright = f'{copyright_year}, {author}'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.5'
+
+release = config['metadata']['version']
 
 
 # -- General configuration ---------------------------------------------------
@@ -30,8 +32,7 @@ release = '0.0.5'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [
-]
+extensions = []
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
