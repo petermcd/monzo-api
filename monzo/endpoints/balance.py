@@ -89,5 +89,5 @@ class Balance(Monzo):
             balance=res['data']['balance'],
             total_balance=res['data']['total_balance'],
             currency=res['data']['currency'],
-            spend_today=res['data']['currency'],
+            spend_today=res['data']['spend_today'],
         )
