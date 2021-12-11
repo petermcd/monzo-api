@@ -1,6 +1,14 @@
 Change Log
 =====================================
 
+**0.0.10**
+
+-
+
+**0.0.9**
+
+- Minor release resolving github actions issue
+
 **0.0.8**
 
 - Minor release resolving github actions issue

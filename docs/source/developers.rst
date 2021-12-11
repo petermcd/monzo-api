@@ -17,6 +17,7 @@ documentation from source the following steps can be taken:
 .. code-block:: bash
 
     cd docs
+    pip install -e .[docs]
     sphinx-build -b html source/ build/html
 
 Tagging
@@ -38,6 +39,9 @@ x.x.x with the version in setup.cfg:
 Distributing Package
 -------------------------------------
 
+Distributing the package should no longer be required. Github actions
+automatically upload the generated .tar.gz and .whl files.
+
 Prior to being able to upload a package to Pypi you first need to create an
 API key,once obtained create a file called .pypirc in %homepath% with the
 following details, replacing API_TOKEN with the real API token.
@@ -54,6 +58,6 @@ You can now run the following to upload the package.
 
     git checkout main
     git pull
-    python -m build
+    pip install -e .[build]
     twine upload dist/*
 
