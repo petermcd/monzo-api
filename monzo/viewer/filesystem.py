@@ -88,8 +88,8 @@ class FileSystem(Storage):
             logging.debug(f'Store file not found {self._file}')
             content = {}
 
-        for item in content:
-            self.__setattr__(f'_{item}', content[item])
+        for item, value in content.items():
+            self.__setattr__(f'_{item}', value)
         return content
 
     @property

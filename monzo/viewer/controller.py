@@ -218,13 +218,9 @@ class Controller(object):
             'configured': MONZO_HANDLER.is_configured,
         }
         if 'submit' in parameters:
-            authenticated = True
-            if not bool(parameters.get('authenticated', True)):
-                authenticated = False
+            authenticated = bool(parameters.get('authenticated', True))
             request_type = parameters.get('authenticated', ['get'])[0]
-            headers = {}
-            if 'headers' in parameters:
-                headers = loads(parameters['headers'][0])
+            headers = loads(parameters['headers'][0]) if 'headers' in parameters else {}
             monzo_parameters = {}
             if 'parameters' in parameters:
                 monzo_parameters = loads(parameters['parameters'][0])
