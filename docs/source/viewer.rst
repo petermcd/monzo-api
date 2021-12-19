@@ -18,11 +18,11 @@ To get started simply run the following:
     start-server
 
 The terminal will provide a URL that you should visit, by default this
-is `http://127.0.0.1:8764/index.html <http://127.0.0.1:8764/index.html>`_.
+is `http://127.0.0.1:8080/index.html <http://127.0.0.1:8080/index.html>`_.
 
 Once you arrive at auth_step_one.html you will find a redirect URL, this
 will have a value of
-`http://127.0.0.1:8764/monzo <http://127.0.0.1:8764/monzo>`_, prior to
+`http://127.0.0.1:8080/monzo <http://127.0.0.1:8080/monzo>`_, prior to
 proceeding ensure that the client you have created on Monzo contains this
 as a redirect URL.
 
@@ -32,6 +32,21 @@ therefore no need to copy the code and state from the URL.
 
 Once finished you will be presented with the credentials in a format that
 can simply be copied into a script.
+
+Transactions
+-------------------------------------
+
+After configuration when visiting `http://127.0.0.1:8080/index.html <http://127.0.0.1:8080/index.html>`_ the page will
+automatically fetch the list of accounts. From this you can request the transactions. At present these transactions
+span from the last 7 days.
+
+Raw Requests
+-------------------------------------
+
+You can make raw requests to the API by visiting
+`http://127.0.0.1:8080/raw_request.html <http://127.0.0.1:8080/raw_request.html>`_. This page will allow you to specify
+the path, http method, and parameters for the request. Regardless of whether you are using get or post the parameters
+should be entered as a json dictionary.
 
 The Future
 -------------------------------------

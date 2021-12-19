@@ -147,10 +147,10 @@ class Attachment(Monzo):
         file_url = urlparse(url)
         _, file_extension = splitext(url)
         if file_extension not in SUPPORTED_ATTACHMENT_EXTENSIONS:
-            raise MonzoGeneralError('Unsupported ')
+            raise MonzoGeneralError('Unsupported file type')
         file_type = SUPPORTED_ATTACHMENT_EXTENSIONS[file_extension]
         if file_url.netloc:
-            file_type = Attachment._upload_file(auth=auth, url=url)
+            file_type = Attachment._upload_file(auth=auth, url=url, file_type=file_type)
 
         data = {
             'external_id': transaction_id,
@@ -184,6 +184,7 @@ class Attachment(Monzo):
         Args:
             auth: Monzo authentication object
             url: URL for the file to upload
+            file_type: Mime type for the file
 
         Returns:
             URL of the uploaded file
@@ -202,6 +203,5 @@ class Attachment(Monzo):
             method='POST',
             data=data,
         )
-        monzo_url = response['data']['file_url']
         #  TODO upload file
-        return monzo_url
+        return response['data']['file_url']

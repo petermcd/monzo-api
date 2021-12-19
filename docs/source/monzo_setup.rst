@@ -64,7 +64,7 @@ the relevant permissions. We can now move onto creating an API client.
 Creating A Client
 -------------------------------------
 
-Not that we are fully logged in we can create the API client. To start with click
+Now that we are fully logged in we can create the API client. To start with click
 the client link in the top right hand side. You should now see a list of existing
 clients, albeit it an empty list.
 

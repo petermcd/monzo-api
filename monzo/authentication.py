@@ -1,3 +1,4 @@
+import logging
 import os
 from pathlib import Path, PurePath
 from tempfile import gettempdir
@@ -69,9 +70,12 @@ class Authentication(object):
         Raises:
             MonzoAuthenticationError On missing authorization token or mismatching state tokens
         """
+        logging.debug('Attempting authentication')
         if not authorization_token:
+            logging.debug('Authentication - Missing token')
             raise MonzoAuthenticationError('Code missing from response')
         if state_token != self.state_token:
+            logging.debug('Authentication - state token mismatch')
             raise MonzoAuthenticationError('State tokens do not match')
         tmp_file_name = 'monzo'
         tmp_file_path = PurePath(gettempdir(), tmp_file_name)
@@ -82,6 +86,7 @@ class Authentication(object):
         """
         Invalidates the access token.
         """
+        logging.debug('Invalidating token')
         self.make_request(path='/oauth2/logout')
 
     def make_request(
@@ -124,7 +129,6 @@ class Authentication(object):
             connection = conn.put
         if authenticated:
             headers['Authorization'] = f'Bearer {self.access_token}'
-        # TODO capture exception
         return connection(path=path, data=data, headers=headers, timeout=timeout)
 
     def refresh_access(self) -> None:
@@ -136,7 +140,9 @@ class Authentication(object):
         Raises:
             MonzoAuthenticationError: On lack of refresh token or failure to refresh a token
         """
+        logging.debug('Fetching new token')
         if not self.refresh_token:
+            logging.debug('Unable to fetch new token without a refresh token')
             raise MonzoAuthenticationError('Unable to refresh without a refresh token')
         data = {
             'grant_type': 'refresh_token',
@@ -149,6 +155,7 @@ class Authentication(object):
             res = conn.post(path='/oauth2/token', data=data)
             self._populate_tokens(res)
         except MonzoError:
+            logging.debug('Failed tp fetch new token')
             raise MonzoAuthenticationError('Could not refresh the access token')
 
     @property
@@ -231,6 +238,7 @@ class Authentication(object):
         Raises:
             MonzoAuthenticationError On failure to create a token
         """
+        logging.debug('Authentication - swapping authorization token for an access token')
         data = {
             'grant_type': 'authorization_code',
             'client_id': self._client_id,
@@ -241,7 +249,8 @@ class Authentication(object):
         try:
             res = self.make_request('/oauth2/token', authenticated=False, method='post', data=data)
             self._populate_tokens(res)
-        except MonzoError:
+        except MonzoError as ex:
+            logging.debug(f'Could not fetch access token {ex}')
             raise MonzoAuthenticationError('Could not fetch a valid access token')
 
     def _populate_tokens(self, response: REQUEST_RESPONSE_TYPE) -> None:
@@ -251,6 +260,7 @@ class Authentication(object):
         Args:
             response: Response from an auth request.
         """
+        logging.debug('Populating tokens')
         self._access_token = response['data']['access_token']
         self.access_token_expiry = response['data']['expires_in']
         self._refresh_token = ''
@@ -260,6 +270,8 @@ class Authentication(object):
         for handler in self._handlers:
             handler.store(
                 access_token=self._access_token,
+                client_id=self._client_id,
+                client_secret=self._client_secret,
                 expiry=self._access_token_expiry,
                 refresh_token=self._refresh_token
             )
@@ -271,4 +283,5 @@ class Authentication(object):
         Args:
             handler: Credential handler implementing Storage
         """
+        logging.debug('Registered a new callback handler')
         self._handlers.append(handler)

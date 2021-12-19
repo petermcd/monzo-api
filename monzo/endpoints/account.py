@@ -6,7 +6,7 @@ from typing import List, Optional
 from monzo.authentication import Authentication
 from monzo.endpoints.balance import Balance
 from monzo.endpoints.monzo import Monzo
-from monzo.exceptions import MonzoHTTPError
+from monzo.exceptions import MonzoHTTPError, MonzoPermissionsError
 from monzo.helpers import create_date
 
 ACCOUNT_TYPES = [
@@ -81,7 +81,7 @@ class Account(Monzo):
         if not self._balance and self._has_balance:
             try:
                 self._balance = Balance.fetch(auth=self._auth, account_id=self._account_id)
-            except MonzoHTTPError:
+            except (MonzoHTTPError, MonzoPermissionsError):
                 self._has_balance = False
         return self._balance
 
