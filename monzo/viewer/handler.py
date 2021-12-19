@@ -1,3 +1,4 @@
+import logging
 from http.server import BaseHTTPRequestHandler
 
 from monzo.viewer.controller import Controller
@@ -12,6 +13,7 @@ class Handler(BaseHTTPRequestHandler):
         """
         Handle GET requests.
         """
+        logging.debug('Processing GET request')
         mon = Controller()
         response = mon.process_request(request=self)
         self.send_response(response['code'], response['message'])
@@ -22,6 +24,7 @@ class Handler(BaseHTTPRequestHandler):
         """
         Handle GET requests.
         """
+        logging.debug('Processing POST request')
         mon = Controller()
         response = mon.process_request(request=self)
         self.send_response(response['code'], response['message'])

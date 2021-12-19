@@ -20,17 +20,28 @@ class FileSystem(Storage):
         """
         self._file = file
 
-    def store(self, access_token: str, expiry: int, refresh_token: str = '') -> None:
+    def store(
+        self,
+        access_token: str,
+        client_id: str,
+        client_secret: str,
+        expiry: int,
+        refresh_token: str = ''
+    ) -> None:
         """
         Method to store the Monzo credentials.
 
         Args:
             access_token: New access token
+            client_id: Monzo client ID
+            client_secret: Monzo client secret
             expiry: Access token expiry as a unix timestamp
             refresh_token: Refresh token that can be used to renew an access token
         """
         content = {
             'access_token': access_token,
+            'client_id': client_id,
+            'client_secret': client_secret,
             'expiry': expiry,
             'refresh_token': refresh_token
         }
@@ -44,7 +55,10 @@ class FileSystem(Storage):
         Returns:
             Dictionary containing access token, expiry and refresh token
         """
-        with open(self._file, 'r') as handler:
-            content = loads(handler.read())
+        try:
+            with open(self._file, 'r') as handler:
+                content = loads(handler.read())
+        except FileNotFoundError:
+            content = {}
 
         return content

@@ -1,6 +1,20 @@
 Change Log
 =====================================
 
+**0.0.10**
+
+- Fixed incorrect key for spend_today in balance (thanks @psleep)
+- Various bug fixes to Viewer
+- Added ability to fetch transactions using viewer
+- Added MonzoPermissionsError exception to Account
+- Increased debug logging
+- Now passing client id and client secret to handlers
+- Various documentation fixes
+
+**0.0.9**
+
+- Minor release resolving github actions issue
+
 **0.0.8**
 
 - Minor release resolving github actions issue

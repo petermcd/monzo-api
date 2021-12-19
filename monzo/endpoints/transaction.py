@@ -490,7 +490,8 @@ class Transaction(Monzo):
             auth: Authentication,
             account_id: str,
             since: Optional[datetime] = None,
-            before: Optional[datetime] = None
+            before: Optional[datetime] = None,
+            expand=None,
     ) -> List[Transaction]:
         """
         Fetch a list of transaction.
@@ -500,13 +501,19 @@ class Transaction(Monzo):
             account_id: ID of the account to fetch transactions for
             since: Datetime object to identify when returned transactions should be made since
             before: Datetime object to identify when returned transactions should be made before
+            expand: List if fields to expand on
 
         Returns:
             List of transaction
         """
+        if expand is None:
+            expand = []
         data = {
             'account_id': account_id,
         }
+        if expand:
+            # TODO fix so that this works on the list
+            data['expand'] = expand[0]
         if since:
             data['since'] = format_date(since)
         if before:

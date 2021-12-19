@@ -4,7 +4,38 @@
     </head>
     <body>
         <h1>Monzo API</h1>
+        {% if configured %}
+        <p>Configured</p>
+        <form method="post">
+            <label for="accounts">Account</label>
+            <select name="accounts" id="accounts">
+                {% for account in accounts %}
+                <option value="{{ account.account_id }}">{{ account.account_type() }}{% if account.balance %} ({{ account.balance.currency}}{{ account.balance.balance }}){% endif %}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" name="transactions" value="transactions">Get Transactions</button>
+        </form>
+        {% if transactions %}
+        <table>
+            <tr>
+                <th>Merchant</th>
+                <th>Description</th>
+                <th>Paid On</th>
+                <th>Amount</th>
+            </tr>
+            {% for transaction in transactions%}
+            <tr>
+                <td>{{ transaction.merchant.name }}</td>
+                <td>{{ transaction.description }}</td>
+                <td>{{ transaction.created }}</td>
+                <td>{{ transaction.currency }}{{ "%.2f"|format(transaction.amount / 100) }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+        {% else %}
         <a href='/auth_step_one.html'>Start configuring the API</a>
+        {% endif %}
         </form>
     </body>
 </html>
