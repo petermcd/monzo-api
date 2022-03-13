@@ -1,3 +1,4 @@
+"""Class to manage transactions."""
 from __future__ import annotations
 
 from datetime import datetime
@@ -18,6 +19,7 @@ class Transaction(Monzo):
 
     Class provides methods to fetch transactions.
     """
+
     __slots__ = [
         '_account_id',
         '_amount',
@@ -61,7 +63,7 @@ class Transaction(Monzo):
             transaction_data: Dict[str, Any]
     ):
         """
-        Standard init.
+        Initialize Transaction.
 
         Args:
             auth: Monzo authentication object
@@ -446,7 +448,7 @@ class Transaction(Monzo):
     @property
     def user_id(self) -> str:
         """
-        UNKNOWN
+        UNKNOWN.
 
         #TODO Identify what this is
 

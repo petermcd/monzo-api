@@ -1,3 +1,4 @@
+"""Class to manage the whoami request."""
 from __future__ import annotations
 
 from monzo.authentication import Authentication
@@ -6,16 +7,17 @@ from monzo.endpoints.monzo import Monzo
 
 class WhoAmI(Monzo):
     """
-    Class to manage whoami.
+    Class to manage WhoAmI.
 
     Class provides access to the whoami endpoint. This is usually used to test connectivity to the
     API
     """
+
     __slots__ = ['_authenticated', '_client_id', '_user_id']
 
     def __init__(self, auth: Authentication, authenticated: bool, client_id: str, user_id: str):
         """
-        Standard init
+        Initialize WhoAmI.
 
         Args:
             auth: Monzo authentication object
@@ -31,7 +33,7 @@ class WhoAmI(Monzo):
     @property
     def authenticated(self) -> bool:
         """
-        Property for authenticated
+        Property for authenticated.
 
         Returns:
             True if authenticated otherwise False
@@ -41,7 +43,7 @@ class WhoAmI(Monzo):
     @property
     def client_id(self) -> str:
         """
-        Property for client_id
+        Property for client_id.
 
         Returns:
             Client ID for the user making the request
@@ -61,7 +63,7 @@ class WhoAmI(Monzo):
     @classmethod
     def fetch(cls, auth: Authentication) -> WhoAmI:
         """
-        Implements and instantiates a WhoAmI object
+        Implement and instantiates a WhoAmI object.
 
         Args:
              auth: Monzo authentication object

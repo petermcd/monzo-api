@@ -1,3 +1,4 @@
+"""Setup the viewer."""
 import logging
 
 from monzo.viewer.server import Server
@@ -7,6 +8,7 @@ PORT = 8080
 
 
 def start_server():
+    """Start the server."""
     try:
         Server(host=HOST, port=PORT)
     except KeyboardInterrupt:

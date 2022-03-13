@@ -1,3 +1,4 @@
+"""Example code for creating a feed item."""
 from monzo.authentication import Authentication
 from monzo.endpoints.account import Account
 from monzo.endpoints.feed_item import FeedItem

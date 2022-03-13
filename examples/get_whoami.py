@@ -1,3 +1,4 @@
+"""Example code for showing who is logged into the Monzo API."""
 from monzo.authentication import Authentication
 from monzo.endpoints.whoami import WhoAmI
 from monzo.exceptions import MonzoError

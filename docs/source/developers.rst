@@ -7,6 +7,30 @@ financials.
 
 The Monzo API package helps simplify usage of the API.
 
+CICD and Code Standards
+-------------------------------------
+
+We have attempted to reduce the work required to ensure the code conforms to
+our coding standards. You can help ensure that any code changes will pass
+CICD by making use of pre-commit. The following steps will set this up for you:
+
+.. code-block:: bash
+
+    pip install pre-commit
+    pre-commit install
+    pre-commit run --all-file
+
+The above commands will create pre-commit hooks, this will test the code prior
+to code being committed by Git. Some of the tasks will even correct the data
+instead of throwing an error.
+
+If you would like to run the checks without cmmitting code you can run the
+following command:
+
+.. code-block:: bash
+
+    pre-commit run --all-file
+
 Building Documentation
 -------------------------------------
 
@@ -60,4 +84,3 @@ You can now run the following to upload the package.
     git pull
     pip install -e .[build]
     twine upload dist/*
-

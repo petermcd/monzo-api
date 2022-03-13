@@ -1,5 +1,6 @@
+"""Class to implement making requests for data from Monzo."""
 import datetime
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from monzo.authentication import Authentication
 from monzo.endpoints.account import Account
@@ -8,15 +9,15 @@ from monzo.exceptions import MonzoPermissionsError
 
 
 class MonzoData:
+    """Class to query Monzo API."""
+
     __slots__ = [
         '_accounts',
         '_transactions'
     ]
 
     def __init__(self):
-        """
-        Standard init.
-        """
+        """Initialize MonzoData."""
         self._accounts: List[Account] = []
         self._transactions: Dict[str, List[Transaction]] = {}
 
@@ -66,8 +67,8 @@ class MonzoData:
         path: str,
         authenticated: bool = True,
         request_type: str = 'get',
-        headers: Dict[str, Any] = {},
-        parameters: Dict[str, Any] = {}
+        headers: Optional[Dict[str, Any]] = None,
+        parameters: Optional[Dict[str, Any]] = None,
     ):
         """
         Perform a raw request.

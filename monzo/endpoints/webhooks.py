@@ -1,3 +1,4 @@
+"""Class to manage webhooks."""
 from __future__ import annotations
 
 from typing import List
@@ -12,11 +13,12 @@ class Webhook(Monzo):
 
     Class provides methods create, fetch and delete webhooks.
     """
+
     __slots__ = ['_account_id', '_url', '_webhook_id']
 
     def __init__(self, auth: Authentication, account_id: str, url: str, webhook_id: str):
         """
-        Standard init
+        Initialize Webhook.
 
         Args:
             auth: Monzo authentication object
@@ -30,9 +32,7 @@ class Webhook(Monzo):
         super().__init__(auth=auth)
 
     def _create(self) -> None:
-        """
-        Creates the webhook.
-        """
+        """Create the webhook."""
         data = {
             'account_id': self._account_id,
             'url': self._url,
@@ -41,9 +41,7 @@ class Webhook(Monzo):
         self._webhook_id = res['data']['webhook']['id']
 
     def _delete(self):
-        """
-        Deletes the current webhook
-        """
+        """Delete the current webhook."""
         path = f'/webhooks/{self._webhook_id}'
         self._monzo_auth.make_request(path=path, method='DELETE')
 
@@ -80,7 +78,7 @@ class Webhook(Monzo):
     @classmethod
     def create(cls, auth: Authentication, account_id: str, url: str) -> Webhook:
         """
-        Creates a webhook.
+        Create a webhook.
 
         Args:
             auth: Monzo authentication object
@@ -97,7 +95,7 @@ class Webhook(Monzo):
     @classmethod
     def delete(cls, webhook: Webhook) -> None:
         """
-        Deletes an existing webhook.
+        Delete an existing webhook.
 
         Args:
             webhook: Webhook requiring deletion
@@ -107,7 +105,7 @@ class Webhook(Monzo):
     @classmethod
     def fetch(cls, auth: Authentication, account_id: str) -> List[Webhook]:
         """
-        Fetches webhooks for an account.
+        Fetch webhooks for an account.
 
         Args:
             auth: Monzo authentication object

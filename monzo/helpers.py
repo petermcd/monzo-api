@@ -1,3 +1,4 @@
+"""Helper functions."""
 import random
 import string
 from datetime import datetime
@@ -5,7 +6,7 @@ from datetime import datetime
 
 def generate_random_token(length: int = 64, include_punctuation: bool = False) -> str:
     """
-    Creates a random token of the given length.
+    Create a random token of the given length.
 
     Args:
         length: The length of the required random string
@@ -22,7 +23,7 @@ def generate_random_token(length: int = 64, include_punctuation: bool = False) -
 
 def create_date(date_str: str) -> datetime:
     """
-    Converts a date and time received from Monzo into a DateTime object.
+    Convert a date and time received from Monzo into a DateTime object.
 
     Args:
         date_str: Date and time as a string
@@ -35,7 +36,7 @@ def create_date(date_str: str) -> datetime:
 
 def format_date(date: datetime) -> str:
     """
-    Converts a datetime object to a format Monzo expects.
+    Convert a datetime object to a format Monzo expects.
 
     Args:
         date: Date and time as a string

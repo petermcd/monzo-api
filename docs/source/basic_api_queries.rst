@@ -54,5 +54,3 @@ these contain either a fetch or fetchone class method that will carry out
 a query and return a list of objects matching your query.
 
 You now have a list of accounts that you can inspect and work with.
-
-

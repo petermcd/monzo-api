@@ -1,3 +1,4 @@
+"""Class to manage pots."""
 from __future__ import annotations
 
 from datetime import datetime
@@ -15,6 +16,7 @@ class Pot(Monzo):
 
     Class provides methods to fetch pots as well as depositing and withdrawing from pots.
     """
+
     __slots__ = [
         '_pot_id',
         '_name',
@@ -39,7 +41,7 @@ class Pot(Monzo):
             deleted: bool
     ):
         """
-        Standard init.
+        Initialize Pot.
 
         Args:
             auth: Monzo authentication object
@@ -235,7 +237,7 @@ class Pot(Monzo):
     @classmethod
     def _update_pot(cls, pot: Pot, data: Dict[str, Any]) -> Pot:
         """
-        Updates a provided pot from a result received from a request.
+        Update a provided pot from a result received from a request.
 
         Args:
             pot: Pot to be updated

@@ -1,11 +1,11 @@
+"""Class that handles HTTP requests."""
 from json import loads
 from typing import Any, Dict, Optional
 from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from monzo.exceptions import (MonzoAuthenticationError, MonzoGeneralError,
-                              MonzoHTTPError, MonzoPermissionsError,
+from monzo.exceptions import (MonzoAuthenticationError, MonzoGeneralError, MonzoHTTPError, MonzoPermissionsError,
                               MonzoRateError, MonzoServerError)
 
 DEFAULT_TIMEOUT = 10
@@ -25,16 +25,17 @@ MONZO_ERROR_MAP = {
 }
 
 
-class HttpIO:
+class HttpIO(object):
     """
     Class to facilitate http requests.
 
     Underlying class that is utilised for making the API calls to the Monzo API. This class should not be used
     directly, instead the authentication make_request method should be used
     """
+
     def __init__(self, url: str):
         """
-        Standard init.
+        Initialize HttpIO.
 
         Args:
             url: Base URL for requests

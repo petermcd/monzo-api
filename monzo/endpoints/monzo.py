@@ -1,3 +1,4 @@
+"""Base abstract Monzo class."""
 from abc import ABC
 
 from monzo.authentication import Authentication
@@ -10,11 +11,12 @@ class Monzo(ABC):
 
     Class to provide basic functionality to all endpoints
     """
+
     __slots__ = ['_monzo_auth', ]
 
     def __init__(self, auth: Authentication):
         """
-        Standard init.
+        Initialize Monzo.
 
         Args:
             auth: Monzo authentication object

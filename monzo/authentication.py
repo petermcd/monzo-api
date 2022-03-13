@@ -1,3 +1,4 @@
+"""Class to allow authentication on the Monzo API."""
 import logging
 import os
 from pathlib import Path, PurePath
@@ -21,6 +22,7 @@ class Authentication(object):
     Class provides methods to authenticate to the Monzo API and to make relevant queries. An instantiated
     copy of this class is usually passed to each action
     """
+
     __slots__ = [
         '_access_token',
         '_access_token_expiry',
@@ -41,7 +43,7 @@ class Authentication(object):
             refresh_token: str = ''
     ):
         """
-        Standard init.
+        Initialize Authentication.
 
         Args:
             client_id: Client ID generated at https://developers.monzo.com
@@ -83,9 +85,7 @@ class Authentication(object):
         self._exchange_token(authorization_token=authorization_token)
 
     def logout(self) -> None:
-        """
-        Invalidates the access token.
-        """
+        """Invalidate the access token."""
         logging.debug('Invalidating token')
         self.make_request(path='/oauth2/logout')
 
@@ -99,7 +99,7 @@ class Authentication(object):
             timeout: int = DEFAULT_TIMEOUT
     ) -> REQUEST_RESPONSE_TYPE:
         """
-        Makes an API call to Monzo.
+        Make an API call to Monzo.
 
         Args:
             path: Path for the API call
@@ -212,7 +212,7 @@ class Authentication(object):
     @property
     def state_token(self) -> str:
         """
-        Generates or returns a previously generated state token.
+        Generate or returns a previously generated state token.
 
         Returns:
             A state token used for authentication requests.
@@ -255,7 +255,7 @@ class Authentication(object):
 
     def _populate_tokens(self, response: REQUEST_RESPONSE_TYPE) -> None:
         """
-        Populates tokens after a token request.
+        Populate tokens after a token request.
 
         Args:
             response: Response from an auth request.
@@ -278,7 +278,7 @@ class Authentication(object):
 
     def register_callback_handler(self, handler: Storage) -> None:
         """
-        Registers a new callback handler for handling new token details.
+        Register a new callback handler for handling new token details.
 
         Args:
             handler: Credential handler implementing Storage

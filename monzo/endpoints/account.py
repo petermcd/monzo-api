@@ -1,3 +1,4 @@
+"""Class to manage Accounts."""
 from __future__ import annotations
 
 from datetime import datetime
@@ -29,11 +30,12 @@ class Account(Monzo):
     Class provides methods to fetch accounts and related information. To properly utilise the
     class the fetch class method should be utilised.
     """
+
     __slots__ = ['_account_id', '_auth', '_balance', '_created', '_description', '_has_balance']
 
     def __init__(self, auth: Authentication, account_id: str, description: str, created: datetime):
         """
-        Standard init
+        Initialize Account.
 
         Args:
             account_id: ID of the account
@@ -108,7 +110,7 @@ class Account(Monzo):
     @classmethod
     def fetch(cls, auth: Authentication, account_type: str = None) -> List[Account]:
         """
-        Implements and instantiates a Account object
+        Implement and instantiates a Account object.
 
         Args:
              auth: Monzo authentication object

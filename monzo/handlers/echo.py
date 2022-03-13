@@ -1,10 +1,10 @@
+"""Class to echo credentials."""
 from monzo.handlers.storage import Storage
 
 
 class Echo(Storage):
-    """
-    Class that will echo out credentials.
-    """
+    """Class that will echo out credentials."""
+
     def store(
         self,
         access_token: str,
@@ -14,7 +14,7 @@ class Echo(Storage):
         refresh_token: str = ''
     ) -> None:
         """
-        Method to echo the Monzo credentials.
+        Echo the Monzo credentials.
 
         Args:
             access_token: New access token
