@@ -1,3 +1,4 @@
+"""Code to handle the seconds stage of authentication."""
 from monzo.authentication import Authentication
 from monzo.exceptions import MonzoAuthenticationError, MonzoServerError
 

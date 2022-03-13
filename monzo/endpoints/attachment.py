@@ -1,3 +1,4 @@
+"""Class to manage Attachments."""
 from __future__ import annotations
 
 from datetime import datetime
@@ -22,6 +23,7 @@ class Attachment(Monzo):
 
     Class provides methods to manage attachments.
     """
+
     __slots__ = [
         '_attachment_id',
         '_user_id',
@@ -42,7 +44,7 @@ class Attachment(Monzo):
             created: datetime
     ):
         """
-        Standard init.
+        Initialize Attachment.
 
         Args:
             auth: Monzo authentication object
@@ -112,9 +114,7 @@ class Attachment(Monzo):
         return self._created
 
     def delete(self) -> None:
-        """
-        Delete the attachment.
-        """
+        """Delete the attachment."""
         data = {
             'id': self.attachment_id
         }
@@ -189,7 +189,6 @@ class Attachment(Monzo):
         Returns:
             URL of the uploaded file
         """
-
         if not isfile(url):
             raise MonzoGeneralError('File does not exist')
         content_length = getsize('url')

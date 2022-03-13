@@ -1,3 +1,4 @@
+"""Class to manage balance."""
 from __future__ import annotations
 
 from monzo.authentication import Authentication
@@ -12,11 +13,12 @@ class Balance(Monzo):
     utilised along with the balance property. Otherwise you can fetch an accounts balance utilising the fetch
     class method.
     """
+
     __slots__ = ['_balance', '_total_balance', '_currency', '_spend_today']
 
     def __init__(self, auth: Authentication, balance: int, total_balance: int, currency: str, spend_today: str):
         """
-        Standard init
+        Initialize Balance.
 
         Args:
             balance: Balance of the account
@@ -73,7 +75,7 @@ class Balance(Monzo):
     @classmethod
     def fetch(cls, auth: Authentication, account_id: str) -> Balance:
         """
-        Implements and instantiates a Account object.
+        Implement and instantiates a Account object.
 
         Args:
              auth: Monzo authentication object

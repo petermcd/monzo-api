@@ -1,3 +1,4 @@
+"""Class to store credentials on the file system."""
 from json import dumps, loads
 from typing import Dict, Union
 
@@ -5,15 +6,13 @@ from monzo.handlers.storage import Storage
 
 
 class FileSystem(Storage):
-    """
-    Class that will store credentials on the file system.
-    """
+    """Class that will store credentials on the file system."""
 
     __slots__ = ['_file']
 
     def __init__(self, file: str):
         """
-        Standard init.
+        Initialize FileSystem.
 
         Args:
             file: THe full path (including filename) to the storage file
@@ -29,7 +28,7 @@ class FileSystem(Storage):
         refresh_token: str = ''
     ) -> None:
         """
-        Method to store the Monzo credentials.
+        Store the Monzo credentials.
 
         Args:
             access_token: New access token
@@ -50,7 +49,7 @@ class FileSystem(Storage):
 
     def fetch(self) -> Dict[str, Union[int, str]]:
         """
-        Method to fetch Monzo credentials previously stored
+        Fetch Monzo credentials previously stored.
 
         Returns:
             Dictionary containing access token, expiry and refresh token

@@ -1,3 +1,4 @@
+"""Controller to handle requests."""
 import logging
 from json import dumps, loads
 from typing import Dict, List, Optional, Tuple, Union
@@ -28,9 +29,8 @@ MONZO_DATA = MonzoData()
 
 
 class Controller(object):
-    """
-    Controller to process the request.
-    """
+    """Controller to process the request."""
+
     __slots__ = [
         '_AUTH',
         '_TEMPLATE_ENV'
@@ -38,9 +38,7 @@ class Controller(object):
     _REDIRECT_URL: Optional[str] = None
 
     def __init__(self):
-        """
-        Default init.
-        """
+        """Initialize Controller."""
         self._TEMPLATE_ENV = Environment(
             loader=PackageLoader('monzo.viewer', 'html'),
             autoescape=select_autoescape()

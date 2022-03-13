@@ -1,3 +1,4 @@
+"""Class to manage Feed Items."""
 from __future__ import annotations
 
 from typing import Dict, Optional
@@ -33,6 +34,7 @@ class FeedItem(Monzo):
     Class provides the ability for creating feed items on a Monzo account. To accomplish this the create class
     method should be utilised.
     """
+
     __slots__ = [
         '_account_id',
         '_feed_type',
@@ -49,7 +51,7 @@ class FeedItem(Monzo):
         url: str = None,
     ):
         """
-        Standard init.
+        Initialize FeedItem.
 
         Args:
             auth: Monzo authentication object
@@ -66,7 +68,7 @@ class FeedItem(Monzo):
 
     def _validate_feed_params(self) -> Dict[str, str]:
         """
-        Cleans the params dictionary with the valid params for the feed type.
+        Clean the params dictionary with the valid params for the feed type.
 
         Raises:
             MonzoArgumentError: On missing required parameters
@@ -91,9 +93,7 @@ class FeedItem(Monzo):
         return parameters_clean
 
     def _create(self) -> None:
-        """
-        Creates the feed item record.
-        """
+        """Create the feed item record."""
         parameters = self._validate_feed_params()
         data = {
             'account_id': self._account_id,
@@ -115,7 +115,7 @@ class FeedItem(Monzo):
         url: str = None
     ) -> FeedItem:
         """
-        Creates a new feed item.
+        Create a new feed item.
 
         Args:
             auth: Monzo authentication object

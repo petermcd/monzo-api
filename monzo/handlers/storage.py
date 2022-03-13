@@ -1,3 +1,4 @@
+"""Abstract class for credential storage."""
 from abc import ABC, abstractmethod
 
 

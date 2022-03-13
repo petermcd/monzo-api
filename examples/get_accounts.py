@@ -1,3 +1,4 @@
+"""Example code to fetch accounts."""
 from monzo.authentication import Authentication
 from monzo.endpoints.account import Account
 from monzo.exceptions import MonzoError

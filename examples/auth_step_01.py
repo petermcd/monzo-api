@@ -1,3 +1,4 @@
+"""Example code to authenticate against the Monzo API."""
 from monzo.authentication import Authentication
 
 client_id = ''  # Client ID obtained when creating Monzo client
