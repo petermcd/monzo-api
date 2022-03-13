@@ -67,10 +67,14 @@ class Account(Monzo):
         Returns:
             Type of account mapped from MONZO_ACCOUNT_TYPES, default to UNKNOWN
         """
-        for account_type in MONZO_ACCOUNT_TYPES.keys():
-            if self.description.lower().startswith(account_type):
-                return MONZO_ACCOUNT_TYPES[account_type]
-        return 'UNKNOWN'
+        return next(
+            (
+                MONZO_ACCOUNT_TYPES[account_type]
+                for account_type in MONZO_ACCOUNT_TYPES.keys()
+                if self.description.lower().startswith(account_type)
+            ),
+            'UNKNOWN',
+        )
 
     @property
     def balance(self) -> Optional[Balance]:
