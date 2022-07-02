@@ -4,7 +4,7 @@ Security Policy
 Supported Versions
 -------------------------------------
 
-At present the following versions are supported for security update:
+At present the following versions are supported for security updates:
 
 .. list-table:: Supported Versions
     :widths: 25 25 50
@@ -16,7 +16,7 @@ At present the following versions are supported for security update:
     * - < 0.0.7
       - No
       - Previous version contained a packaging issue and are useless.
-    * - 0.0.7
+    * - >= 0.0.7
       - Yes
       -
 

@@ -114,7 +114,7 @@ class Account(Monzo):
     @classmethod
     def fetch(cls, auth: Authentication, account_type: str = None) -> List[Account]:
         """
-        Implement and instantiates a Account object.
+        Implement and instantiates an Account object.
 
         Args:
              auth: Monzo authentication object

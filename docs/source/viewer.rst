@@ -1,12 +1,12 @@
 Viewer
 =====================================
 
-The viewer is an server application that aides in the creation of Access
+The viewer is a server application that aides in the creation of Access
 tokens.
 
 Within the tutorials section we guide you through how to create a client
 in the Monzo developer center. You are still required to do this however
-once you have these details you can use the viewer to simply converting
+once you have these details you can use the viewer to simply convert
 this into an access token.
 
 To get started simply run the following:

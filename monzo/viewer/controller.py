@@ -69,8 +69,8 @@ class Controller(object):
         if not Controller._REDIRECT_URL:
             Controller._REDIRECT_URL =\
                 f'http://{request.server.server_address[0]}:{request.server.server_address[1]}/monzo'
-        path, parameters = self._parse_request_path(request=request)
-        parameters = {**parameters, **self._parse_request_body(request=request)}
+        path, parameters = Controller._parse_request_path(request=request)
+        parameters = {**parameters, **Controller._parse_request_body(request=request)}
         if path in IGNORE_PATHS or path not in SCRIPT_MAP:
             logging.debug(f'{path} points to a 404')
             return self._404(request=request, parameters=parameters)
@@ -242,7 +242,8 @@ class Controller(object):
             'content': self._fetch_template(template_name='raw_request.html', variables=variables).encode('utf-8'),
         }
 
-    def _parse_request_body(self, request) -> Dict[str, List[str]]:
+    @staticmethod
+    def _parse_request_body(request) -> Dict[str, List[str]]:
         """
         Obtain query parameters from the URL.
 
@@ -255,7 +256,8 @@ class Controller(object):
             return parse.parse_qs(post_body)
         return {}
 
-    def _parse_request_path(self, request) -> Tuple[str, Dict[str, List[str]]]:
+    @staticmethod
+    def _parse_request_path(request) -> Tuple[str, Dict[str, List[str]]]:
         """
         Obtain query parameters from the URL.
 

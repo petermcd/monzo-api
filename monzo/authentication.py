@@ -123,6 +123,8 @@ class Authentication(object):
         method = method.lower()
         if method == 'delete':
             connection = conn.delete
+        elif method == 'patch':
+            connection = conn.patch
         elif method == 'post':
             connection = conn.post
         elif method == 'put':
@@ -154,9 +156,9 @@ class Authentication(object):
         try:
             res = conn.post(path='/oauth2/token', data=data)
             self._populate_tokens(res)
-        except MonzoError:
+        except MonzoError as exc:
             logging.debug('Failed tp fetch new token')
-            raise MonzoAuthenticationError('Could not refresh the access token')
+            raise MonzoAuthenticationError('Could not refresh the access token') from exc
 
     @property
     def access_token(self) -> str:
@@ -249,9 +251,9 @@ class Authentication(object):
         try:
             res = self.make_request('/oauth2/token', authenticated=False, method='post', data=data)
             self._populate_tokens(res)
-        except MonzoError as ex:
-            logging.debug(f'Could not fetch access token {ex}')
-            raise MonzoAuthenticationError('Could not fetch a valid access token')
+        except MonzoError as exc:
+            logging.debug(f'Could not fetch access token {exc}')
+            raise MonzoAuthenticationError('Could not fetch a valid access token') from exc
 
     def _populate_tokens(self, response: REQUEST_RESPONSE_TYPE) -> None:
         """

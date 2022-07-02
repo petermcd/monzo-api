@@ -75,7 +75,7 @@ class Balance(Monzo):
     @classmethod
     def fetch(cls, auth: Authentication, account_id: str) -> Balance:
         """
-        Implement and instantiates a Account object.
+        Implement and instantiates an Account object.
 
         Args:
              auth: Monzo authentication object

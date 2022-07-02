@@ -457,6 +457,29 @@ class Transaction(Monzo):
         """
         return self._user_id
 
+    def annotate(
+            self,
+            key: str,
+            value: str = '',
+    ):
+        """
+        Annotate the transaction.
+
+        Functionality on Monzo currently appears to be broken when using customer keys, this works with the Notes key
+        however will override the existing notes.
+
+        Args:
+            key: Key for the annotation.
+            value: Value for annotation, if left blank it will remove the annotation.
+        """
+        path = f'/transactions/{self.transaction_id}'
+        data = {
+            f'metadata[{key}]': value,
+        }
+        res = self._monzo_auth.make_request(path=path, method='PATCH', data=data)
+        self._notes = res['data']['transaction']['notes']
+        self._metadata = res['data']['transaction']['metadata']
+
     @classmethod
     def fetch_single(
             cls,
