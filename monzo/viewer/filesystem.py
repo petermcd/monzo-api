@@ -80,7 +80,7 @@ class FileSystem(Storage):
         """
         try:
             with open(self._file, 'r') as handler:
-                logging.debug(f'Fetching OAUTH toens from store file {self._file}')
+                logging.debug(f'Fetching OAUTH tokens from store file {self._file}')
                 content = loads(handler.read())
                 self._fetched = True
         except FileNotFoundError:

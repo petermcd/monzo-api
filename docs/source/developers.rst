@@ -34,7 +34,7 @@ following command:
 Building Documentation
 -------------------------------------
 
-Unless eating you should have no need to build the docs, ReadTheDocs does
+Unless testing you should have no need to build the docs, ReadTheDocs does
 this automatically, however, if you find you need to build the
 documentation from source the following steps can be taken:
 
