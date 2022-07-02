@@ -86,6 +86,32 @@ class HttpIO(object):
             path += f'?{parameters}'
         return self._perform_request(method='GET', path=path, data=None, headers=headers, timeout=timeout)
 
+    def patch(
+            self,
+            path: str,
+            data=None,
+            headers=None,
+            timeout: int = DEFAULT_TIMEOUT
+    ) -> REQUEST_RESPONSE_TYPE:
+        """
+        Perform a PATCH request.
+
+        Args:
+            path: Path for the HTTP call
+            data: Data for the request to be passed as form data
+            headers: Headers as a dictionary for the request
+            timeout: Timeout in seconds for the request
+
+        Returns:
+             Dictionary containing the response code, headers and content
+        """
+        if headers is None:
+            headers = {}
+        if data is None:
+            data = {}
+        parameters = urlencode(data).encode() if data else None
+        return self._perform_request(method='PATCH', path=path, data=parameters, headers=headers, timeout=timeout)
+
     def post(
             self,
             path: str,
@@ -168,7 +194,7 @@ class HttpIO(object):
             with response as fh:
                 content += fh.read().decode('utf-8')
         except HTTPError as error:
-            raise MONZO_ERROR_MAP[error.code]()
+            raise MONZO_ERROR_MAP[error.code]() from error
         return {
             'code': response.code,
             'headers': response.headers,

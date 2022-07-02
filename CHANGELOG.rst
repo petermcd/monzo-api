@@ -1,6 +1,15 @@
 Change Log
 =====================================
 
+**0.1.1**
+
+- Added the ability to add annotations to transactions. The Monzo API is broken for custom keys
+- Various spelling isssues in notes
+
+**0.1.0**
+
+- Fixed viewer when authentication is not already setup
+
 **0.0.10**
 
 - Fixed incorrect key for spend_today in balance (thanks @psleep)

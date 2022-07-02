@@ -45,8 +45,8 @@ Implemented End Points
       - yes
       -  0.0.4
     * - Annotate Transaction
-      -
-      -
+      - yes
+      - 0.1.1 \*
     * - Create Feed Item
       - yes
       - 0.0.2
@@ -82,10 +82,10 @@ Implemented End Points
       - 0.0.3
     * - Open Banking API
       -
-      - \*
+      - \*\*
 
-\* It is unlikely that this package will implement usage of the Open
-Banking API due to restrictions accessing it
+* \* Annotations only appear to work for existing keys such as Notes `view on the forum <https://community.monzo.com/t/annotate-transaction-endpoint-not-working-for-custom-key/121203>`_.
+* \*\* It is unlikely that this package will implement usage of the Open Banking API due to restrictions accessing it.
 
 Miscellaneous
 -------------------------------------
