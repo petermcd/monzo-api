@@ -11,6 +11,7 @@ from monzo.exceptions import MonzoAuthenticationError
 from monzo.viewer.filesystem import FileSystem
 from monzo.viewer.monzo_data import MonzoData
 
+logging.basicConfig(level=logging.DEBUG)
 SCRIPT_MAP = {
     '/': 'index',
     '/auth_step_one.html': 'auth_step_one',
@@ -43,6 +44,7 @@ class Controller(object):
             loader=PackageLoader('monzo.viewer', 'html'),
             autoescape=select_autoescape()
         )
+        self._AUTH = None
         if MONZO_HANDLER.is_configured:
             self._AUTH = Authentication(
                 access_token=MONZO_HANDLER.access_token,
@@ -115,7 +117,6 @@ class Controller(object):
             Dictionary containing the response
         """
         redirect_url = f'http://{request.server.server_address[0]}:{request.server.server_address[1]}/monzo'
-        parameters = self._parse_request_body(request=request)
         template = 'auth_step_two.html'
         variables: Dict[str, Union[int, object, str]] = {}
         if 'client_id' not in parameters or 'client_secret' not in parameters:
@@ -194,10 +195,13 @@ class Controller(object):
         logging.debug('Outputting index page')
         variables: Dict[str, Union[bool, int, object, str]] = {
             'configured': MONZO_HANDLER.is_configured,
-            'accounts': MONZO_DATA.get_accounts(auth=self._AUTH),
         }
+        if MONZO_HANDLER.is_configured:
+            variables['accounts'] = MONZO_DATA.get_accounts(auth=self._AUTH)
+
         if 'transactions' in parameters and 'accounts' in parameters:
             variables['transactions'] = MONZO_DATA.get_transactions(self._AUTH, parameters['accounts'][0])
+
         return {
             'code': 200,
             'message': 'OK',
