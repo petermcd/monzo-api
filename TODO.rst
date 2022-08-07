@@ -59,18 +59,15 @@ Implemented End Points
     * - Deregister Attachment
       -
       -
-    * - Fetch Receipts
-      -
-      -
     * - Fetch Receipt
-      -
-      -
+      - yes
+      - 0.1.2
     * - Create Receipt
-      -
-      -
+      - yes
+      - 0.1.2
     * - Delete Receipt
-      -
-      -
+      - yes
+      - 0.1.2
     * - Register Webhook
       - yes
       - 0.0.3

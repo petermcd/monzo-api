@@ -1,6 +1,14 @@
 Change Log
 =====================================
 
+**0.1.2**
+
+- Implemented receipts
+- Implemented a fetch single method for pots
+- Fixed bug in pots checking incorrect balance
+- Various minor fixes in httpio for differing body types
+- Removed the superfluous Viewer2 directory.
+
 **0.1.1**
 
 - Added the ability to add annotations to transactions. The Monzo API is broken for custom keys

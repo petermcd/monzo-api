@@ -191,7 +191,7 @@ class Attachment(Monzo):
         """
         if not isfile(url):
             raise MonzoGeneralError('File does not exist')
-        content_length = getsize('url')
+        content_length = getsize(url)
         data = {
             'file_name': None,
             'file_type': file_type,

@@ -55,14 +55,12 @@ class HttpIO(object):
         Returns:
              Dictionary containing the response code, headers and content
         """
-        if data is None:
-            data = {}
         if headers is None:
             headers = {}
-        parameters = urlencode(data) if data else None
-        if parameters:
-            path += f'?{parameters}'
-        return self._perform_request(method='DELETE', path=path, data=None, headers=headers, timeout=timeout)
+        if data is None:
+            data = {}
+        parameters = urlencode(data).encode() if data else None
+        return self._perform_request(method='DELETE', path=path, data=parameters, headers=headers, timeout=timeout)
 
     def get(self, path: str, data=None, headers=None, timeout: int = DEFAULT_TIMEOUT) -> REQUEST_RESPONSE_TYPE:
         """
@@ -161,7 +159,10 @@ class HttpIO(object):
             headers = {}
         if data is None:
             data = {}
-        parameters = urlencode(data).encode() if data else None
+        if type(data) is dict:
+            parameters = urlencode(data).encode() if data else None
+        else:
+            parameters = data.encode('ascii')
         return self._perform_request(method='PUT', path=path, data=parameters, headers=headers, timeout=timeout)
 
     def _perform_request(
@@ -198,5 +199,5 @@ class HttpIO(object):
         return {
             'code': response.code,
             'headers': response.headers,
-            'data': loads(content),
+            'data': loads(content) if len(content) > 0 else '',
         }
