@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from monzo.authentication import Authentication
 from monzo.endpoints.monzo import Monzo
@@ -151,7 +151,7 @@ class Pot(Monzo):
 
         Args:
             auth: Monzo authentication object
-            pot: Pot to withdraw funds from
+            pot: Pot to deposit funds into
             account_id: ID of the account to withdraw funds into
             amount: Amount in pence/cents to withdraw from pot
             dedupe_id: Unique ID for the request, must be maintained between retries
@@ -162,8 +162,7 @@ class Pot(Monzo):
         Returns:
             Updated pot
         """
-        if amount > pot.balance:
-            raise MonzoGeneralError('The pot does not contain enough funds')
+        # TODO add abiloity to check account has sufficient funds
         path = f'/pots/{pot.pot_id}/deposit'
         data = {
             'source_account_id': account_id,
@@ -204,6 +203,21 @@ class Pot(Monzo):
             )
             pot_list.append(pot)
         return pot_list
+
+    @classmethod
+    def fetch_single(cls, auth: Authentication, account_id: str, pot_id: str) -> Optional[Pot]:
+        """
+        Fetch a list of pots associated with an account.
+
+        Args:
+            auth: Monzo authentication object
+            account_id: Account ID to fetch pots for
+
+        Returns:
+            List of pots
+        """
+        pots = Pot.fetch(auth=auth, account_id=account_id)
+        return next((pot for pot in pots if pot.pot_id == pot_id), None)
 
     @classmethod
     def withdraw(cls, auth: Authentication, pot: Pot, account_id: str, amount: int, dedupe_id: str) -> Pot:

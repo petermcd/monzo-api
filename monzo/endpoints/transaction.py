@@ -465,7 +465,7 @@ class Transaction(Monzo):
         """
         Annotate the transaction.
 
-        Functionality on Monzo currently appears to be broken when using customer keys, this works with the Notes key
+        Functionality on Monzo currently appears to be broken when using custom keys, this works with the Notes key
         however will override the existing notes.
 
         Args:

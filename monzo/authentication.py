@@ -157,7 +157,7 @@ class Authentication(object):
             res = conn.post(path='/oauth2/token', data=data)
             self._populate_tokens(res)
         except MonzoError as exc:
-            logging.debug('Failed tp fetch new token')
+            logging.debug('Failed to fetch new token')
             raise MonzoAuthenticationError('Could not refresh the access token') from exc
 
     @property
