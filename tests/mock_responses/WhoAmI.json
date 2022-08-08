@@ -1,0 +1,9 @@
+{
+  "status_code": 200,
+  "headers": {},
+  "data": {
+    "authenticated":true,
+    "client_id":"client123",
+    "user_id":"user123"
+  }
+}

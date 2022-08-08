@@ -43,16 +43,6 @@ class Balance(Monzo):
         return self._balance
 
     @property
-    def total_balance(self) -> int:
-        """
-        Property for the total balance.
-
-        Returns:
-            Total balance for the account in pence/cents
-        """
-        return self._total_balance
-
-    @property
     def currency(self) -> str:
         """
         Property for the currency.
@@ -71,6 +61,16 @@ class Balance(Monzo):
             Total spend today in pence/cents
         """
         return self._spend_today
+
+    @property
+    def total_balance(self) -> int:
+        """
+        Property for the total balance.
+
+        Returns:
+            Total balance for the account in pence/cents
+        """
+        return self._total_balance
 
     @classmethod
     def fetch(cls, auth: Authentication, account_id: str) -> Balance:

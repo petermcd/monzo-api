@@ -1,0 +1,24 @@
+{
+  "status_code": 200,
+  "headers": {},
+  "data": {
+    "accounts": [
+      {
+        "id":"acc_123ABC",
+        "closed":true,
+        "created": "2018-01-01T01:01:01.000Z",
+        "description":"monzoflexbackingloan_123ABC",
+        "type":"uk_monzo_flex_backing_loan",
+        "currency":"GBP",
+        "country_code":"GB",
+        "owners":[
+          {
+            "user_id":"user_123ABC",
+            "preferred_name":"Bob Smith",
+            "preferred_first_name":"Bob"
+          }
+        ]
+      }
+    ]
+  }
+}
