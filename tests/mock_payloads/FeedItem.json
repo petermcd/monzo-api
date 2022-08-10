@@ -1,0 +1,13 @@
+{
+  "data": {
+    "account_id": "acc_123ABC",
+    "type": "basic",
+    "params[title]": "My Alert",
+    "params[image_url]": "https://some-url.co.uk/image.jpg"
+  },
+  "path": "/feed",
+  "timeout": 10,
+  "headers": {
+    "Authorization":  "Bearer abc123"
+  }
+}

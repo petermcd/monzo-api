@@ -1,0 +1,10 @@
+{
+  "data": {
+    "metadata[notes]": "Test Note"
+  },
+  "path": "/transactions/tx_123ABC1",
+  "timeout": 10,
+  "headers": {
+    "Authorization":  "Bearer abc123"
+  }
+}

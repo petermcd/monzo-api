@@ -1,6 +1,12 @@
 Change Log
 =====================================
 
+**0.1.3**
+
+- Fixed logout method using incorrect http verb
+- Implemented pytest for most endpoints and logout
+- Fixed various typing issues
+
 **0.1.2**
 
 - Implemented receipts

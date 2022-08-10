@@ -1,4 +1,4 @@
-"""Class that handles HTTP requests."""
+﻿"""Class that handles HTTP requests."""
 from json import loads
 from typing import Any, Dict, Optional
 from urllib.error import HTTPError

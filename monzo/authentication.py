@@ -87,7 +87,7 @@ class Authentication(object):
     def logout(self) -> None:
         """Invalidate the access token."""
         logging.debug('Invalidating token')
-        self.make_request(path='/oauth2/logout')
+        self.make_request(path='/oauth2/logout', method='post')
 
     def make_request(
             self,

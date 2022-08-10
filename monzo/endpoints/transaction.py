@@ -140,7 +140,7 @@ class Transaction(Monzo):
         return self._amount_is_pending
 
     @property
-    def atm_fees_detailed(self) -> str:
+    def atm_fees_detailed(self) -> Optional[str]:
         """
         Property for detailed atm fees.
 
@@ -150,7 +150,7 @@ class Transaction(Monzo):
         return self._atm_fees_detailed
 
     @property
-    def attachments(self) -> str:
+    def attachments(self) -> Optional[str]:
         """
         Property for attachments.
 
@@ -230,7 +230,7 @@ class Transaction(Monzo):
         return self._category
 
     @property
-    def counterparty(self) -> str:
+    def counterparty(self) -> Dict[str, str]:
         """
         Property to identify counterparty.
 
