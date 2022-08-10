@@ -1,0 +1,10 @@
+{
+  "data": {
+    "expand[]": "merchant"
+  },
+  "path": "/transactions/tx_123ABC",
+  "timeout": 10,
+  "headers": {
+    "Authorization":  "Bearer abc123"
+  }
+}
