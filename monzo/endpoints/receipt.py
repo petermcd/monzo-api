@@ -37,9 +37,9 @@ class ReceiptItem(object):
             description: str,
             amount: int,
             currency: str,
-            quantity: Optional[float] = None,
-            unit: Optional[str] = None,
-            tax: Optional[int] = None,
+            quantity: float = 0,
+            unit: str = '',
+            tax: int = 0,
     ):
         """
         Initialise ReceiptItem.
@@ -81,7 +81,7 @@ class ReceiptItem(object):
             'amount': self._amount,
             'currency': self._currency,
             'description': self._description,
-            '_quantity': self._quantity,
+            'quantity': self._quantity,
             'tax': self._tax,
             'unit': self._unit,
         }

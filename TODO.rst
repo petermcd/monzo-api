@@ -79,15 +79,15 @@ Implemented End Points
     * - Fetch Receipt
       - yes
       - 0.1.2
-      - No
+      - Yes
     * - Create Receipt
       - yes
       - 0.1.2
-      - No
+      - Yes
     * - Delete Receipt
       - yes
       - 0.1.2
-      - No
+      - No Functionality currently broken
     * - Register Webhook
       - yes
       - 0.0.3

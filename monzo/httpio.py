@@ -162,7 +162,7 @@ class HttpIO(object):
         if type(data) is dict:
             parameters = urlencode(data).encode() if data else None
         else:
-            parameters = data.encode('ascii')
+            parameters = data.encode('utf8')
         return self._perform_request(method='PUT', path=path, data=parameters, headers=headers, timeout=timeout)
 
     def _perform_request(

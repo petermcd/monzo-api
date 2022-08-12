@@ -1,0 +1,32 @@
+{
+  "status_code": 200,
+  "headers": {},
+  "data": {
+    "accounts": [
+      {
+        "id": "acc_123ABC",
+        "closed": false,
+        "created": "2018-01-01T01:01:01.000Z",
+        "description": "user_123ABC",
+        "type": "uk_retail",
+        "currency": "GBP",
+        "country_code": "GB",
+        "owners": [
+          {
+            "user_id": "user_123ABC",
+            "preferred_name": "Bob Smith",
+            "preferred_first_name": "Bob"
+          }
+        ],
+        "account_number": "12345",
+        "sort_code": "040004",
+        "payment_details": {
+          "locale_uk": {
+            "account_number": "12345",
+            "sort_code": "040004"
+          }
+        }
+      }
+    ]
+  }
+}
