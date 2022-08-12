@@ -1,0 +1,28 @@
+{
+  "data": {
+    "transaction_id": "tx_123ABC",
+    "external_id": "123ABC",
+    "total": 665,
+    "currency": "GBP",
+    "taxes": [],
+    "payments": [],
+    "merchant": {},
+    "items": [
+      {
+        "amount": 665,
+        "currency": "GBP",
+        "description": "testing receipts",
+        "quantity": 1,
+        "tax": 0,
+        "unit": "",
+        "sub_items": []
+      }
+    ]
+  },
+  "path": "/transaction-receipts",
+  "timeout": 10,
+  "headers": {
+    "Authorization":  "Bearer abc123",
+    "Content-Type": "application/json"
+  }
+}

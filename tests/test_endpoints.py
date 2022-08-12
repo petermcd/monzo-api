@@ -1,12 +1,13 @@
 """Tests for endpoints."""
 from datetime import datetime
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import pytest
 
 from monzo import authentication
 from monzo.endpoints.account import Account
 from monzo.endpoints.balance import Balance
+from monzo.endpoints.receipt import MERCHANT_TYPE, PAYMENT_TYPE, TAX_TYPE, Receipt
 from monzo.endpoints.transaction import Transaction
 from monzo.endpoints.webhooks import Webhook
 from monzo.endpoints.whoami import WhoAmI
@@ -123,6 +124,78 @@ class TestEndPoints(object):
         assert balance.total_balance == expected_total_balance
         assert balance.currency == expected_currency
         assert balance.spend_today == expected_spend_today
+
+    @pytest.mark.parametrize(
+        'mock_file,expected_external_id,expected_receipt_currency,expected_receipt_merchant,expected_receipt_payments,'
+        + 'expected_receipt_taxes,expected_receipt_total,expected_transaction_id,',
+        [
+            (
+                'Receipt',
+                '123ABC',
+                'GBP',
+                {},
+                [],
+                [],
+                665,
+                'tx_123ABC'
+            ),
+        ],
+    )
+    def test_create_receipt(
+            self,
+            mock_file: str,
+            expected_external_id: str,
+            expected_receipt_currency: str,
+            expected_receipt_merchant: MERCHANT_TYPE,
+            expected_receipt_payments: List[PAYMENT_TYPE],
+            expected_receipt_taxes: List[TAX_TYPE],
+            expected_receipt_total: int,
+            expected_transaction_id: str,
+            mocker
+    ):
+        """
+        Test Receipt endpoint.
+
+        Args:
+            mock_file: File to fetch the mock response from
+            expected_balance: Expected account balance
+            expected_currency: Expected account currency
+            expected_spend_today: Expected account spend today
+            expected_total_balance: Expected account balance total
+        """
+        mocker.patch.object(
+            authentication.HttpIO,
+            'get',
+            return_value=load_data(path='mock_responses', filename=mock_file)
+        )
+
+        handler = Handler()
+
+        credentials = handler.fetch()
+
+        auth = authentication.Authentication(
+            client_id=credentials['client_id'],
+            client_secret=credentials['client_secret'],
+            redirect_url='',
+            access_token=credentials['access_token'],
+            access_token_expiry=credentials['expiry'],
+            refresh_token=credentials['refresh_token'],
+        )
+
+        auth.register_callback_handler(handler)
+
+        receipt = Receipt.fetch(auth=auth, external_id='123ABC')
+
+        assert len(receipt) == 1
+        assert len(receipt[0].receipt_items) == 1
+
+        assert receipt[0].external_id == expected_external_id
+        assert receipt[0].receipt_currency == expected_receipt_currency
+        assert receipt[0].receipt_merchant == expected_receipt_merchant
+        assert receipt[0].receipt_payments == expected_receipt_payments
+        assert receipt[0].receipt_taxes == expected_receipt_taxes
+        assert receipt[0].receipt_total == expected_receipt_total
+        assert receipt[0].transaction_id == expected_transaction_id
 
     @pytest.mark.parametrize(
         'mock_file,multi,expected_account_id,expected_amount,expected_amount_is_pending,expected_atm_fees_detailed,'

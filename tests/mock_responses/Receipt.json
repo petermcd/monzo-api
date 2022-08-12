@@ -1,0 +1,36 @@
+{
+  "status_code": 200,
+  "headers": {},
+  "data": {
+    "receipt": {
+      "id":"receipt_123ABC",
+      "external_id":"123ABC",
+      "transaction_id":"tx_123ABC",
+      "proof_of_purchase_id":"",
+      "total":665,
+      "currency":"GBP",
+      "merchant":{
+        "name":"",
+        "online":false,
+        "phone":"",
+        "email":"",
+        "store_name":"",
+        "store_address":"",
+        "store_postcode":""
+      },
+      "payments":[],
+      "taxes":[],
+      "items":[
+        {
+          "description":"testing receipts",
+          "quantity":1,
+          "amount":665,
+          "currency":"GBP",
+          "tax":0,
+          "sub_items":[]
+        }
+      ],
+      "barcode":null
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "data": {
+    "external_id": "123ABC"
+  },
+  "path": "/transaction-receipts",
+  "timeout": 10,
+  "headers": {
+    "Authorization":  "Bearer abc123"
+  }
+}
