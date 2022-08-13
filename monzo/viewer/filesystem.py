@@ -121,7 +121,7 @@ class FileSystem(Storage):
         """
         if not self._fetched:
             self.fetch()
-        logging.debug(f'Fetching access token = {self._access_token}')
+        logging.debug('Fetching access token')
         return self._access_token or ''
 
     @property
@@ -134,7 +134,7 @@ class FileSystem(Storage):
         """
         if not self._fetched:
             self.fetch()
-        logging.debug(f'Fetching client id = {self._client_id}')
+        logging.debug('Fetching client id')
         return self._client_id or ''
 
     @client_id.setter
@@ -145,7 +145,7 @@ class FileSystem(Storage):
         Args:
             client_id: Monzo client id
         """
-        logging.debug(f'Setting client id = {client_id}')
+        logging.debug('Setting client id')
         self._client_id = client_id
 
     @property
@@ -158,7 +158,7 @@ class FileSystem(Storage):
         """
         if not self._fetched:
             self.fetch()
-        logging.debug(f'Fetching client secret = {self._client_secret}')
+        logging.debug('Fetching client secret')
         return self._client_secret or ''
 
     @client_secret.setter
@@ -169,7 +169,7 @@ class FileSystem(Storage):
         Args:
             client_secret: Monzo client secret
         """
-        logging.debug(f'Setting client secret = {client_secret}')
+        logging.debug('Setting client secret')
         self._client_secret = client_secret
 
     @property
@@ -182,7 +182,7 @@ class FileSystem(Storage):
         """
         if not self._fetched:
             self.fetch()
-        logging.debug(f'Fetching expiry = {self._expiry}')
+        logging.debug('Fetching expiry')
         return self._expiry or 0
 
     @property
