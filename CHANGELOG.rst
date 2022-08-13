@@ -1,6 +1,15 @@
 Change Log
 =====================================
 
+**0.1.5**
+
+- Removed secrets from log files for security reasons
+
+**0.1.4**
+
+- Fixed receipt fetch issue
+- Improved testing
+
 **0.1.3**
 
 - Fixed logout method using incorrect http verb
