@@ -1,6 +1,10 @@
 Change Log
 =====================================
 
+**0.1.6**
+
+- Resolved issue with missing HTML files for the viewer when not installing in edit mode
+
 **0.1.5**
 
 - Removed secrets from log files for security reasons
