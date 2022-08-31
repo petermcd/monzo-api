@@ -14,7 +14,7 @@ from typing import List
 
 # -- Path setup --------------------------------------------------------------
 
-sys.path.insert(0, os.path.abspath('monzo'))
+sys.path.insert(0, os.path.abspath('../'))
 config = ConfigParser()
 config.read('../../setup.cfg')
 
@@ -35,7 +35,11 @@ release = config['metadata']['version']
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions: List[str] = []
+extensions: List[str] = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.coverage',
+    'sphinx.ext.doctest',
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path: List[str] = ['_templates']

@@ -1,11 +1,9 @@
-"""Base abstract Monzo class."""
-from abc import ABC
-
+"""Base Monzo class."""
 from monzo.authentication import Authentication
 from monzo.exceptions import MonzoAuthenticationError
 
 
-class Monzo(ABC):
+class Monzo(object):
     """
     Abstract base class all endpoints will inherit from.
 
