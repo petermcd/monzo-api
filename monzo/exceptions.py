@@ -75,7 +75,7 @@ class MonzoGeneralError(MonzoError):
     """
     General error exception.
 
-    Exception to be thrown when a general error occurs that do not fit into other exceptio types
+    Exception to be thrown when a general error occurs that do not fit into other exception types
     """
 
     pass
