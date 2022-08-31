@@ -26,6 +26,7 @@ used on a private server.
    :caption: Contents:
 
    tutorials
+   modules
    api_observations
    viewer
    developers
