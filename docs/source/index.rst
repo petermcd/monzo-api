@@ -28,7 +28,6 @@ used on a private server.
    tutorials
    modules
    api_observations
-   viewer
    developers
    todo
    changelog
