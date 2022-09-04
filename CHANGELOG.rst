@@ -1,6 +1,10 @@
 Change Log
 =====================================
 
+**0.2.0**
+
+- Removed Viewer from the main repository and is now its own project
+
 **0.1.6**
 
 - Resolved issue with missing HTML files for the viewer when not installing in edit mode
