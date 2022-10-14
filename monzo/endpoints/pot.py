@@ -6,6 +6,7 @@ from typing import Any, Dict, List, Optional
 
 from monzo.authentication import Authentication
 from monzo.endpoints.monzo import Monzo
+from monzo.endpoints.balance import Balance
 from monzo.exceptions import MonzoGeneralError
 from monzo.helpers import create_date
 
@@ -157,12 +158,16 @@ class Pot(Monzo):
             dedupe_id: Unique ID for the request, must be maintained between retries
 
         Raises:
-            MonzoGeneralError: On attempting to withdraw from a pot that does not have sufficient funds
+            MonzoGeneralError: On attempting to withdraw from an account that does not have sufficient funds
 
         Returns:
             Updated pot
         """
-        # TODO add abiloity to check account has sufficient funds
+        account_balance_obj = Balance.fetch(auth=auth, account_id=account_id)
+        account_balance = account_balance_obj.balance
+
+        if account_balance < amount:
+            raise MonzoGeneralError('The account does not contain enough funds')
         path = f'/pots/{pot.pot_id}/deposit'
         data = {
             'source_account_id': account_id,
