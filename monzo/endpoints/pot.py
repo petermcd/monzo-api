@@ -5,8 +5,8 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from monzo.authentication import Authentication
-from monzo.endpoints.monzo import Monzo
 from monzo.endpoints.balance import Balance
+from monzo.endpoints.monzo import Monzo
 from monzo.exceptions import MonzoGeneralError
 from monzo.helpers import create_date
 

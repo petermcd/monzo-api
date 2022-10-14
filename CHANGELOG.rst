@@ -5,6 +5,10 @@ Change Log
 
 - Removed Viewer from the main repository and is now its own project
 
+**0.2.1**
+
+- Resolved bug checking pot balance instead of account balance during transfer to pot (Thanks to @eliasbenaddou for the report and PR)
+
 **0.1.6**
 
 - Resolved issue with missing HTML files for the viewer when not installing in edit mode
