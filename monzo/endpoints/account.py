@@ -31,9 +31,9 @@ class Account(Monzo):
     class the fetch class method should be utilised.
     """
 
-    __slots__ = ['_account_id', '_auth', '_balance', '_created', '_description', '_has_balance']
+    __slots__ = ['_account_id', '_auth', '_balance', '_created', '_description', '_has_balance', '_closed']
 
-    def __init__(self, auth: Authentication, account_id: str, description: str, created: datetime):
+    def __init__(self, auth: Authentication, account_id: str, description: str, created: datetime, closed: bool):
         """
         Initialize Account.
 
@@ -41,6 +41,7 @@ class Account(Monzo):
             account_id: ID of the account
             description: Description of the account
             created: Date and time the account was created
+            closed: Boolean for account status
         """
         self._auth: Authentication = auth
         self._account_id: str = account_id
@@ -48,6 +49,7 @@ class Account(Monzo):
         self._created: datetime = created
         self._description: str = description
         self._has_balance: bool = True
+        self._closed: bool = closed
         super().__init__(auth=auth)
 
     @property
@@ -111,6 +113,16 @@ class Account(Monzo):
         """
         return self._description
 
+    @property
+    def closed(self) -> bool:
+        """
+        Property for closed.
+
+        Returns:
+            Boolean for account status
+        """
+        return self._closed
+
     @classmethod
     def fetch(cls, auth: Authentication, account_type: str = None) -> List[Account]:
         """
@@ -134,6 +146,7 @@ class Account(Monzo):
                 account_id=account_item['id'],
                 description=account_item['description'],
                 created=create_date(account_item['created']),
+                closed=account_item(account_item['closed']),
             )
             account_list.append(account)
         return account_list
