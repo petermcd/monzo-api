@@ -78,19 +78,36 @@ class Account(Monzo):
             'UNKNOWN',
         )
 
+    def fetch_balance(self) -> Optional[Balance]:
+        """
+        Fetch the live balance.
+
+        This will always carry out an API call to fetch the new balance. If the originally fetched balance is good
+        enough use the balance property.
+
+        Returns:
+            Balance object
+        """
+        if self._has_balance:
+            try:
+                self._balance = Balance.fetch(auth=self._auth, account_id=self._account_id)
+            except (MonzoHTTPError, MonzoPermissionsError):
+                self._has_balance = False
+        return self._balance
+
     @property
     def balance(self) -> Optional[Balance]:
         """
         Property for balance.
 
+        If a balance has not been fetched yet this will trigger a fetch, otherwise it will return the already fetched
+        balance. To always fetch the live balance use fetch_balance().
+
         Returns:
             Balance object
         """
         if not self._balance and self._has_balance:
-            try:
-                self._balance = Balance.fetch(auth=self._auth, account_id=self._account_id)
-            except (MonzoHTTPError, MonzoPermissionsError):
-                self._has_balance = False
+            return self.fetch_balance()
         return self._balance
 
     @property
@@ -124,7 +141,7 @@ class Account(Monzo):
         return self._closed
 
     @classmethod
-    def fetch(cls, auth: Authentication, account_type: str = None) -> List[Account]:
+    def fetch(cls, auth: Authentication, account_type: str = '') -> List[Account]:
         """
         Implement and instantiates an Account object.
 
@@ -141,12 +158,12 @@ class Account(Monzo):
         res = auth.make_request(path='/accounts', data=data)
         account_list = []
         for account_item in res['data']['accounts']:
-            account = cls(
+            account = Account(
                 auth=auth,
                 account_id=account_item['id'],
                 description=account_item['description'],
                 created=create_date(account_item['created']),
-                closed=account_item(account_item['closed']),
+                closed=account_item['closed'],
             )
             account_list.append(account)
         return account_list

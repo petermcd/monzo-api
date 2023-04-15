@@ -1,13 +1,18 @@
 Change Log
 =====================================
 
-**0.2.0**
+**0.3.0**
 
-- Removed Viewer from the main repository and is now its own project
+- Added the ability to continually fetch a new balance rather than only the cached vale (fetch_balance())
+- Fixed a bug in which the closed attribute of Account was incorrectly set.
 
 **0.2.1**
 
 - Resolved bug checking pot balance instead of account balance during transfer to pot (Thanks to @eliasbenaddou for the report and PR)
+
+**0.2.0**
+
+- Removed Viewer from the main repository and is now its own project
 
 **0.1.6**
 
