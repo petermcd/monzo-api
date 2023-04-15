@@ -13,10 +13,6 @@ Converting our Client ID and Client Secret to an access token is a two step proc
 the first step will feel familiar, it is similar to the process wed to obtain
 access to the developer area.
 
-At this time you have 2 options for creating an access token. You can either
-follow the below manual steps, alternatively you can use the
-`viewer <viewer.html>`_ to help you do this.
-
 Creating A Request URL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

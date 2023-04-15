@@ -9,7 +9,6 @@ Subpackages
 
    monzo.endpoints
    monzo.handlers
-   monzo.viewer
 
 Submodules
 ----------
