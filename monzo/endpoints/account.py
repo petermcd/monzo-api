@@ -141,7 +141,7 @@ class Account(Monzo):
         return self._closed
 
     @classmethod
-    def fetch(cls, auth: Authentication, account_type: str = None) -> List[Account]:
+    def fetch(cls, auth: Authentication, account_type: str = '') -> List[Account]:
         """
         Implement and instantiates an Account object.
 

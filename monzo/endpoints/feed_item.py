@@ -48,7 +48,7 @@ class FeedItem(Monzo):
         account_id: str,
         feed_type: str,
         params: Dict[str, str],
-        url: str = None,
+        url: str = '',
     ):
         """
         Initialize FeedItem.
@@ -112,7 +112,7 @@ class FeedItem(Monzo):
         account_id: str,
         feed_type: str,
         params: Dict[str, str],
-        url: str = None
+        url: str = ''
     ) -> FeedItem:
         """
         Create a new feed item.
