@@ -101,7 +101,7 @@ Implemented End Points
       - 0.0.3
       - Yes
     * - Open Banking API
-      -
+      - No
       - \*\*
       - No
 
