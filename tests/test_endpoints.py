@@ -4,14 +4,13 @@ from typing import Any, Dict, List, Optional, Union
 
 import pytest
 
-from monzo import authentication
 from monzo.endpoints.account import Account
 from monzo.endpoints.balance import Balance
 from monzo.endpoints.receipt import MERCHANT_TYPE, PAYMENT_TYPE, TAX_TYPE, Receipt
 from monzo.endpoints.transaction import Transaction
 from monzo.endpoints.webhooks import Webhook
 from monzo.endpoints.whoami import WhoAmI
-from tests.helpers import Handler, load_data
+from tests.helpers import httpio
 
 
 class TestEndPoints(object):
@@ -44,26 +43,7 @@ class TestEndPoints(object):
             expected_account_type: Expected account type
             expected_description: str: Expected account description
         """
-        mocker.patch.object(
-            authentication.HttpIO,
-            'get',
-            return_value=load_data(path='mock_responses', filename=mock_file)
-        )
-
-        handler = Handler()
-
-        credentials = handler.fetch()
-
-        auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
-        )
-
-        auth.register_callback_handler(handler)
+        httpio_capture, auth = httpio(mocker, http_method='get', response_filename=mock_file)
 
         accounts = Account.fetch(auth=auth)
 
@@ -97,26 +77,7 @@ class TestEndPoints(object):
             expected_spend_today: Expected account spend today
             expected_total_balance: Expected account balance total
         """
-        mocker.patch.object(
-            authentication.HttpIO,
-            'get',
-            return_value=load_data(path='mock_responses', filename=mock_file)
-        )
-
-        handler = Handler()
-
-        credentials = handler.fetch()
-
-        auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
-        )
-
-        auth.register_callback_handler(handler)
+        httpio_capture, auth = httpio(mocker, http_method='get', response_filename=mock_file)
 
         balance = Balance.fetch(auth=auth, account_id='123ABC')
 
@@ -158,31 +119,15 @@ class TestEndPoints(object):
 
         Args:
             mock_file: File to fetch the mock response from
-            expected_balance: Expected account balance
-            expected_currency: Expected account currency
-            expected_spend_today: Expected account spend today
-            expected_total_balance: Expected account balance total
+            expected_external_id: Expected external ID
+            expected_receipt_currency: Expected currency
+            expected_receipt_merchant: Expected merchant
+            expected_receipt_payments: List of expected payments
+            expected_receipt_taxes: List of expected tax
+            expected_receipt_total: Expected receipt total
+            expected_transaction_id: Expected transaction id
         """
-        mocker.patch.object(
-            authentication.HttpIO,
-            'get',
-            return_value=load_data(path='mock_responses', filename=mock_file)
-        )
-
-        handler = Handler()
-
-        credentials = handler.fetch()
-
-        auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
-        )
-
-        auth.register_callback_handler(handler)
+        httpio_capture, auth = httpio(mocker, http_method='get', response_filename=mock_file)
 
         receipt = Receipt.fetch(auth=auth, external_id='123ABC')
 
@@ -214,7 +159,7 @@ class TestEndPoints(object):
                 -2775,
                 False,
                 None,
-                None,
+                [],
                 True,
                 True,
                 True,
@@ -338,26 +283,7 @@ class TestEndPoints(object):
             expected_user_id: Expected user ID
             mocker: mocker fixture
         """
-        mocker.patch.object(
-            authentication.HttpIO,
-            'get',
-            return_value=load_data(path='mock_responses', filename=mock_file)
-        )
-
-        handler = Handler()
-
-        credentials = handler.fetch()
-
-        auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
-        )
-
-        auth.register_callback_handler(handler)
+        httpio_capture, auth = httpio(mocker, http_method='get', response_filename=mock_file)
 
         if multi:
             transactions = Transaction.fetch(auth=auth, account_id=expected_account_id, since=datetime.now())
@@ -427,26 +353,7 @@ class TestEndPoints(object):
             expected_webhook_id: Expected webhook ID
             mocker: mocker fixture
         """
-        mocker.patch.object(
-            authentication.HttpIO,
-            'get',
-            return_value=load_data(path='mock_responses', filename=mock_file)
-        )
-
-        handler = Handler()
-
-        credentials = handler.fetch()
-
-        auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
-        )
-
-        auth.register_callback_handler(handler)
+        httpio_capture, auth = httpio(mocker, http_method='get', response_filename=mock_file)
 
         webhook = Webhook.fetch(auth=auth, account_id=expected_account_id)
 
@@ -481,26 +388,7 @@ class TestEndPoints(object):
             expected_user_id expected user id
             mocker: mocker fixture
         """
-        mocker.patch.object(
-            authentication.HttpIO,
-            'get',
-            return_value=load_data(path='mock_responses', filename=mock_file)
-        )
-
-        handler = Handler()
-
-        credentials = handler.fetch()
-
-        auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
-        )
-
-        auth.register_callback_handler(handler)
+        httpio_capture, auth = httpio(mocker, http_method='get', response_filename=mock_file)
 
         whoami = WhoAmI.fetch(auth=auth)
 

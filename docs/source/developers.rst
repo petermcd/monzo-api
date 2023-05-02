@@ -24,7 +24,7 @@ The above commands will create pre-commit hooks, this will test the code prior
 to code being committed by Git. Some of the tasks will even correct the data
 instead of throwing an error.
 
-If you would like to run the checks without cmmitting code you can run the
+If you would like to run the checks without committing code you can run the
 following command:
 
 .. code-block:: bash

@@ -5,6 +5,7 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 
 from monzo.authentication import Authentication
+from monzo.endpoints.attachment import Attachment
 from monzo.endpoints.monzo import Monzo
 from monzo.helpers import create_date, format_date
 
@@ -73,7 +74,15 @@ class Transaction(Monzo):
         self._amount: int = transaction_data['amount']
         self._amount_is_pending: bool = transaction_data['amount_is_pending']
         self._atm_fees_detailed: str = transaction_data['atm_fees_detailed']
-        self._attachments: str = transaction_data['attachments']
+        self._attachments: list[Attachment] = []
+        if transaction_data['attachments']:
+            for attachment_data in transaction_data['attachments']:
+                self._attachments.append(
+                    Attachment(
+                        auth=auth,
+                        attachment_data=attachment_data
+                    )
+                )
         self._can_add_to_tab: bool = transaction_data['can_add_to_tab']
         self._can_be_excluded_from_breakdown: bool = transaction_data['can_be_excluded_from_breakdown']
         self._can_be_made_subscription: bool = transaction_data['can_be_made_subscription']
@@ -150,7 +159,7 @@ class Transaction(Monzo):
         return self._atm_fees_detailed
 
     @property
-    def attachments(self) -> Optional[str]:
+    def attachments(self) -> list[Attachment]:
         """
         Property for attachments.
 
@@ -480,6 +489,22 @@ class Transaction(Monzo):
         self._notes = res['data']['transaction']['notes']
         self._metadata = res['data']['transaction']['metadata']
 
+    def add_attachment(self, url: str = '', file_path: str = ''):
+        """
+        Add an attachment to the transaction.
+
+        Args:
+            url: URL for the file to add to the transaction, if set file_path is ignored
+            file_path: Path for the file to add to the transaction
+        """
+        attach = Attachment.create_attachment(
+            auth=self._monzo_auth,
+            transaction=self,
+            url=url,
+            file_path=file_path,
+        )
+        self._attachments.append(attach)
+
     @classmethod
     def fetch_single(
             cls,
@@ -524,7 +549,7 @@ class Transaction(Monzo):
         Args:
             auth: Monzo authentication object
             account_id: ID of the account to fetch transactions for
-            since: Datetime object to identify when returned transactions should be made since
+            since: Datetime object to identify the earliest time a returned record should be from
             before: Datetime object to identify when returned transactions should be made before
             expand: List if fields to expand on
 

@@ -3,7 +3,44 @@ from datetime import datetime, timedelta
 from json import loads
 from typing import Dict, Union
 
+from monzo import authentication
 from monzo.handlers.storage import Storage
+
+
+def httpio(mocker, http_method: str, response_filename: str):
+    """
+    Fixture to provide a mocked authentication.HttpIO.
+
+    Args:
+        mocker: Mocker object
+        http_method: HTTP Verb
+        response_filename: Name of the file that should be returned
+
+    Returns:
+        httpio_mock: Mocked authentication.HttpIO
+        auth: Instance of authentication.Authentication
+    """
+    httpio_mock = mocker.patch.object(
+        authentication.HttpIO,
+        http_method,
+        return_value=load_data(path='mock_responses', filename=response_filename)
+    )
+    handler = Handler()
+
+    credentials = handler.fetch()
+
+    auth = authentication.Authentication(
+        client_id=str(credentials['client_id']),
+        client_secret=str(credentials['client_secret']),
+        redirect_url='',
+        access_token=str(credentials['access_token']),
+        access_token_expiry=int(credentials['expiry']),
+        refresh_token=str(credentials['refresh_token']),
+    )
+
+    auth.register_callback_handler(handler)
+
+    return httpio_mock, auth
 
 
 def load_data(path: str, filename: str):

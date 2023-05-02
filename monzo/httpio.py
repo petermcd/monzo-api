@@ -133,8 +133,9 @@ class HttpIO(object):
             headers = {}
         if data is None:
             data = {}
-        parameters = urlencode(data).encode() if data else None
-        return self._perform_request(method='POST', path=path, data=parameters, headers=headers, timeout=timeout)
+        else:
+            data_enc = urlencode(data).encode() if data else None
+        return self._perform_request(method='POST', path=path, data=data_enc, headers=headers, timeout=timeout)
 
     def put(
             self,

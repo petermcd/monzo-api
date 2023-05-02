@@ -4,7 +4,6 @@ from typing import Dict
 
 import pytest
 
-from monzo import authentication
 from monzo.endpoints.account import Account
 from monzo.endpoints.balance import Balance
 from monzo.endpoints.feed_item import FeedItem
@@ -12,7 +11,7 @@ from monzo.endpoints.receipt import Receipt, ReceiptItem
 from monzo.endpoints.transaction import Transaction
 from monzo.endpoints.webhooks import Webhook
 from monzo.endpoints.whoami import WhoAmI
-from tests.helpers import Handler, load_data
+from tests.helpers import httpio, load_data
 
 
 class TestHttpIO(object):
@@ -60,26 +59,7 @@ class TestHttpIO(object):
             response_filename: Filename of the response data
             extra_data: Extra parameters for the fetch request
         """
-        httpio_capture = mocker.patch.object(
-            authentication.HttpIO,
-            http_method,
-            return_value=load_data(path='mock_responses', filename=response_filename)
-        )
-
-        handler = Handler()
-
-        credentials = handler.fetch()
-
-        auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
-        )
-
-        auth.register_callback_handler(handler)
+        httpio_capture, auth = httpio(mocker, http_method=http_method, response_filename=response_filename)
 
         endpoint.create(auth=auth, **extra_data)
 
@@ -120,26 +100,7 @@ class TestHttpIO(object):
             response_filename: Filename of the response data
             webhook_id: ID of the webhook to delete
         """
-        httpio_capture = mocker.patch.object(
-            authentication.HttpIO,
-            http_method,
-            return_value=load_data(path='mock_responses', filename=response_filename)
-        )
-
-        handler = Handler()
-
-        credentials = handler.fetch()
-
-        auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
-        )
-
-        auth.register_callback_handler(handler)
+        httpio_capture, auth = httpio(mocker, http_method=http_method, response_filename=response_filename)
 
         webhook = Webhook(auth=auth, account_id='acc_123ABC', url='https://some-url.co.uk', webhook_id=webhook_id)
 
@@ -181,26 +142,7 @@ class TestHttpIO(object):
             response_filename: Filename of the response data
             extra_data: Extra parameters for the fetch request
         """
-        httpio_capture = mocker.patch.object(
-            authentication.HttpIO,
-            http_method,
-            return_value=load_data(path='mock_responses', filename=response_filename)
-        )
-
-        handler = Handler()
-
-        credentials = handler.fetch()
-
-        auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
-        )
-
-        auth.register_callback_handler(handler)
+        httpio_capture, auth = httpio(mocker, http_method=http_method, response_filename=response_filename)
 
         endpoint.fetch(auth=auth, **extra_data)
 
@@ -235,26 +177,7 @@ class TestHttpIO(object):
             response_filename: Filename of the response data
             extra_data: Extra parameters for the fetch request
         """
-        httpio_capture = mocker.patch.object(
-            authentication.HttpIO,
-            http_method,
-            return_value=load_data(path='mock_responses', filename=response_filename)
-        )
-
-        handler = Handler()
-
-        credentials = handler.fetch()
-
-        auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
-        )
-
-        auth.register_callback_handler(handler)
+        httpio_capture, auth = httpio(mocker, http_method=http_method, response_filename=response_filename)
 
         transaction = Transaction(
             auth=auth,
@@ -314,26 +237,7 @@ class TestHttpIO(object):
             response_filename: Filename of the response data
             extra_data: Extra parameters for the fetch request
         """
-        httpio_capture = mocker.patch.object(
-            authentication.HttpIO,
-            http_method,
-            return_value=load_data(path='mock_responses', filename=response_filename)
-        )
-
-        handler = Handler()
-
-        credentials = handler.fetch()
-
-        auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
-        )
-
-        auth.register_callback_handler(handler)
+        httpio_capture, auth = httpio(mocker, http_method=http_method, response_filename=response_filename)
 
         receipt = Receipt(
             auth=auth,

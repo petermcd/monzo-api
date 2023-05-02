@@ -1,6 +1,13 @@
 Change Log
 =====================================
 
+**1.0.0**
+
+- Improved testing
+- Removed echo handler
+- Fully implemented attachments
+- Various minor fixes
+
 **0.3.0**
 
 - Added the ability to continually fetch a new balance rather than only the cached vale (fetch_balance())
@@ -44,7 +51,7 @@ Change Log
 **0.1.1**
 
 - Added the ability to add annotations to transactions. The Monzo API is broken for custom keys
-- Various spelling isssues in notes
+- Various spelling issues in notes
 
 **0.1.0**
 

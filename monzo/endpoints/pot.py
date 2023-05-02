@@ -217,6 +217,7 @@ class Pot(Monzo):
         Args:
             auth: Monzo authentication object
             account_id: Account ID to fetch pots for
+            pot_id: Pot ID
 
         Returns:
             List of pots

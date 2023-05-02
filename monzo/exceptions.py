@@ -25,7 +25,7 @@ class MonzoHTTPError(MonzoError):
     """
     HTTP error exception.
 
-    Exception to be thrown when a HTTP error occurs during an API call
+    Exception to be thrown when an HTTP error occurs during an API call
     """
 
     pass

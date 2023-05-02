@@ -157,7 +157,7 @@ token will expire.
 **refresh_token**
 
 If you specified "Confidential" when creating the client in the Monzo developer
-area then you will have received a refresh toen. This token can be used to generate
+area then you will have received a refresh token. This token can be used to generate
 a new access token without following this complete process again.
 
 This does not extend the life of the token, instead a new token is created with a
