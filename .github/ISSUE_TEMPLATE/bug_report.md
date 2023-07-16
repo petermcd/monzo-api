@@ -11,7 +11,7 @@ assignees: petermcd
 A clear and concise description of what the bug is.
 
 **To Reproduce**
-Please provide minimal code to reporcude the bug.
+Please provide minimal code to reproduce the bug.
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.

@@ -158,10 +158,13 @@ class TestEndPoints(object):
 
         Args:
             mock_file: File to fetch the mock response from
-            expected_balance: Expected account balance
-            expected_currency: Expected account currency
-            expected_spend_today: Expected account spend today
-            expected_total_balance: Expected account balance total
+            expected_external_id: Expected external ID
+            expected_receipt_currency: Expected currency in receipt
+            expected_receipt_merchant: Expected merchant for receipt
+            expected_receipt_payments: Expected list of payments
+            expected_receipt_taxes: Expected list of taxes
+            expected_receipt_total: Expected total for receipt
+            expected_transaction_id: Expected transaction ID
         """
         mocker.patch.object(
             authentication.HttpIO,
@@ -198,7 +201,7 @@ class TestEndPoints(object):
         assert receipt[0].transaction_id == expected_transaction_id
 
     @pytest.mark.parametrize(
-        'mock_file,multi,expected_account_id,expected_amount,expected_amount_is_pending,expected_atm_fees_detailed,'
+        'mock_file,expected_account_id,expected_amount,expected_amount_is_pending,expected_atm_fees_detailed,'
         + 'expected_attachments,expected_can_add_to_tab,expected_can_be_excluded_from_breakdown,'
         + 'expected_can_be_made_subscription,expected_can_match_transactions_in_categorization,'
         + 'expected_can_split_the_bill,expected_categories,expected_category,expected_counterparty,expected_created,'
@@ -209,7 +212,6 @@ class TestEndPoints(object):
         [
             (
                 'Transaction',
-                True,
                 'acc_123ABC',
                 -2775,
                 False,
@@ -256,10 +258,9 @@ class TestEndPoints(object):
             ),
         ],
     )
-    def test_transaction(
+    def test_multiple_transaction(
             self,
             mock_file: str,
-            multi: bool,
             expected_account_id: str,
             expected_amount: int,
             expected_amount_is_pending: bool,
@@ -301,7 +302,6 @@ class TestEndPoints(object):
 
         Args:
             mock_file: File to fetch the mock response from
-            multi: True if using fetch False if using fetch_single
             expected_account_id: Expected account ID
             expected_amount: Expected amount
             expected_amount_is_pending: Expected amount is pending
@@ -359,12 +359,9 @@ class TestEndPoints(object):
 
         auth.register_callback_handler(handler)
 
-        if multi:
-            transactions = Transaction.fetch(auth=auth, account_id=expected_account_id, since=datetime.now())
-            assert len(transactions) == 1
-            transaction = transactions[0]
-        else:
-            transaction = Transaction.fetch_single(auth=auth, transaction_id=expected_transaction_id)
+        transactions = Transaction.fetch(auth=auth, account_id=expected_account_id, since=datetime.now())
+        assert len(transactions) == 1
+        transaction = transactions[0]
 
         assert transaction.account_id == expected_account_id
         assert transaction.amount == expected_amount

@@ -90,9 +90,9 @@ the project it is being used on as you can have multiple clients.
 
 This can e left blank
 
-**Redirect URL's**
+**Redirect URLs**
 
-The redirect URL's are used during the authorisation phase of using the API. You
+The redirect URLs are used during the authorisation phase of using the API. You
 will need to have a webserver listening on the address to capture the get
 parameters (we can work around this if you dont have one).
 
@@ -121,7 +121,7 @@ If you now click on the new entry you will be presented with details such as:
   :width: 400
   :alt: Monzo Client Details
 
-From this page we need to take three pieces of information (the valuesin the above
+From this page we need to take three pieces of information (the values in the above
 screenshot has been redacted, make sure you also keep yours secret):
 
 - Client ID

@@ -212,11 +212,12 @@ class Pot(Monzo):
     @classmethod
     def fetch_single(cls, auth: Authentication, account_id: str, pot_id: str) -> Optional[Pot]:
         """
-        Fetch a list of pots associated with an account.
+        Fetch a pot associated with an account with the given pot id.
 
         Args:
             auth: Monzo authentication object
             account_id: Account ID to fetch pots for
+            pot_id: Pot ID of the required pot
 
         Returns:
             List of pots
