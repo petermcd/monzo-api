@@ -524,7 +524,7 @@ class Transaction(Monzo):
         Args:
             auth: Monzo authentication object
             account_id: ID of the account to fetch transactions for
-            since: Datetime object to identify when returned transactions should be made since
+            since: Datetime object to identify when returned transactions should be made from
             before: Datetime object to identify when returned transactions should be made before
             expand: List if fields to expand on
 

@@ -44,7 +44,7 @@ Change Log
 **0.1.1**
 
 - Added the ability to add annotations to transactions. The Monzo API is broken for custom keys
-- Various spelling isssues in notes
+- Various spelling issues in notes
 
 **0.1.0**
 

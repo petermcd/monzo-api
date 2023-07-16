@@ -1,4 +1,5 @@
 """Helper functions and classes for testing."""
+import pathlib
 from datetime import datetime, timedelta
 from json import loads
 from typing import Dict, Union
@@ -17,8 +18,7 @@ def load_data(path: str, filename: str):
     Returns:
         JSON Content
     """
-    with open(f'tests/{path}/{filename}.json') as fh:
-        content = fh.read()
+    content = pathlib.Path(f'./tests/{path}/{filename}.json').read_text()
     return loads(content)
 
 

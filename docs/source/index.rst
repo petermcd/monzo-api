@@ -1,4 +1,4 @@
-Welcome to Monzo API's documentation
+Welcome to Monzo APIs documentation
 =====================================
 
 Many banks now provide an API to allow you too obtain data from your account
@@ -10,7 +10,7 @@ The Monzo API package helps simplify usage of the API.
 Disclaimer
 -------------------------------------
 
-As per Monzo's documentation:
+As per the Monzo documentation:
 
     The Monzo Developer API is not suitable for building public applications.
 
