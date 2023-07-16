@@ -16,14 +16,17 @@ At present the following versions are supported for security updates:
     * - < 0.0.7
       - No
       - Previous version contained a packaging issue and are useless.
-    * - >= 0.0.7
+    * - < 1.0.0
+      - No
+      - Anything prior to v1.0.0 is now considered pre release.
+    * - >= 1.0.0
       - Yes
       -
 
 Reporting a Vulnerability
 -------------------------------------
 
-Although this package is intended for locally hosted applications fixing
+Although this package is intended for locally hosted applications, fixing
 security vulnerabilities is still important, especially when finance is
 involved.
 

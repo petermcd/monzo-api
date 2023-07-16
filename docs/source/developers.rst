@@ -18,7 +18,6 @@ CICD by making use of pre-commit. The following steps will set this up for you:
 
     pip install pre-commit
     pre-commit install
-    pre-commit run --all-file
 
 The above commands will create pre-commit hooks, this will test the code prior
 to code being committed by Git. Some of the tasks will even correct the data
@@ -34,7 +33,7 @@ following command:
 Building Documentation
 -------------------------------------
 
-Unless testing you should have no need to build the docs, ReadTheDocs does
+Unless testing, you should have no need to build the docs, ReadTheDocs does
 this automatically, however, if you find you need to build the
 documentation from source the following steps can be taken:
 
@@ -63,11 +62,11 @@ x.x.x with the version in setup.cfg:
 Distributing Package
 -------------------------------------
 
-Distributing the package should no longer be required. Github actions
-automatically upload the generated .tar.gz and .whl files.
+Distributing the package should no longer be required. A Github action
+automatically uploads the generated .tar.gz and .whl files.
 
 Prior to being able to upload a package to Pypi you first need to create an
-API key,once obtained create a file called .pypirc in %homepath% with the
+API key, once obtained create a file called .pypirc in %homepath% with the
 following details, replacing API_TOKEN with the real API token.
 
 .. code-block:: yaml

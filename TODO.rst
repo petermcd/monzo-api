@@ -114,5 +114,4 @@ Miscellaneous
 - Tidy exceptions and ensure scenarios are captured correctly
 - Implement testing
 - Facilitate receiving webhook calls
-- Enhancing the test server for development
 - Improve documentation
