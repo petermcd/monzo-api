@@ -9,9 +9,8 @@ class Balance(Monzo):
     """
     Class to manage balances.
 
-    Class provides methods to fetch account balances. To properly utilise the class the Account class should be
-    utilised along with the balance property. Otherwise, you can fetch an accounts balance utilising the fetch
-    class method.
+    Class provides methods to fetch account balances. To properly utilise the class the Account class should be utilised
+    along with the balance property. Otherwise, you can fetch an accounts balance utilising the fetch class method.
     """
 
     __slots__ = ['_balance', '_total_balance', '_currency', '_spend_today']
@@ -21,6 +20,7 @@ class Balance(Monzo):
         Initialize Balance.
 
         Args:
+            auth: Monzo authentication object
             balance: Balance of the account
             total_balance: Balance of account and associated pots
             currency: Currency the balances are in

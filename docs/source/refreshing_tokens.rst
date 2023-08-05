@@ -9,7 +9,7 @@ is required automatically.
 
 This raises the question how do you know if a token has been refreshed.
 
-Identifying Refreshed ToKens
+Identifying Refreshed Tokens
 -------------------------------------
 
 There are two ways that you can identify if a token has been refreshed.
@@ -60,7 +60,7 @@ This is where handlers come in.
 .. code-block:: python
 
     from monzo.authentication import Authentication
-    from monzo.endpoints.echo import Echo
+    from monzo.endpoints.filesystem import FileSystem
 
     monzo = Authentication(
         client_id=client_id,
@@ -72,7 +72,7 @@ This is where handlers come in.
     )
 
     # Instantiate our handler
-    handler = Echo()
+    handler = FileSystem(file='/path/to/file')
 
     #Register the handler
     monzo.register_callback_handler(handler)
@@ -82,12 +82,7 @@ This is where handlers come in.
 Now whenever the package needs to fetch new tokens the store method of
 the handler will be called.
 
-This package currently contains two handlers:
-
-**Echo**
-
-This handler simply prints the new token details. Under no circumstances should
-this handler be used in a real application.
+This package currently contains one handlers:
 
 **FileSystem**
 
@@ -107,7 +102,7 @@ To achieve this you should create a class that extends from the Storage
 abstract base class. At present this simply dictates that you must have
 a store method and the parameters that must be present.
 
-Reading the Echo handler code should clarify how this works
+Reading the FileSystem handler code should clarify how this works
 
-.. literalinclude:: ../../monzo/handlers/echo.py
+.. literalinclude:: ../../monzo/handlers/filesystem.py
   :language: python

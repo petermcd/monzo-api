@@ -1,8 +1,8 @@
 {
-  "data": {},
-  "path": "/webhooks/webhook_123ABC",
-  "timeout": 10,
-  "headers": {
-    "Authorization":  "Bearer abc123"
+  "data" : {},
+  "path" : "/webhooks/webhook_123ABC",
+  "timeout" : 10,
+  "headers" : {
+    "Authorization" : "Bearer abc123"
   }
 }

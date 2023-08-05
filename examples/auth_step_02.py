@@ -1,4 +1,6 @@
 """Code to handle the seconds stage of authentication."""
+import sys
+
 from monzo.authentication import Authentication
 from monzo.exceptions import MonzoAuthenticationError, MonzoServerError
 
@@ -13,10 +15,10 @@ try:
     monzo.authenticate(authorization_token=code, state_token=state)
 except MonzoAuthenticationError:
     print('State code does not match')
-    exit(1)
+    sys.exit(1)
 except MonzoServerError:
     print('Monzo Server Error')
-    exit(1)
+    sys.exit(1)
 
 # The following 3 items should be stored for future requests
 print(f"access_token = '{monzo.access_token}'")

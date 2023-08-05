@@ -6,12 +6,12 @@ class Echo(Storage):
     """Class that will echo out credentials."""
 
     def store(
-        self,
-        access_token: str,
-        client_id: str,
-        client_secret: str,
-        expiry: int,
-        refresh_token: str = ''
+            self,
+            access_token: str,
+            client_id: str,
+            client_secret: str,
+            expiry: int,
+            refresh_token: str = ''
     ) -> None:
         """
         Echo the Monzo credentials.

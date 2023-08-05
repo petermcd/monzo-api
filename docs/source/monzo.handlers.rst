@@ -4,14 +4,6 @@ monzo.handlers package
 Submodules
 ----------
 
-monzo.handlers.echo module
---------------------------
-
-.. automodule:: monzo.handlers.echo
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 monzo.handlers.filesystem module
 --------------------------------
 

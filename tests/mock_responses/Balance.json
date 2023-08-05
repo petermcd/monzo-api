@@ -2,17 +2,17 @@
   "status_code": 200,
   "headers": {},
   "data": {
-    "balance":40000,
-    "total_balance":60000,
-    "balance_including_flexible_savings":60000,
-    "currency":"GBP",
-    "spend_today":-3000,
-    "local_currency":"",
-    "local_exchange_rate":0,
-    "local_spend":[
+    "balance": 40000,
+    "total_balance": 60000,
+    "balance_including_flexible_savings": 60000,
+    "currency": "GBP",
+    "spend_today": -3000,
+    "local_currency": "",
+    "local_exchange_rate": 0,
+    "local_spend": [
       {
-        "spend_today":-3000,
-        "currency":"GBP"
+        "spend_today": -3000,
+        "currency": "GBP"
       }
     ]
   }

@@ -44,12 +44,12 @@ class Handler(Storage):
         self._refresh_token = 'ijk012'
 
     def store(
-        self,
-        access_token: str,
-        client_id: str,
-        client_secret: str,
-        expiry: int,
-        refresh_token: str = ''
+            self,
+            access_token: str,
+            client_id: str,
+            client_secret: str,
+            expiry: int,
+            refresh_token: str = ''
     ) -> None:
         """
         Store the Monzo credentials.

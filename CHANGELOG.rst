@@ -4,6 +4,7 @@ Change Log
 **1.0.0**
 
 - Updated pre commit packages to current latest.
+- Removed echo handler
 
 **0.3.0**
 

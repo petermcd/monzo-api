@@ -1,7 +1,7 @@
 {
-  "status_code": 200,
-  "headers": {},
-  "data": {
-    "webhooks": []
+  "status_code" : 200,
+  "headers" : {},
+  "data" : {
+    "webhooks" : []
   }
 }

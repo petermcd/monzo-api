@@ -29,10 +29,10 @@ FEED_ITEM_PARAMS = {
 
 class FeedItem(Monzo):
     """
-    Class to create  feed items.
+    Class to create feed items.
 
-    Class provides the ability for creating feed items on a Monzo account. To accomplish this the create class
-    method should be utilised.
+    Class provides the ability for creating feed items on a Monzo account. To accomplish this the create class  method
+    should be utilised.
     """
 
     __slots__ = [
@@ -43,12 +43,12 @@ class FeedItem(Monzo):
     ]
 
     def __init__(
-        self,
-        auth: Authentication,
-        account_id: str,
-        feed_type: str,
-        params: Dict[str, str],
-        url: str = '',
+            self,
+            auth: Authentication,
+            account_id: str,
+            feed_type: str,
+            params: Dict[str, str],
+            url: str = '',
     ):
         """
         Initialize FeedItem.
@@ -107,12 +107,12 @@ class FeedItem(Monzo):
 
     @classmethod
     def create(
-        cls,
-        auth: Authentication,
-        account_id: str,
-        feed_type: str,
-        params: Dict[str, str],
-        url: str = ''
+            cls,
+            auth: Authentication,
+            account_id: str,
+            feed_type: str,
+            params: Dict[str, str],
+            url: str = ''
     ) -> FeedItem:
         """
         Create a new feed item.

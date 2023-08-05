@@ -1,11 +1,11 @@
 {
-  "data": {
-    "account_id": "acc_123ABC",
-    "url": "https://some-url.co.uk"
+  "data" : {
+    "account_id" : "acc_123ABC",
+    "url" : "https://some-url.co.uk"
   },
-  "path": "/webhooks",
-  "timeout": 10,
-  "headers": {
-    "Authorization":  "Bearer abc123"
+  "path" : "/webhooks",
+  "timeout" : 10,
+  "headers" : {
+    "Authorization" : "Bearer abc123"
   }
 }
