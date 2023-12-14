@@ -43,6 +43,21 @@ class Handler(Storage):
         self._expiry = expiry
         self._refresh_token = 'ijk012'
 
+    def fetch(self) -> Dict[str, Union[int, str]]:
+        """
+        Fetch Monzo credentials previously stored.
+
+        Returns:
+            Dictionary containing access token, expiry and refresh token
+        """
+        return {
+            'access_token': self._access_token,
+            'client_id': self._client_id,
+            'client_secret': self._client_secret,
+            'expiry': self._expiry,
+            'refresh_token': self._refresh_token
+        }
+
     def store(
             self,
             access_token: str,
@@ -66,18 +81,3 @@ class Handler(Storage):
         self._client_secret = client_secret
         self._expiry = expiry
         self._refresh_token = refresh_token
-
-    def fetch(self) -> Dict[str, Union[int, str]]:
-        """
-        Fetch Monzo credentials previously stored.
-
-        Returns:
-            Dictionary containing access token, expiry and refresh token
-        """
-        return {
-            'access_token': self._access_token,
-            'client_id': self._client_id,
-            'client_secret': self._client_secret,
-            'expiry': self._expiry,
-            'refresh_token': self._refresh_token
-        }
