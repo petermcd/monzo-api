@@ -1,12 +1,12 @@
 """Class to allow authentication on the Monzo API."""
 import logging
 import os
+import secrets
 from pathlib import Path, PurePath
 from tempfile import gettempdir
 from time import time
 from typing import List
 
-from monzo import helpers
 from monzo.exceptions import MonzoAuthenticationError, MonzoError, MonzoHTTPError
 from monzo.handlers.storage import Storage
 from monzo.httpio import DEFAULT_TIMEOUT, REQUEST_RESPONSE_TYPE, HttpIO
@@ -221,7 +221,7 @@ class Authentication(object):
         tmp_file_path = PurePath(gettempdir(), tmp_file_name)
         if not Path(tmp_file_path).is_file():
             with open(tmp_file_path, 'w') as fh:
-                state_token = helpers.generate_random_token(length=64)
+                state_token = secrets.token_urlsafe(64)
                 fh.write(state_token)
                 fh.flush()
         with open(tmp_file_path, 'r') as fh:
