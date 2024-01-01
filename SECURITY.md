@@ -6,12 +6,10 @@ Supported Versions
 
 At present the following versions are supported for security updates:
 
-
-| Version  | Supported          | Notes                                                         |
-|----------|--------------------|---------------------------------------------------------------|
-| < 0.0.7  | :x:                | Previous version contained a packaging issue and are useless. |
-| < 1.0.0  | :x:                | Anything prior to v1.0.0 is now considered pre release.       |
-| >= 1.0.0 | :white_check_mark: |                                                               |
+| Version  | Supported          | Notes                        |
+|----------|--------------------|------------------------------|
+| < 1.0.0  | :x:                | Niow considered pre-release. |
+| >= 1.0.0 | :white_check_mark: |                              |
 
 Reporting a Vulnerability
 -------------------------------------
