@@ -27,8 +27,8 @@ class Account(Monzo):
     """
     Class to manage accounts.
 
-    Class provides methods to fetch accounts and related information. To properly utilise the
-    class the fetch class method should be utilised.
+    Class provides methods to fetch accounts and related information. To properly utilise the class the fetch class
+    method should be utilised.
     """
 
     __slots__ = ['_account_id', '_auth', '_balance', '_created', '_description', '_has_balance', '_closed']
@@ -38,6 +38,7 @@ class Account(Monzo):
         Initialize Account.
 
         Args:
+            auth: Monzo authentication object
             account_id: ID of the account
             description: Description of the account
             created: Date and time the account was created

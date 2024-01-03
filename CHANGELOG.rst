@@ -1,6 +1,11 @@
 Change Log
 =====================================
 
+**1.0.0**
+
+- Updated pre commit packages to current latest.
+- Removed echo handler
+
 **0.3.0**
 
 - Added the ability to continually fetch a new balance rather than only the cached vale (fetch_balance())

@@ -1,7 +1,7 @@
 Basic API Calls
 =====================================
 
-All API calls in the package take the same form, therefore following this
+All API calls in the package take the same form, therefore, following this
 tutorial should help you understand how the package works.
 
 For this tutorial we are going to select all accounts that we have in Monzo.

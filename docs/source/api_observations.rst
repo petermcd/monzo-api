@@ -26,7 +26,7 @@ Transaction Merchants
 
 As part of the returned data you are provided with the merchant ID. This can be
 expanded to include further information. Merchant information is not present
-on the following type of transactions:
+on the following types of transactions:
 
 * Bank transfers
 * Transfers between pots and the main account

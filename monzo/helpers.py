@@ -1,24 +1,5 @@
 """Helper functions."""
-import random
-import string
 from datetime import datetime
-
-
-def generate_random_token(length: int = 64, include_punctuation: bool = False) -> str:
-    """
-    Create a random token of the given length.
-
-    Args:
-        length: The length of the required random string
-        include_punctuation: True if punctuation should be included
-
-    Returns:
-        Random string of the given length
-    """
-    letters = string.ascii_lowercase + string.ascii_uppercase + string.digits
-    if include_punctuation:
-        letters += string.punctuation
-    return ''.join(random.choice(letters) for _ in range(length))
 
 
 def create_date(date_str: str) -> datetime:

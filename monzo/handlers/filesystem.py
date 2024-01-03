@@ -19,13 +19,28 @@ class FileSystem(Storage):
         """
         self._file = file
 
+    def fetch(self) -> Dict[str, Union[int, str]]:
+        """
+        Fetch Monzo credentials previously stored.
+
+        Returns:
+            Dictionary containing access token, expiry and refresh token
+        """
+        try:
+            with open(self._file, 'r') as handler:
+                content = loads(handler.read())
+        except FileNotFoundError:
+            content = {}
+
+        return content
+
     def store(
-        self,
-        access_token: str,
-        client_id: str,
-        client_secret: str,
-        expiry: int,
-        refresh_token: str = ''
+            self,
+            access_token: str,
+            client_id: str,
+            client_secret: str,
+            expiry: int,
+            refresh_token: str = ''
     ) -> None:
         """
         Store the Monzo credentials.
@@ -46,18 +61,3 @@ class FileSystem(Storage):
         }
         with open(self._file, 'w') as handler:
             handler.write(dumps(content))
-
-    def fetch(self) -> Dict[str, Union[int, str]]:
-        """
-        Fetch Monzo credentials previously stored.
-
-        Returns:
-            Dictionary containing access token, expiry and refresh token
-        """
-        try:
-            with open(self._file, 'r') as handler:
-                content = loads(handler.read())
-        except FileNotFoundError:
-            content = {}
-
-        return content

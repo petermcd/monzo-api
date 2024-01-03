@@ -20,25 +20,25 @@ class TestHttpIO(object):
 
     @pytest.mark.parametrize("endpoint,http_method,data_filename,response_filename,extra_data", [
         (
-            FeedItem,
-            'post',
-            'FeedItem',
-            'FeedItem',
-            {
-                'account_id': 'acc_123ABC',
-                'feed_type': 'basic',
-                'params': {'title': 'My Alert', 'image_url': 'https://some-url.co.uk/image.jpg'},
-            }
+                FeedItem,
+                'post',
+                'FeedItem',
+                'FeedItem',
+                {
+                    'account_id': 'acc_123ABC',
+                    'feed_type': 'basic',
+                    'params': {'title': 'My Alert', 'image_url': 'https://some-url.co.uk/image.jpg'},
+                }
         ),
         (
-            Webhook,
-            'post',
-            'WebhooksCreate',
-            'WebhooksCreated',
-            {
-                'account_id': 'acc_123ABC',
-                "url": 'https://some-url.co.uk',
-            },
+                Webhook,
+                'post',
+                'WebhooksCreate',
+                'WebhooksCreated',
+                {
+                    'account_id': 'acc_123ABC',
+                    "url": 'https://some-url.co.uk',
+                },
         )
     ])
     def test_create_payload(
@@ -94,11 +94,11 @@ class TestHttpIO(object):
 
     @pytest.mark.parametrize("endpoint,http_method,data_filename,response_filename,webhook_id", [
         (
-            Webhook,
-            'delete',
-            'WebhooksDelete',
-            'WebhooksDeleted',
-            'webhook_123ABC',
+                Webhook,
+                'delete',
+                'WebhooksDelete',
+                'WebhooksDeleted',
+                'webhook_123ABC',
         )
     ])
     def test_delete_webhook_payload(
@@ -275,19 +275,19 @@ class TestHttpIO(object):
         'endpoint,http_method,data_filename,response_filename,transaction_id,external_id,transaction_total,'
         + 'transaction_currency,extra_data', [
             (
-                Receipt,
-                'put',
-                'ReceiptCreate',
-                'ReceiptCreated',
-                'tx_123ABC',
-                '123ABC',
-                665,
-                'GBP',
-                {
-                    'items': [
-                        ReceiptItem(description='testing receipts', amount=665, currency='GBP', quantity=1),
-                    ],
-                },
+                    Receipt,
+                    'put',
+                    'ReceiptCreate',
+                    'ReceiptCreated',
+                    'tx_123ABC',
+                    '123ABC',
+                    665,
+                    'GBP',
+                    {
+                        'items': [
+                            ReceiptItem(description='testing receipts', amount=665, currency='GBP', quantity=1),
+                        ],
+                    },
             ),
         ]
     )

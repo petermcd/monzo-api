@@ -101,7 +101,7 @@ class Attachment(Monzo):
         Returns:
             Attachment file type
         """
-        return self._transaction_id
+        return self._file_type
 
     @property
     def created(self) -> datetime:
@@ -126,10 +126,10 @@ class Attachment(Monzo):
 
     @classmethod
     def create_attachment(
-        cls,
-        auth: Authentication,
-        transaction_id: str,
-        url: str
+            cls,
+            auth: Authentication,
+            transaction_id: str,
+            url: str
     ) -> Attachment:
         """
         Create a new image attachment.

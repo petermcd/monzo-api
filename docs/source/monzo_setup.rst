@@ -9,25 +9,25 @@ The following tutorial will guide you through creating credentials for your acco
 Logging In
 -------------------------------------
 
-To start with we have to log into the Monzo developer system, this can be found
+To start with, we have to log into the Monzo developer system, this can be found
 at `https://developers.monzo.com/ <https://developers.monzo.com/>`_.
 
-On visiting this page you will find a "Sign in with your Monzo Account"
+On visiting this page you will find a "Sign in with your Monzo Account" button.
 
 .. image:: images/sign-in-1.png
   :width: 400
   :alt: Monzo sign in step one
 
 Once you have clicked on this link you will be presented with another page
-inviting you to log in. On this page click on "Continue to login"
+inviting you to log in. On this page click on the "Continue to login" button.
 
 .. image:: images/sign-in-2.png
   :width: 400
   :alt: Monzo sign in step two
 
 You will now be asked to enter your email address, you need to enter the email
-address associated with your account. Once entered click "Submit" and you will be
-presented with the following page:
+address associated with your account. Once entered click on the "Submit" button and
+you will be presented with the following page:
 
 .. image:: images/sign-in-3.png
   :width: 400
@@ -40,7 +40,7 @@ It is now time to check your email, you should have received an email containing
   :alt: Monzo sign in email
 
 You should click on the "Log Into Monzo" link. This will now take you back to
-https://developers.monzo.com but you will now be logged in. HOWEVER you wil
+https://developers.monzo.com but you will now be logged in. HOWEVER, you will
 receive an alert on screen similar to the following:
 
 .. image:: images/sign-in-alert.png
@@ -48,7 +48,7 @@ receive an alert on screen similar to the following:
   :alt: Monzo sign in alert
 
 Although we have successfully logged in, we have not authorised the token this
-processed to have full access to your account. To complete authorisation we
+process created to have full access to your account. To complete authorisation we
 now need to go to the Monzo app where you will find an alert, clicking on the alert
 will display a message such as the following:
 
@@ -58,15 +58,15 @@ will display a message such as the following:
 
 To be able to use the developer interface properly you will need to select approve.
 
-You have now successfully logged into the Monzo developer forum and granted
+You have now successfully logged into the Monzo developer dashboard and granted
 the relevant permissions. We can now move onto creating an API client.
 
 Creating A Client
 -------------------------------------
 
-Now that we are fully logged in we can create the API client. To start with click
+Now that we are fully logged in we can create the API client. To start with, click
 the client link in the top right hand side. You should now see a list of existing
-clients, albeit it an empty list.
+clients, albeit an empty list if you have not created one before.
 
 .. image:: images/create-client-1.png
   :width: 400
@@ -88,7 +88,7 @@ the project it is being used on as you can have multiple clients.
 
 **Logo URL**
 
-This can e left blank
+This can be left blank
 
 **Redirect URLs**
 
@@ -108,7 +108,7 @@ Unless you are only going to utilise the API for a quick task you should select
 circumstances a token will expire, a refresh token will allow access to be renewed.
 
 Now that we have completed the form you can click "Submit". Once submitted you
-will be presented with a client list again, this time however there will be one
+will be presented with a client list again, this time, however, there will be one
 entry:
 
 .. image:: images/create-client-3.png
@@ -122,7 +122,7 @@ If you now click on the new entry you will be presented with details such as:
   :alt: Monzo Client Details
 
 From this page we need to take three pieces of information (the values in the above
-screenshot has been redacted, make sure you also keep yours secret):
+screenshot have been redacted, make sure you also keep yours secret):
 
 - Client ID
 - Owner ID

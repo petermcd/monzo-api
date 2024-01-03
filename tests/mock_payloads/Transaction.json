@@ -1,10 +1,10 @@
 {
-  "data": {
-    "account_id": "acc_123ABC"
+  "data" : {
+    "account_id" : "acc_123ABC"
   },
-  "path": "/transactions",
-  "timeout": 10,
-  "headers": {
-    "Authorization":  "Bearer abc123"
+  "path" : "/transactions",
+  "timeout" : 10,
+  "headers" : {
+    "Authorization" : "Bearer abc123"
   }
 }

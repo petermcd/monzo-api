@@ -9,8 +9,7 @@ class WhoAmI(Monzo):
     """
     Class to manage WhoAmI.
 
-    Class provides access to the whoami endpoint. This is usually used to test connectivity to the
-    API
+    Class provides access to the whoami endpoint. This is usually used to test connectivity to the API
     """
 
     __slots__ = ['_authenticated', '_client_id', '_user_id']
@@ -63,7 +62,7 @@ class WhoAmI(Monzo):
     @classmethod
     def fetch(cls, auth: Authentication) -> WhoAmI:
         """
-        Implement and instantiates a WhoAmI object.
+        Implement and instantiates the WhoAmI object.
 
         Args:
              auth: Monzo authentication object

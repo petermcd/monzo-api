@@ -5,6 +5,6 @@
   "path": "/balance",
   "timeout": 10,
   "headers": {
-    "Authorization":  "Bearer abc123"
+    "Authorization": "Bearer abc123"
   }
 }

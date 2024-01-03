@@ -1,13 +1,13 @@
 """Class to allow authentication on the Monzo API."""
 import logging
 import os
+import secrets
 from pathlib import Path, PurePath
 from tempfile import gettempdir
 from time import time
 from typing import List
 
-from monzo import helpers
-from monzo.exceptions import MonzoAuthenticationError, MonzoError
+from monzo.exceptions import MonzoAuthenticationError, MonzoError, MonzoHTTPError
 from monzo.handlers.storage import Storage
 from monzo.httpio import DEFAULT_TIMEOUT, REQUEST_RESPONSE_TYPE, HttpIO
 
@@ -19,8 +19,8 @@ class Authentication(object):
     """
     Class to manage authentication.
 
-    Class provides methods to authenticate to the Monzo API and to make relevant queries. An instantiated
-    copy of this class is usually passed to each action
+    Class provides methods to authenticate to the Monzo API and to make relevant queries. An instantiated copy of this
+    class is usually passed to each action
     """
 
     __slots__ = [
@@ -111,6 +111,9 @@ class Authentication(object):
 
         Returns:
             Dictionary containing headers and data from query response
+
+        Raises:
+            MonzoHTTPError: On using invalid method
         """
         if self._access_token and self._access_token_expiry - time() < 0:
             self.refresh_access()
@@ -118,19 +121,14 @@ class Authentication(object):
             data = {}
         if headers is None:
             headers = {}
-        conn = HttpIO(MONZO_API_URL)
-        connection = conn.get
-        method = method.lower()
-        if method == 'delete':
-            connection = conn.delete
-        elif method == 'patch':
-            connection = conn.patch
-        elif method == 'post':
-            connection = conn.post
-        elif method == 'put':
-            connection = conn.put
         if authenticated:
             headers['Authorization'] = f'Bearer {self.access_token}'
+        conn = HttpIO(MONZO_API_URL)
+        method = method.lower()
+        try:
+            connection = getattr(conn, method)
+        except AttributeError as exc:
+            raise MonzoHTTPError('Specified HTTP method is not supported') from exc
         return connection(path=path, data=data, headers=headers, timeout=timeout)
 
     def refresh_access(self) -> None:
@@ -176,7 +174,7 @@ class Authentication(object):
         Property for access token expiry.
 
         Returns:
-            Access token expiry as an epoch
+            Access token expiry as an epoch if it exists otherwise 0
         """
         return self._access_token_expiry or 0
 
@@ -223,7 +221,7 @@ class Authentication(object):
         tmp_file_path = PurePath(gettempdir(), tmp_file_name)
         if not Path(tmp_file_path).is_file():
             with open(tmp_file_path, 'w') as fh:
-                state_token = helpers.generate_random_token(length=64)
+                state_token = secrets.token_urlsafe(64)
                 fh.write(state_token)
                 fh.flush()
         with open(tmp_file_path, 'r') as fh:

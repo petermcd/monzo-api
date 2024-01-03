@@ -6,29 +6,20 @@ Supported Versions
 
 At present the following versions are supported for security updates:
 
-.. list-table:: Supported Versions
-    :widths: 25 25 50
-    :header-rows: 1
-
-    * - Version
-      - Support Status
-      - Notes
-    * - < 0.0.7
-      - No
-      - Previous version contained a packaging issue and are useless.
-    * - >= 0.0.7
-      - Yes
-      -
+| Version  | Supported          | Notes                        |
+|----------|--------------------|------------------------------|
+| < 1.0.0  | :x:                | Niow considered pre-release. |
+| >= 1.0.0 | :white_check_mark: |                              |
 
 Reporting a Vulnerability
 -------------------------------------
 
-Although this package is intended for locally hosted applications fixing
+Although this package is intended for locally hosted applications, fixing
 security vulnerabilities is still important, especially when finance is
 involved.
 
 In the event such an issue has been identified please open a
-`Github Issue <https://github.com/petermcd/monzo-api/issues>`_
+[GitHub Issue](https://github.com/petermcd/monzo-api/issues>)
 information required.
 
 For more sensitive information, for example exploitation details should be
