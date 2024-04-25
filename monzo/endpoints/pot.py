@@ -46,8 +46,8 @@ class Pot(Monzo):
             created: datetime,
             updated: datetime,
             deleted: bool,
-            goal_amount: int,
-            round_up_multiplier: int,
+            goal_amount: int | None,
+            round_up_multiplier: int | None,
             has_round_up: bool,
             pot_type: str,
             locked: bool,
@@ -164,22 +164,22 @@ class Pot(Monzo):
         return self._updated
 
     @property
-    def goal_amount(self) -> int:
+    def goal_amount(self) -> int | None:
         """
         Property for the pots goal amount.
 
         Returns:
-            int object for the pots goal amount
+            int object for the pots goal amount else None object if goal is disabled
         """
         return self._goal_amount
 
     @property
-    def round_up_multiplier(self) -> int:
+    def round_up_multiplier(self) -> int | None:
         """
         Property for the pots round up multiplier.
 
         Returns:
-            int object for the pots round up multiplier
+            int object for the pots round up multiplier else None object if roundup is disabled
         """
         return self._round_up_multiplier
 
@@ -219,7 +219,7 @@ class Pot(Monzo):
         Property if the pot is locked'.
 
         Returns:
-            bool object if the pot is locked
+            bool object if the pot is locked else None object if the pot isn't locked
         """
         return self._locked_until
 
@@ -286,7 +286,7 @@ class Pot(Monzo):
                 created=create_date(pot_item['created']),
                 updated=create_date(pot_item['updated']),
                 deleted=pot_item['deleted'],
-                goal_amount=pot_item['goal_amount'],
+                goal_amount=pot_item.get('goal_amount', None),
                 round_up_multiplier=pot_item['round_up_multiplier'],
                 has_round_up=pot_item['round_up'],
                 pot_type=pot_item['type'],
