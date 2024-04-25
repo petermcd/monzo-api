@@ -51,7 +51,7 @@ class Pot(Monzo):
             has_round_up: bool,
             pot_type: str,
             locked: bool,
-            locked_until: datetime
+            locked_until: datetime | None,
     ):
         """
         Initialize Pot.
@@ -214,7 +214,7 @@ class Pot(Monzo):
         return self._locked
 
     @property
-    def locked_until(self) -> datetime:
+    def locked_until(self) -> datetime | None:
         """
         Property if the pot is locked'.
 
@@ -273,6 +273,9 @@ class Pot(Monzo):
         res = auth.make_request(path='/pots', data=data)
         pot_list = []
         for pot_item in res['data']['pots']:
+            locked_until = pot_item.get('locked_until', None)
+            if locked_until:
+                locked_until = create_date(locked_until)
             pot = Pot(
                 auth=auth,
                 pot_id=pot_item['id'],
@@ -288,7 +291,7 @@ class Pot(Monzo):
                 has_round_up=pot_item['round_up'],
                 pot_type=pot_item['type'],
                 locked=pot_item['locked'],
-                locked_until=create_date(pot_item['locked_until']),
+                locked_until=locked_until,
             )
             pot_list.append(pot)
         return pot_list
