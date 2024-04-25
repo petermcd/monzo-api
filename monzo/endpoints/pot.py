@@ -30,7 +30,7 @@ class Pot(Monzo):
         '_goal_amount',
         '_has_round_up',
         '_round_up_multiplier',
-        '_type',
+        '_pot_type',
         '_locked',
         '_locked_until',
     ]
@@ -78,7 +78,7 @@ class Pot(Monzo):
         self._goal_amount = goal_amount
         self._round_up_multiplier = round_up_multiplier
         self._has_round_up = has_round_up
-        self._type = pot_type
+        self._pot_type = pot_type
         self._locked = locked
         self._locked_until = locked_until
         super().__init__(auth=auth)
@@ -194,14 +194,14 @@ class Pot(Monzo):
         return self._has_round_up
 
     @property
-    def type(self) -> str:
+    def pot_type(self) -> str:
         """
         Property for the pot's type'.
 
         Returns:
             str object for the pot's type
         """
-        return self._type
+        return self._pot_type
 
     @property
     def locked(self) -> bool:
