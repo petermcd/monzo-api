@@ -1,6 +1,10 @@
 Change Log
 =====================================
 
+**1.1.0**
+
+- Updated pots with round up, locking and  goal information (thanks @rippleFCL)
+
 **1.0.0**
 
 - Updated pre commit packages to current latest.
