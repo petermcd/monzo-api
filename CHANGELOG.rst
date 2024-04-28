@@ -1,6 +1,10 @@
 Change Log
 =====================================
 
+**1.2.0**
+
+- Updated transactions to expand pagination options
+
 **1.1.0**
 
 - Updated pots with round up, locking and  goal information (thanks @rippleFCL)

@@ -514,9 +514,10 @@ class Transaction(Monzo):
             cls,
             auth: Authentication,
             account_id: str,
-            since: Optional[datetime] = None,
+            since: Optional[Union[datetime, str]] = None,
             before: Optional[datetime] = None,
             expand=None,
+            limit: int = 30
     ) -> List[Transaction]:
         """
         Fetch a list of transaction.
@@ -524,9 +525,10 @@ class Transaction(Monzo):
         Args:
             auth: Monzo authentication object
             account_id: ID of the account to fetch transactions for
-            since: Datetime object to identify when returned transactions should be made from
+            since: Datetime object or transaction ID to identify when returned transactions should be made from
             before: Datetime object to identify when returned transactions should be made before
             expand: List if fields to expand on
+            limit: Maximum number of transactions to fetch
 
         Returns:
             List of transaction
@@ -535,12 +537,13 @@ class Transaction(Monzo):
             expand = []
         data = {
             'account_id': account_id,
+            'limit': limit,
         }
         if expand:
             # TODO fix so that this works on the list
             data['expand'] = expand[0]
         if since:
-            data['since'] = format_date(since)
+            data['since'] = format_date(since) if isinstance(since, datetime) else since
         if before:
             data['before'] = format_date(before)
         path = '/transactions'
