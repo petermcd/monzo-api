@@ -29,6 +29,5 @@ used on a private server.
    modules
    api_observations
    developers
-   todo
    changelog
    license
