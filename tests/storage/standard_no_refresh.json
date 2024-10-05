@@ -1,0 +1,7 @@
+{
+  "access_token": "token_123",
+  "client_id": "id_123",
+  "client_secret": "secret_123",
+  "expiry": 1234,
+  "refresh_token": ""
+}

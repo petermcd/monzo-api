@@ -1,3 +1,12 @@
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[cosmic-ray]
+module-path = "monzo"
+timeout = 10.0
+excluded-modules = []
+test-command = "pytest"
+
+[cosmic-ray.distributor]
+name = "local"
