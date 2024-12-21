@@ -361,9 +361,9 @@ class Receipt(Monzo):
         receipt_data = res['data']['receipt']
         receipt_items: List[ReceiptItem] = []
         for item in receipt_data['items']:
-            quantity = item['quantity'] if 'quantity' in item else None
-            tax = item['tax'] if 'tax' in item else None
-            unit = item['unit'] if 'unit' in item else None
+            quantity = float(item['quantity']) if 'quantity' in item else 0.0
+            tax = item['tax'] if 'tax' in item else 0
+            unit = item['unit'] if 'unit' in item else ''
             receipt_item: ReceiptItem = ReceiptItem(
                 description=item['description'],
                 amount=item['amount'],
@@ -374,9 +374,9 @@ class Receipt(Monzo):
             )
 
             for sub_item in item['sub_items']:
-                sub_item_quantity = sub_item['quantity'] if 'quantity' in sub_item else None
-                sub_item_tax = sub_item['tax'] if 'tax' in sub_item else None
-                sub_item_unit = sub_item['unit'] if 'unit' in sub_item else None
+                sub_item_quantity = sub_item['quantity'] if 'quantity' in sub_item else 0.0
+                sub_item_tax = sub_item['tax'] if 'tax' in sub_item else 0
+                sub_item_unit = sub_item['unit'] if 'unit' in sub_item else ''
                 receipt_sub_item = ReceiptItem(
                     description=sub_item['description'],
                     amount=sub_item['amount'],
