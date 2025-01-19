@@ -517,6 +517,7 @@ class Transaction(Monzo):
             since: Optional[datetime] = None,
             before: Optional[datetime] = None,
             expand=None,
+            limit=30
     ) -> List[Transaction]:
         """
         Fetch a list of transaction.
@@ -543,6 +544,8 @@ class Transaction(Monzo):
             data['since'] = format_date(since)
         if before:
             data['before'] = format_date(before)
+        if limit:
+            data['limit'] = min(limit, 100)
         path = '/transactions'
         res = auth.make_request(path=path, data=data)
         transactions = []
