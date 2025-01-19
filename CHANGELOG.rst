@@ -3,12 +3,18 @@ Change Log
 
 **1.1.0**
 
-- Updated pots with round up, locking and  goal information (thanks @rippleFCL)
+- Updated transaction to provide a limit on the number of transactions returned (thanks tomii-dev:main).
+- Resolved pytest issues.
+- Resolved Github workflows having an incorrect branch name.
+
+**1.1.0**
+
+- Updated pots with round up, locking and  goal information (thanks @rippleFCL).
 
 **1.0.0**
 
 - Updated pre commit packages to current latest.
-- Removed echo handler
+- Removed echo handler.
 
 **0.3.0**
 
