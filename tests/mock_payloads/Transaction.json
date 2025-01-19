@@ -1,6 +1,7 @@
 {
   "data" : {
-    "account_id" : "acc_123ABC"
+    "account_id" : "acc_123ABC",
+    "limit" : 30
   },
   "path" : "/transactions",
   "timeout" : 10,
