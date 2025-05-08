@@ -132,7 +132,7 @@ class Transaction(Monzo):
     @property
     def amount_is_pending(self) -> bool:
         """
-        Property to identify if amount is pending.
+        Property to identify if the amount is pending.
 
         Returns:
             True if transaction is pending
@@ -162,10 +162,10 @@ class Transaction(Monzo):
     @property
     def can_add_to_tab(self) -> bool:
         """
-        Property to identify if transaction can be added to tab.
+        Property to identify if transaction can be added to the tab.
 
         Returns:
-            True if transaction can be added to tab otherwise False
+            True if transaction can be added to the tab otherwise False
         """
         return self._can_add_to_tab
 
@@ -222,7 +222,7 @@ class Transaction(Monzo):
     @property
     def category(self) -> str:
         """
-        Property to identify category a transaction is a member of.
+        Property to identify the category a transaction is a member of.
 
         Returns:
             Category a transaction is a member of
@@ -465,12 +465,12 @@ class Transaction(Monzo):
         """
         Annotate the transaction.
 
-        Functionality on Monzo currently appears to be broken when using custom keys, this works with the Notes key
-        however will override the existing notes.
+        Functionality on Monzo currently appears to be broken when using custom keys, this works with the Notes key,
+        however, will override the existing notes.
 
         Args:
             key: Key for the annotation.
-            value: Value for annotation, if left blank it will remove the annotation.
+            value: Value for annotation, if left blank, it will remove the annotation.
         """
         path = f'/transactions/{self.transaction_id}'
         data = {
@@ -493,7 +493,7 @@ class Transaction(Monzo):
         Args:
             auth: Monzo authentication object
             transaction_id: Transaction ID for the transaction to fetch
-            expand_on: Field to expand. must be contained in EXPAND_VALID_VALUES
+            expand_on: Field to expand. Must be contained in EXPAND_VALID_VALUES
 
         Returns:
             Transaction if it exists otherwise None
@@ -517,7 +517,7 @@ class Transaction(Monzo):
             since: Optional[datetime] = None,
             before: Optional[datetime] = None,
             expand=None,
-            limit=30
+            limit=30,
     ) -> List[Transaction]:
         """
         Fetch a list of transaction.
@@ -528,6 +528,7 @@ class Transaction(Monzo):
             since: Datetime object to identify when returned transactions should be made from
             before: Datetime object to identify when returned transactions should be made before
             expand: List if fields to expand on
+            limit: Number of transactions to return per request, max 100, default 30.
 
         Returns:
             List of transaction
@@ -545,7 +546,7 @@ class Transaction(Monzo):
         if before:
             data['before'] = format_date(before)
         if limit:
-            data['limit'] = min(limit, 100)
+            data['limit'] = str(min(limit, 100))
         path = '/transactions'
         res = auth.make_request(path=path, data=data)
         transactions = []

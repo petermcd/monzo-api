@@ -86,7 +86,7 @@ class Attachment(Monzo):
     @property
     def url(self) -> str:
         """
-        Property to output attachment URL.
+        Property to output the attachment URL.
 
         Returns:
             Attachment URL
@@ -96,7 +96,7 @@ class Attachment(Monzo):
     @property
     def file_type(self) -> str:
         """
-        Property to output attachment file type.
+        Property to output an attachment file type.
 
         Returns:
             Attachment file type
@@ -106,7 +106,7 @@ class Attachment(Monzo):
     @property
     def created(self) -> datetime:
         """
-        Property to output attachment creation time.
+        Property to output the attachment creation time.
 
         Returns:
             Attachment creation datetime
@@ -134,7 +134,7 @@ class Attachment(Monzo):
         """
         Create a new image attachment.
 
-        Creates an image attachment, if the URL is a file system URL the file is uploaded, otherwise the URL is used.
+        Creates an image attachment if the URL is a file system URL the file is uploaded, otherwise the URL is used.
 
         Args:
             auth: Monzo authentication object

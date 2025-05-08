@@ -31,8 +31,8 @@ class FeedItem(Monzo):
     """
     Class to create feed items.
 
-    Class provides the ability for creating feed items on a Monzo account. To accomplish this the create class  method
-    should be utilised.
+    Class provides the ability to create feed items on a Monzo account. To achieve this, the create class method
+    should be used.
     """
 
     __slots__ = [

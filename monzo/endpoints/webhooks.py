@@ -11,7 +11,7 @@ class Webhook(Monzo):
     """
     Class to manage webhooks.
 
-    Class provides methods create, fetch and delete webhooks.
+    Class provides methods to create, fetch and delete webhooks.
     """
 
     __slots__ = ['_account_id', '_url', '_webhook_id']

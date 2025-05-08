@@ -232,7 +232,7 @@ class Authentication(object):
         """
         Exchange an authorization code for an access token.
 
-        Args
+        Args:
             authorization_token: Authorization token as received from Monzo
 
         Raises:

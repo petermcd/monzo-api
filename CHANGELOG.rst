@@ -1,7 +1,14 @@
 Change Log
 =====================================
 
-**1.1.0**
+**1.2.1**
+
+- Updated errors in documentation and method definitions.
+- Updated pre-commit hooks.
+- General comment tidy up.
+- Added Python 3.13 as a test environment.
+
+**1.2.0**
 
 - Updated transaction to provide a limit on the number of transactions returned (thanks tomii-dev:main).
 - Resolved pytest issues.

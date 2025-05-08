@@ -43,6 +43,7 @@ class TestEndPoints(object):
             expected_account_id: Expected account ID
             expected_account_type: Expected account type
             expected_description: str: Expected account description
+            mocker: Pytest mocker fixture
         """
         mocker.patch.object(
             authentication.HttpIO,
@@ -96,6 +97,7 @@ class TestEndPoints(object):
             expected_currency: Expected account currency
             expected_spend_today: Expected account spend today
             expected_total_balance: Expected account balance total
+            mocker: Pytest mocker fixture
         """
         mocker.patch.object(
             authentication.HttpIO,
@@ -165,6 +167,7 @@ class TestEndPoints(object):
             expected_receipt_taxes: Expected list of taxes
             expected_receipt_total: Expected total for receipt
             expected_transaction_id: Expected transaction ID
+            mocker: Pytest mocker fixture
         """
         mocker.patch.object(
             authentication.HttpIO,
@@ -336,7 +339,7 @@ class TestEndPoints(object):
             expected_transaction_id: Expected transaction ID
             expected_updated: Expected updated
             expected_user_id: Expected user ID
-            mocker: mocker fixture
+            mocker: Pytest mocker fixture
         """
         mocker.patch.object(
             authentication.HttpIO,
@@ -422,7 +425,8 @@ class TestEndPoints(object):
             expected_account_id: Expected account ID
             expected_url: Expected URL
             expected_webhook_id: Expected webhook ID
-            mocker: mocker fixture
+            expected_count: Expected count of webhooks
+            mocker: Pytest mocker fixture
         """
         mocker.patch.object(
             authentication.HttpIO,
@@ -475,8 +479,8 @@ class TestEndPoints(object):
             mock_file: File to fetch the mock response from
             expected_authenticated: Expected value for authenticated
             expected_client_id: expected client id
-            expected_user_id expected user id
-            mocker: mocker fixture
+            expected_user_id: expected user id
+            mocker: Pytest mocker fixture
         """
         mocker.patch.object(
             authentication.HttpIO,
