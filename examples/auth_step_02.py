@@ -1,11 +1,11 @@
-"""Code to handle the seconds stage of authentication."""
+"""Code to handle the second stage of authentication."""
 import sys
 
 from monzo.authentication import Authentication
 from monzo.exceptions import MonzoAuthenticationError, MonzoServerError
 
-client_id = ''  # Client ID obtained when creating Monzo client
-client_secret = ''  # Client secret obtained when creating Monzo client
+client_id = ''  # Client ID obtained when creating a Monzo client
+client_secret = ''  # Client secret obtained when creating a Monzo client
 redirect_uri = 'http://127.0.0.1/monzo'  # URL requests via Monzo will be redirected in a browser
 state = ''  # State random string created when creating the Monzo URL (generated in step 1 and appended to the URL)
 code = ''  # Authorization code from Monzo (this will be in the redirected URL after clicking the link from step 1)
@@ -25,4 +25,4 @@ print(f"access_token = '{monzo.access_token}'")
 print(f'expiry = {monzo.access_token_expiry}')
 print(f"refresh_token = '{monzo.refresh_token}'")
 
-# Now authorise access in the Monzo app
+# Now authorize access from the alert in the Monzo app

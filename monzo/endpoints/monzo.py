@@ -20,7 +20,7 @@ class Monzo(object):
             auth: Monzo authentication object
 
         Raises:
-            MonzoAuthenticationError: On failure to provide object with an access token
+            MonzoAuthenticationError: On failure to provide an object with an access token
         """
         if not auth.access_token:
             raise MonzoAuthenticationError('Endpoint cannot be instantiated without a valid access token')

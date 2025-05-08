@@ -48,7 +48,7 @@ class TestHttpIO(object):
             data_filename: str,
             response_filename: str,
             extra_data: Dict[str, str],
-            mocker
+            mocker,
     ):
         """
         Test the payload httpio would send.
@@ -59,6 +59,7 @@ class TestHttpIO(object):
             data_filename: Filename of the request data
             response_filename: Filename of the response data
             extra_data: Extra parameters for the fetch request
+            mocker: Pytest mocker fixture
         """
         httpio_capture = mocker.patch.object(
             authentication.HttpIO,
@@ -108,7 +109,7 @@ class TestHttpIO(object):
             data_filename: str,
             response_filename: str,
             webhook_id: str,
-            mocker
+            mocker,
     ):
         """
         Test the payload httpio would send.
@@ -119,6 +120,7 @@ class TestHttpIO(object):
             data_filename: Filename of the request data
             response_filename: Filename of the response data
             webhook_id: ID of the webhook to delete
+            mocker: Pytest mocker fixture
         """
         httpio_capture = mocker.patch.object(
             authentication.HttpIO,
@@ -180,6 +182,7 @@ class TestHttpIO(object):
             data_filename: Filename of the request data
             response_filename: Filename of the response data
             extra_data: Extra parameters for the fetch request
+            mocker: Pytest mocker fixture
         """
         httpio_capture = mocker.patch.object(
             authentication.HttpIO,
@@ -234,6 +237,7 @@ class TestHttpIO(object):
             data_filename: Filename of the request data
             response_filename: Filename of the response data
             extra_data: Extra parameters for the fetch request
+            mocker: Pytest mocker fixture
         """
         httpio_capture = mocker.patch.object(
             authentication.HttpIO,
@@ -312,7 +316,12 @@ class TestHttpIO(object):
             http_method: HTTP method the request uses
             data_filename: Filename of the request data
             response_filename: Filename of the response data
+            transaction_id: Dummy transaction ID
+            external_id: External ID for the receipt
+            transaction_total: Total amount of the transaction for the receipt
+            transaction_currency: Currency for the receipt
             extra_data: Extra parameters for the fetch request
+            mocker: Pytest mocker fixture
         """
         httpio_capture = mocker.patch.object(
             authentication.HttpIO,

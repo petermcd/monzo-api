@@ -11,7 +11,7 @@ class TestEndPoints(object):
         Test the logout functionality.
 
         Args:
-            mocker: mocker fixture
+            mocker: Pytest mocker fixture
         """
         httpio_capture = mocker.patch.object(
             authentication.HttpIO,

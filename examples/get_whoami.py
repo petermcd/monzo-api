@@ -3,8 +3,8 @@ from monzo.authentication import Authentication
 from monzo.endpoints.whoami import WhoAmI
 from monzo.exceptions import MonzoError
 
-client_id = ''  # Client ID obtained when creating Monzo client
-client_secret = ''  # Client secret obtained when creating Monzo client
+client_id = ''  # Client ID obtained when creating a Monzo client
+client_secret = ''  # Client secret obtained when creating a Monzo client
 redirect_uri = 'http://127.0.0.1/monzo'  # URL requests via Monzo will be redirected in a browser
 access_token = ''  # access_token retrieved in step 2
 expiry = 0  # access_token_expiry retrieved in step 2

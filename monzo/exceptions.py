@@ -25,7 +25,7 @@ class MonzoHTTPError(MonzoError):
     """
     HTTP error exception.
 
-    Exception to be thrown when HTTP error occurs during an API call
+    Exception to be thrown when an HTTP error occurs during an API call
     """
 
     pass
@@ -55,7 +55,7 @@ class MonzoPermissionsError(MonzoError):
     """
     Permissions error exception.
 
-    The API is logged in but insufficient permissions to perform the query
+    The API is logged in but does not have enough permissions to perform the query
     """
 
     pass
@@ -65,7 +65,7 @@ class MonzoRateError(MonzoError):
     """
     Rate error exception.
 
-    Exception to be thrown when a Monzo advise you are exceeding the rate limit for the API
+    Exception to be thrown when a Monzo advises you are exceeding the rate limit for the API
     """
 
     pass
@@ -75,7 +75,7 @@ class MonzoGeneralError(MonzoError):
     """
     General error exception.
 
-    Exception to be thrown when a general error occurs that do not fit into other exception types
+    Exception to be thrown when a general error occurs that does not fit into other exception types
     """
 
     pass

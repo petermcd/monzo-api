@@ -27,8 +27,8 @@ class Account(Monzo):
     """
     Class to manage accounts.
 
-    Class provides methods to fetch accounts and related information. To properly utilise the class the fetch class
-    method should be utilised.
+    Class provides methods to fetch accounts and related information. To properly use the class, the fetch class
+    method should be used.
     """
 
     __slots__ = ['_account_id', '_auth', '_balance', '_created', '_description', '_has_balance', '_closed']
@@ -84,7 +84,7 @@ class Account(Monzo):
         Fetch the live balance.
 
         This will always carry out an API call to fetch the new balance. If the originally fetched balance is good
-        enough use the balance property.
+        enough, use the balance property.
 
         Returns:
             Balance object
@@ -101,8 +101,8 @@ class Account(Monzo):
         """
         Property for balance.
 
-        If a balance has not been fetched yet this will trigger a fetch, otherwise it will return the already fetched
-        balance. To always fetch the live balance use fetch_balance().
+        If a balance has not been fetched yet, this will trigger a fetch, otherwise it will return the already fetched
+        balance. To always fetch the live balance, use fetch_balance().
 
         Returns:
             Balance object

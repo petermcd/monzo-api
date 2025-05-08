@@ -20,7 +20,7 @@ class WhoAmI(Monzo):
 
         Args:
             auth: Monzo authentication object
-            authenticated: True if user is authenticated on Monzo, otherwise False
+            authenticated: True if the user is authenticated on Monzo, otherwise False
             client_id: API client ID for the user
             user_id: API user ID for the user
         """

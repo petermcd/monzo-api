@@ -19,7 +19,7 @@ class ReceiptItem(object):
     """
     Class for Receipt Items.
 
-    Class to configure receipt items and sub items.
+    Class to configure receipt items and subitems.
     """
 
     __slots__ = (
@@ -47,9 +47,9 @@ class ReceiptItem(object):
         Args:
             description: Item description
             amount: The item amount in pence/cents
-            currency: The currency the item amount is in
-            quantity: The number of this item purchased or for example the weight
-            unit: The unit the quantity is in for example KG
+            currency: The currency the item amount is in using the 3-character code such as GBP
+            quantity: The number of this item purchased or, for example, the weight
+            unit: The unit the quantity is in, for example, KG
             tax: The tax amount in pence/cents for the individual item
         """
         self._amount = amount
@@ -62,7 +62,7 @@ class ReceiptItem(object):
 
     def add_sub_item(self, sub_item: ReceiptItem):
         """
-        Add a sub item to an item. This should not be carried out to a sub item.
+        Add a subitem to an item. This should not be carried out to a subitem.
 
         Args:
             sub_item: Instance of ReceiptItem
@@ -76,7 +76,6 @@ class ReceiptItem(object):
         Returns:
             Object as a dict
         """
-        # TODO remove the need for Any. Easiest time would be when removing support for Python 3.7:x
         item: Any = {
             'amount': self._amount,
             'currency': self._currency,
@@ -96,7 +95,7 @@ class Receipt(Monzo):
     """
     Class to manage Receipts.
 
-    Class provides methods create, fetch and delete receipts.
+    Class provides methods to create, fetch and delete receipts.
     """
 
     __slots__ = (
@@ -120,14 +119,15 @@ class Receipt(Monzo):
             items: List[ReceiptItem],
     ):
         """
-        Initialise Receipt.
+        Initialize Receipt.
 
         Args:
             auth: Monzo authentication object
             transaction_id: ID of the transaction known to Monzo
             external_id: External ID for the receipt
             transaction_total: The total for the transaction on pence/cents
-            transaction_currency: The currency the transaction is in
+            transaction_currency: The currency the transaction is in using the 3-character code such as GBP
+            items: List of ReceiptItem objects for the receipt. This should contain all items for the transaction.
         """
         self._external_id: str = external_id
         self._transaction_id: str = transaction_id
@@ -264,7 +264,7 @@ class Receipt(Monzo):
         Property for the items in a receipt.
 
         Returns:
-            List of receipt items and sub items
+            List of receipt items and subitems
         """
         return self._items
 
@@ -347,7 +347,7 @@ class Receipt(Monzo):
     @classmethod
     def fetch(cls, auth: Authentication, external_id: str) -> List[Receipt]:
         """
-        Fetch receipt with the given external ID.
+        Fetch the receipt with the given external ID.
 
         Args:
             auth: Monzo authentication object

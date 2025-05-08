@@ -66,6 +66,12 @@ class Pot(Monzo):
             created: Date and time the pot was created
             updated: Date and time the pot was updated
             deleted: True if the pot has been deleted otherwise False
+            goal_amount: The target balance for the pot if one exists
+            round_up_multiplier: If a round up is enabled, this is the multiplier applied to the transactions
+            has_round_up: Flag to identify if the pot receives money from transaction round ups
+            pot_type: The type of pot this is
+            locked: Flag to identify if the pot is locked or not
+            locked_until: If a pot is locked, the timestamp for when it will be unlocked
         """
         self._pot_id = pot_id
         self._name = name
@@ -166,17 +172,17 @@ class Pot(Monzo):
     @property
     def goal_amount(self) -> int | None:
         """
-        Property for the pots goal amount.
+        Property for the pot goal amount.
 
         Returns:
-            int object for the pots goal amount else None object if goal is disabled
+            int object for the pot goal amount else None object if the goal is disabled
         """
         return self._goal_amount
 
     @property
     def round_up_multiplier(self) -> int | None:
         """
-        Property for the pots round up multiplier.
+        Property for the pot round up multiplier.
 
         Returns:
             int object for the pots round up multiplier else None object if roundup is disabled
@@ -206,7 +212,7 @@ class Pot(Monzo):
     @property
     def locked(self) -> bool:
         """
-        Property if the pot is locked'.
+        Property to identify if the pot is locked.
 
         Returns:
             bool object if the pot is locked
@@ -216,7 +222,7 @@ class Pot(Monzo):
     @property
     def locked_until(self) -> datetime | None:
         """
-        Property if the pot is locked'.
+        Property to fetch the timestamp for when a pot is unlocked if the pot is locked'.
 
         Returns:
             bool object if the pot is locked else None object if the pot isn't locked
