@@ -19,7 +19,7 @@ security vulnerabilities is still important, especially when finance is
 involved.
 
 In the event such an issue has been identified, please open a
-[GitHub Issue](https://github.com/petermcd/monzo-api/issues>)
+[GitHub Issue](https://github.com/petermcd/monzo-api/issues)
 information required.
 
 For more sensitive information, for example, exploitation details should be
