@@ -546,7 +546,7 @@ class Transaction(Monzo):
         if before:
             data['before'] = format_date(before)
         if limit:
-            data['limit'] = str(min(limit, 100))
+            data['limit'] = min(limit, 100)
         path = '/transactions'
         res = auth.make_request(path=path, data=data)
         transactions = []
