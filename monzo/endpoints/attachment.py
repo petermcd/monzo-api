@@ -202,5 +202,4 @@ class Attachment(Monzo):
             method='POST',
             data=data,
         )
-        #  TODO upload file
         return response['data']['file_url']

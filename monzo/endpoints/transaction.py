@@ -234,8 +234,6 @@ class Transaction(Monzo):
         """
         Property to identify counterparty.
 
-        #TODO identify what counterparty is
-
         Returns:
             Counterparty
         """
@@ -314,12 +312,10 @@ class Transaction(Monzo):
     @property
     def international(self) -> Optional[str]:
         """
-        UNCLEAR.
-
-        #TODO identify what this is
+        UNKNOWN.
 
         Returns:
-            UNCLEAR
+            UNKNOWN
         """
         return self._international
 
@@ -406,12 +402,10 @@ class Transaction(Monzo):
     @property
     def scheme(self) -> str:
         """
-        UNCLEAR.
-
-        #TODO identify what this is
+        UNKNOWN.
 
         Returns:
-            UNCLEAR
+            UNKNOWN
         """
         return self._scheme
 
@@ -449,8 +443,6 @@ class Transaction(Monzo):
     def user_id(self) -> str:
         """
         UNKNOWN.
-
-        #TODO Identify what this is
 
         Returns:
             UNKNOWN
@@ -539,7 +531,6 @@ class Transaction(Monzo):
             'account_id': account_id,
         }
         if expand:
-            # TODO fix so that this works on the list
             data['expand'] = expand[0]
         if since:
             data['since'] = format_date(since)
