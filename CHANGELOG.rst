@@ -1,6 +1,10 @@
 Change Log
 =====================================
 
+**1.3.0**
+
+- Remove support for Python 3.8.
+
 **1.2.1**
 
 - Updated errors in documentation and method definitions.
