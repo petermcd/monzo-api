@@ -39,8 +39,8 @@ documentation from source the following steps can be taken:
 
 .. code-block:: bash
 
-    cd docs
     pip install -e .[docs]
+    cd docs
     sphinx-build -b html source/ build/html
 
 Tagging
