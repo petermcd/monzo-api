@@ -1,6 +1,7 @@
-import pytest
-from urllib.error import HTTPError
 from unittest.mock import patch
+from urllib.error import HTTPError
+
+import pytest
 
 from monzo.exceptions import MonzoGeneralError
 from monzo.httpio import HttpIO
