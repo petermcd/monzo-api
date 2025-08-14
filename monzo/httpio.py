@@ -195,7 +195,8 @@ class HttpIO(object):
             with response as fh:
                 content += fh.read().decode('utf-8')
         except HTTPError as error:
-            raise MONZO_ERROR_MAP[error.code]() from error
+            exception_cls = MONZO_ERROR_MAP.get(error.code, MonzoGeneralError)
+            raise exception_cls() from error
         return {
             'code': response.code,
             'headers': response.headers,
