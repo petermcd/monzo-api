@@ -1,4 +1,4 @@
-"""Class to manage transactions."""
+"""Class to manage receipts."""
 from __future__ import annotations
 
 from json import dumps
