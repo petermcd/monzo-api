@@ -2,8 +2,8 @@ import pytest
 from urllib.error import HTTPError
 from unittest.mock import patch
 
-from monzo.httpio import HttpIO
 from monzo.exceptions import MonzoGeneralError
+from monzo.httpio import HttpIO
 
 
 def test_unknown_status_code_raises_monzogeneralerror():
