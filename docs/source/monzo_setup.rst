@@ -2,7 +2,7 @@ Monzo Setup
 =====================================
 
 As with any restricted resource on the internet, you require credentials to login.
-The Monzo APi is no different.
+The Monzo API is no different.
 
 The following tutorial will guide you through creating credentials for your account.
 
