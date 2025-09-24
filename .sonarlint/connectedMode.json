@@ -1,4 +1,4 @@
 {
-    "sonarQubeUri": "http://57.128.159.138:9000",
-    "projectKey": "petermcd_monzo-api_6d112260-b85e-46fc-8fc1-e3746f2e075a"
+    "sonarQubeUri": "https://sq.petermcdonald.co.uk",
+    "projectKey": "petermcd_monzo-api_04a97896-4fdc-4f19-9741-cfbf67fe58c1"
 }
