@@ -1,4 +1,5 @@
 """Abstract class for credential storage."""
+
 from abc import ABC, abstractmethod
 from typing import Dict, Union
 
@@ -23,12 +24,12 @@ class Storage(ABC):
 
     @abstractmethod
     def store(
-            self,
-            access_token: str,
-            client_id: str,
-            client_secret: str,
-            expiry: int,
-            refresh_token: str = ''
+        self,
+        access_token: str,
+        client_id: str,
+        client_secret: str,
+        expiry: int,
+        refresh_token: str = "",
     ) -> None:
         """
         Abstract method that needs to be implemented to store credentials from Monzo.

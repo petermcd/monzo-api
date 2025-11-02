@@ -14,20 +14,20 @@ from typing import List
 
 # -- Path setup --------------------------------------------------------------
 
-sys.path.insert(0, os.path.abspath('../'))
+sys.path.insert(0, os.path.abspath("../"))
 config = ConfigParser()
-config.read('../../setup.cfg')
+config.read("../../setup.cfg")
 
 # -- Project information -----------------------------------------------------
 
 copyright_year = datetime.datetime.now().year
-author = config['metadata']['author']
-project = config['metadata']['name']
-copyright = f'{copyright_year}, {author}'
+author = config["metadata"]["author"]
+project = config["metadata"]["name"]
+copyright = f"{copyright_year}, {author}"
 
 # The full version, including alpha/beta/rc tags
 
-release = config['metadata']['version']
+release = config["metadata"]["version"]
 
 
 # -- General configuration ---------------------------------------------------
@@ -36,13 +36,13 @@ release = config['metadata']['version']
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions: List[str] = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.coverage',
-    'sphinx.ext.doctest',
+    "sphinx.ext.autodoc",
+    "sphinx.ext.coverage",
+    "sphinx.ext.doctest",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path: List[str] = ['_templates']
+templates_path: List[str] = ["_templates"]
 
 # List of patterns, relative to the source directory, that match files and
 # directories to ignore when looking for source files.
@@ -55,9 +55,9 @@ exclude_patterns: List[str] = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'sphinx_rtd_theme'
+html_theme = "sphinx_rtd_theme"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]

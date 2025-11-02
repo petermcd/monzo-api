@@ -1,0 +1,45 @@
+name: UV
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  uv:
+    name: python
+    runs-on: ubuntu-latest
+    permissions: read-all
+    strategy:
+      matrix:
+        python-version:
+          - "3.11"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        with:
+          fetch-depth: 0
+      - name: Install uv
+        uses: astral-sh/setup-uv@85856786d1ce8acfbcc2f13a5f3fbd6b938f9f41
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Set up Python
+        run: uv python install
+      - name: pyTest
+        run: uv run pytest tests
+      - name: Ruff (check)
+        run: uv run ruff check
+      - name: Ruff (format)
+        run: uv run ruff format --diff --check
+      - name: Ty
+        run: uv run ty check
+      #- name: Troml
+      #  run: uv run troml check
+      - name: Run SonarQube
+        uses: sonarsource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}

@@ -1,4 +1,5 @@
 """Class to manage receipts."""
+
 from __future__ import annotations
 
 from json import dumps
@@ -7,9 +8,12 @@ from typing import Any, Dict, List, Optional, Union
 from monzo.authentication import Authentication
 from monzo.endpoints.monzo import Monzo
 
-RECEIPTS_PATH = '/transaction-receipts'
+RECEIPTS_PATH = "/transaction-receipts"
 
-ITEM_TYPE = Dict[str, Union[float, Optional[int], str, List[Dict[str, Union[float, Optional[int], str]]]]]
+ITEM_TYPE = Dict[
+    str,
+    Union[float, Optional[int], str, List[Dict[str, Union[float, Optional[int], str]]]],
+]
 MERCHANT_TYPE = Dict[str, Union[bool, str]]
 PAYMENT_TYPE = Dict[str, Union[int, str]]
 TAX_TYPE = Dict[str, Union[int, str]]
@@ -23,23 +27,23 @@ class ReceiptItem(object):
     """
 
     __slots__ = (
-        '_amount',
-        '_currency',
-        '_description',
-        '_quantity',
-        '_sub_items',
-        '_tax',
-        '_unit',
+        "_amount",
+        "_currency",
+        "_description",
+        "_quantity",
+        "_sub_items",
+        "_tax",
+        "_unit",
     )
 
     def __init__(
-            self,
-            description: str,
-            amount: int,
-            currency: str,
-            quantity: float = 0,
-            unit: str = '',
-            tax: int = 0,
+        self,
+        description: str,
+        amount: int,
+        currency: str,
+        quantity: float = 0,
+        unit: str = "",
+        tax: int = 0,
     ):
         """
         Initialise ReceiptItem.
@@ -77,16 +81,16 @@ class ReceiptItem(object):
             Object as a dict
         """
         item: Any = {
-            'amount': self._amount,
-            'currency': self._currency,
-            'description': self._description,
-            'quantity': self._quantity,
-            'tax': self._tax,
-            'unit': self._unit,
+            "amount": self._amount,
+            "currency": self._currency,
+            "description": self._description,
+            "quantity": self._quantity,
+            "tax": self._tax,
+            "unit": self._unit,
         }
         sub_item_list: List[Any] = [sub_item.as_dict() for sub_item in self._sub_items]
 
-        item['sub_items'] = sub_item_list
+        item["sub_items"] = sub_item_list
 
         return item
 
@@ -99,24 +103,24 @@ class Receipt(Monzo):
     """
 
     __slots__ = (
-        '_external_id',
-        '_transaction_id',
-        '_total',
-        '_currency',
-        '_items',
-        '_taxes',
-        '_payments',
-        '_merchant',
+        "_external_id",
+        "_transaction_id",
+        "_total",
+        "_currency",
+        "_items",
+        "_taxes",
+        "_payments",
+        "_merchant",
     )
 
     def __init__(
-            self,
-            auth: Authentication,
-            transaction_id: str,
-            external_id: str,
-            transaction_total: int,
-            transaction_currency: str,
-            items: List[ReceiptItem],
+        self,
+        auth: Authentication,
+        transaction_id: str,
+        external_id: str,
+        transaction_total: int,
+        transaction_currency: str,
+        items: List[ReceiptItem],
     ):
         """
         Initialize Receipt.
@@ -141,14 +145,14 @@ class Receipt(Monzo):
         super().__init__(auth=auth)
 
     def add_merchant(
-            self,
-            name: str,
-            online: bool,
-            phone: Optional[str] = None,
-            email: Optional[str] = None,
-            store_name: Optional[str] = None,
-            store_address: Optional[str] = None,
-            store_postcode: Optional[str] = None,
+        self,
+        name: str,
+        online: bool,
+        phone: Optional[str] = None,
+        email: Optional[str] = None,
+        store_name: Optional[str] = None,
+        store_address: Optional[str] = None,
+        store_postcode: Optional[str] = None,
     ):
         """
         Set the merchant for the receipt.
@@ -163,28 +167,28 @@ class Receipt(Monzo):
             store_postcode: Postcode of the store
         """
         merchant: MERCHANT_TYPE = {
-            'name': name,
-            'online': online,
+            "name": name,
+            "online": online,
         }
         if phone:
-            merchant['phone'] = phone
+            merchant["phone"] = phone
         if email:
-            merchant['email'] = email
+            merchant["email"] = email
         if store_name:
-            merchant['store_name'] = store_name
+            merchant["store_name"] = store_name
         if store_address:
-            merchant['store_address'] = store_address
+            merchant["store_address"] = store_address
         if store_postcode:
-            merchant['store_postcode'] = store_postcode
+            merchant["store_postcode"] = store_postcode
 
         self._merchant = merchant
 
     def add_tax(
-            self,
-            description: str,
-            amount: int,
-            currency: str,
-            tax_number: Optional[str] = None,
+        self,
+        description: str,
+        amount: int,
+        currency: str,
+        tax_number: Optional[str] = None,
     ):
         """
         Add receipt tax item.
@@ -196,47 +200,45 @@ class Receipt(Monzo):
             tax_number: The tax number from the receipt
         """
         tax: TAX_TYPE = {
-            'description': description,
-            'amount': amount,
-            'currency': currency,
+            "description": description,
+            "amount": amount,
+            "currency": currency,
         }
         if tax_number:
-            tax['tax_number'] = tax_number
+            tax["tax_number"] = tax_number
         self._taxes.append(tax)
 
     def _create(self) -> None:
         """Create the receipt."""
         data = {
-            'transaction_id': self._transaction_id,
-            'external_id': self._external_id,
-            'total': self._total,
-            'currency': self._currency,
-            'taxes': self._taxes,
-            'payments': self._payments,
-            'merchant': self._merchant
+            "transaction_id": self._transaction_id,
+            "external_id": self._external_id,
+            "total": self._total,
+            "currency": self._currency,
+            "taxes": self._taxes,
+            "payments": self._payments,
+            "merchant": self._merchant,
         }
         receipt_items: List[ITEM_TYPE] = [item.as_dict() for item in self._items]
 
-        data['items'] = receipt_items
+        data["items"] = receipt_items
 
         headers = {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
         }
 
         self._monzo_auth.make_request(
             path=RECEIPTS_PATH,
             authenticated=True,
-            method='PUT',
+            method="PUT",
             data=dumps(data),
             headers=headers,
         )
 
     def _delete(self):
         """Delete the current receipt."""
-        data = {
-            'external_id': self._external_id
-        }
-        self._monzo_auth.make_request(path=RECEIPTS_PATH, data=data, method='DELETE')
+        data = {"external_id": self._external_id}
+        self._monzo_auth.make_request(path=RECEIPTS_PATH, data=data, method="DELETE")
 
     @property
     def external_id(self) -> str:
@@ -356,31 +358,31 @@ class Receipt(Monzo):
         Returns:
             List of receipts objects for the external ID
         """
-        data = {'external_id': external_id}
+        data = {"external_id": external_id}
         res = auth.make_request(path=RECEIPTS_PATH, data=data)
-        receipt_data = res['data']['receipt']
+        receipt_data = res["data"]["receipt"]
         receipt_items: List[ReceiptItem] = []
-        for item in receipt_data['items']:
-            quantity = float(item['quantity']) if 'quantity' in item else 0.0
-            tax = item['tax'] if 'tax' in item else 0
-            unit = item['unit'] if 'unit' in item else ''
+        for item in receipt_data["items"]:
+            quantity = float(item["quantity"]) if "quantity" in item else 0.0
+            tax = item["tax"] if "tax" in item else 0
+            unit = item["unit"] if "unit" in item else ""
             receipt_item: ReceiptItem = ReceiptItem(
-                description=item['description'],
-                amount=item['amount'],
-                currency=item['currency'],
+                description=item["description"],
+                amount=item["amount"],
+                currency=item["currency"],
                 quantity=quantity,
                 unit=unit,
                 tax=tax,
             )
 
-            for sub_item in item['sub_items']:
-                sub_item_quantity = sub_item['quantity'] if 'quantity' in sub_item else 0.0
-                sub_item_tax = sub_item['tax'] if 'tax' in sub_item else 0
-                sub_item_unit = sub_item['unit'] if 'unit' in sub_item else ''
+            for sub_item in item["sub_items"]:
+                sub_item_quantity = sub_item["quantity"] if "quantity" in sub_item else 0.0
+                sub_item_tax = sub_item["tax"] if "tax" in sub_item else 0
+                sub_item_unit = sub_item["unit"] if "unit" in sub_item else ""
                 receipt_sub_item = ReceiptItem(
-                    description=sub_item['description'],
-                    amount=sub_item['amount'],
-                    currency=sub_item['currency'],
+                    description=sub_item["description"],
+                    amount=sub_item["amount"],
+                    currency=sub_item["currency"],
                     quantity=sub_item_quantity,
                     unit=sub_item_unit,
                     tax=sub_item_tax,
@@ -391,32 +393,32 @@ class Receipt(Monzo):
 
         receipt: Receipt = Receipt(
             auth=auth,
-            transaction_id=receipt_data['transaction_id'],
-            external_id=receipt_data['external_id'],
-            transaction_total=receipt_data['total'],
-            transaction_currency=receipt_data['currency'],
+            transaction_id=receipt_data["transaction_id"],
+            external_id=receipt_data["external_id"],
+            transaction_total=receipt_data["total"],
+            transaction_currency=receipt_data["currency"],
             items=receipt_items,
         )
 
-        if receipt_data['merchant']['name']:
-            merchant_data = receipt_data['merchant']
+        if receipt_data["merchant"]["name"]:
+            merchant_data = receipt_data["merchant"]
             receipt.add_merchant(
-                name=merchant_data['name'],
-                online=merchant_data['online'],
-                phone=merchant_data['phone'],
-                email=merchant_data['email'],
-                store_name=merchant_data['store_name'],
-                store_address=merchant_data['store_address'],
-                store_postcode=merchant_data['store_postcode'],
+                name=merchant_data["name"],
+                online=merchant_data["online"],
+                phone=merchant_data["phone"],
+                email=merchant_data["email"],
+                store_name=merchant_data["store_name"],
+                store_address=merchant_data["store_address"],
+                store_postcode=merchant_data["store_postcode"],
             )
 
-        if len(receipt_data['taxes']):
-            for tax_data in receipt_data['taxes']:
+        if len(receipt_data["taxes"]):
+            for tax_data in receipt_data["taxes"]:
                 receipt.add_tax(
-                    description=tax_data['description'],
-                    amount=tax_data['amount'],
-                    currency=tax_data['currency'],
-                    tax_number=tax_data['tax_number'],
+                    description=tax_data["description"],
+                    amount=tax_data["amount"],
+                    currency=tax_data["currency"],
+                    tax_number=tax_data["tax_number"],
                 )
 
         return [receipt]

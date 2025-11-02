@@ -1,4 +1,5 @@
 """Class to manage the whoami request."""
+
 from __future__ import annotations
 
 from monzo.authentication import Authentication
@@ -12,7 +13,7 @@ class WhoAmI(Monzo):
     Class provides access to the whoami endpoint. This is usually used to test connectivity to the API
     """
 
-    __slots__ = ['_authenticated', '_client_id', '_user_id']
+    __slots__ = ["_authenticated", "_client_id", "_user_id"]
 
     def __init__(self, auth: Authentication, authenticated: bool, client_id: str, user_id: str):
         """
@@ -70,10 +71,10 @@ class WhoAmI(Monzo):
         Returns:
             Instantiated WhoAmI object
         """
-        res = auth.make_request(path='/ping/whoami')
+        res = auth.make_request(path="/ping/whoami")
         return cls(
             auth=auth,
-            authenticated=res['data']['authenticated'],
-            client_id=res['data']['client_id'],
-            user_id=res['data']['user_id'],
+            authenticated=res["data"]["authenticated"],
+            client_id=res["data"]["client_id"],
+            user_id=res["data"]["user_id"],
         )

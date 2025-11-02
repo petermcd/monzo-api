@@ -1,4 +1,5 @@
 """Class to manage pots."""
+
 from __future__ import annotations
 
 from datetime import datetime
@@ -19,39 +20,39 @@ class Pot(Monzo):
     """
 
     __slots__ = [
-        '_pot_id',
-        '_name',
-        '_style',
-        '_balance',
-        '_currency',
-        '_created',
-        '_updated',
-        '_deleted',
-        '_goal_amount',
-        '_has_round_up',
-        '_round_up_multiplier',
-        '_pot_type',
-        '_locked',
-        '_locked_until',
+        "_pot_id",
+        "_name",
+        "_style",
+        "_balance",
+        "_currency",
+        "_created",
+        "_updated",
+        "_deleted",
+        "_goal_amount",
+        "_has_round_up",
+        "_round_up_multiplier",
+        "_pot_type",
+        "_locked",
+        "_locked_until",
     ]
 
     def __init__(
-            self,
-            auth: Authentication,
-            pot_id: str,
-            name: str,
-            style: str,
-            balance: int,
-            currency: str,
-            created: datetime,
-            updated: datetime,
-            deleted: bool,
-            goal_amount: int | None,
-            round_up_multiplier: int | None,
-            has_round_up: bool,
-            pot_type: str,
-            locked: bool,
-            locked_until: datetime | None,
+        self,
+        auth: Authentication,
+        pot_id: str,
+        name: str,
+        style: str,
+        balance: int,
+        currency: str,
+        created: datetime,
+        updated: datetime,
+        deleted: bool,
+        goal_amount: int | None,
+        round_up_multiplier: int | None,
+        has_round_up: bool,
+        pot_type: str,
+        locked: bool,
+        locked_until: datetime | None,
     ):
         """
         Initialize Pot.
@@ -230,7 +231,14 @@ class Pot(Monzo):
         return self._locked_until
 
     @classmethod
-    def deposit(cls, auth: Authentication, pot: Pot, account_id: str, amount: int, dedupe_id: str) -> Pot:
+    def deposit(
+        cls,
+        auth: Authentication,
+        pot: Pot,
+        account_id: str,
+        amount: int,
+        dedupe_id: str,
+    ) -> Pot:
         """
         Deposit funds from an account into a pot.
 
@@ -251,15 +259,15 @@ class Pot(Monzo):
         account_balance = account_balance_obj.balance
 
         if account_balance < amount:
-            raise MonzoGeneralError('The account does not contain enough funds')
-        path = f'/pots/{pot.pot_id}/deposit'
+            raise MonzoGeneralError("The account does not contain enough funds")
+        path = f"/pots/{pot.pot_id}/deposit"
         data = {
-            'source_account_id': account_id,
-            'amount': amount,
-            'dedupe_id': dedupe_id
+            "source_account_id": account_id,
+            "amount": amount,
+            "dedupe_id": dedupe_id,
         }
-        res = auth.make_request(path=path, method='PUT', data=data)
-        return cls._update_pot(pot=pot, data=res['data'])
+        res = auth.make_request(path=path, method="PUT", data=data)
+        return cls._update_pot(pot=pot, data=res["data"])
 
     @classmethod
     def fetch(cls, auth: Authentication, account_id: str) -> List[Pot]:
@@ -273,30 +281,28 @@ class Pot(Monzo):
         Returns:
             List of pots
         """
-        data = {
-            'current_account_id': account_id
-        }
-        res = auth.make_request(path='/pots', data=data)
+        data = {"current_account_id": account_id}
+        res = auth.make_request(path="/pots", data=data)
         pot_list = []
-        for pot_item in res['data']['pots']:
-            locked_until = pot_item.get('locked_until', None)
+        for pot_item in res["data"]["pots"]:
+            locked_until = pot_item.get("locked_until", None)
             if locked_until:
                 locked_until = create_date(locked_until)
             pot = Pot(
                 auth=auth,
-                pot_id=pot_item['id'],
-                name=pot_item['name'],
-                style=pot_item['style'],
-                balance=pot_item['balance'],
-                currency=pot_item['currency'],
-                created=create_date(pot_item['created']),
-                updated=create_date(pot_item['updated']),
-                deleted=pot_item['deleted'],
-                goal_amount=pot_item.get('goal_amount', None),
-                round_up_multiplier=pot_item['round_up_multiplier'],
-                has_round_up=pot_item['round_up'],
-                pot_type=pot_item['type'],
-                locked=pot_item['locked'],
+                pot_id=pot_item["id"],
+                name=pot_item["name"],
+                style=pot_item["style"],
+                balance=pot_item["balance"],
+                currency=pot_item["currency"],
+                created=create_date(pot_item["created"]),
+                updated=create_date(pot_item["updated"]),
+                deleted=pot_item["deleted"],
+                goal_amount=pot_item.get("goal_amount", None),
+                round_up_multiplier=pot_item["round_up_multiplier"],
+                has_round_up=pot_item["round_up"],
+                pot_type=pot_item["type"],
+                locked=pot_item["locked"],
                 locked_until=locked_until,
             )
             pot_list.append(pot)
@@ -319,7 +325,14 @@ class Pot(Monzo):
         return next((pot for pot in pots if pot.pot_id == pot_id), None)
 
     @classmethod
-    def withdraw(cls, auth: Authentication, pot: Pot, account_id: str, amount: int, dedupe_id: str) -> Pot:
+    def withdraw(
+        cls,
+        auth: Authentication,
+        pot: Pot,
+        account_id: str,
+        amount: int,
+        dedupe_id: str,
+    ) -> Pot:
         """
         Withdraw funds from a pot into an account.
 
@@ -337,15 +350,15 @@ class Pot(Monzo):
             Updated pot
         """
         if amount > pot.balance:
-            raise MonzoGeneralError('The pot does not contain enough funds')
-        path = f'/pots/{pot.pot_id}/withdraw'
+            raise MonzoGeneralError("The pot does not contain enough funds")
+        path = f"/pots/{pot.pot_id}/withdraw"
         data = {
-            'destination_account_id': account_id,
-            'amount': amount,
-            'dedupe_id': dedupe_id
+            "destination_account_id": account_id,
+            "amount": amount,
+            "dedupe_id": dedupe_id,
         }
-        res = auth.make_request(path=path, method='PUT', data=data)
-        return cls._update_pot(pot=pot, data=res['data'])
+        res = auth.make_request(path=path, method="PUT", data=data)
+        return cls._update_pot(pot=pot, data=res["data"])
 
     @classmethod
     def _update_pot(cls, pot: Pot, data: Dict[str, Any]) -> Pot:
@@ -359,8 +372,8 @@ class Pot(Monzo):
         Returns:
             Updated pot
         """
-        pot._balance = data['balance']
-        pot._created = create_date(data['created'])
-        pot._updated = create_date(data['updated'])
+        pot._balance = data["balance"]
+        pot._created = create_date(data["created"])
+        pot._updated = create_date(data["updated"])
 
         return pot

@@ -1,4 +1,5 @@
 """Base Monzo class."""
+
 from monzo.authentication import Authentication
 from monzo.exceptions import MonzoAuthenticationError
 
@@ -10,7 +11,9 @@ class Monzo(object):
     Class to provide basic functionality to all endpoints
     """
 
-    __slots__ = ['_monzo_auth', ]
+    __slots__ = [
+        "_monzo_auth",
+    ]
 
     def __init__(self, auth: Authentication):
         """
@@ -23,5 +26,5 @@ class Monzo(object):
             MonzoAuthenticationError: On failure to provide an object with an access token
         """
         if not auth.access_token:
-            raise MonzoAuthenticationError('Endpoint cannot be instantiated without a valid access token')
+            raise MonzoAuthenticationError("Endpoint cannot be instantiated without a valid access token")
         self._monzo_auth = auth

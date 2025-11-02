@@ -1,4 +1,5 @@
 """Class to manage Feed Items."""
+
 from __future__ import annotations
 
 from typing import Dict, Optional
@@ -7,22 +8,20 @@ from monzo.authentication import Authentication
 from monzo.endpoints.monzo import Monzo
 from monzo.exceptions import MonzoArgumentError
 
-FEED_ITEM_TYPES = [
-    'basic'
-]
+FEED_ITEM_TYPES = ["basic"]
 
 FEED_ITEM_PARAMS = {
-    'basic': {
-        'optional': [
-            'body',
-            'background_color',
-            'title_color',
-            'body_color',
+    "basic": {
+        "optional": [
+            "body",
+            "background_color",
+            "title_color",
+            "body_color",
         ],
-        'required': [
-            'title',
-            'image_url',
-        ]
+        "required": [
+            "title",
+            "image_url",
+        ],
     }
 }
 
@@ -36,19 +35,19 @@ class FeedItem(Monzo):
     """
 
     __slots__ = [
-        '_account_id',
-        '_feed_type',
-        '_params',
-        '_url',
+        "_account_id",
+        "_feed_type",
+        "_params",
+        "_url",
     ]
 
     def __init__(
-            self,
-            auth: Authentication,
-            account_id: str,
-            feed_type: str,
-            params: Dict[str, str],
-            url: str = '',
+        self,
+        auth: Authentication,
+        account_id: str,
+        feed_type: str,
+        params: Dict[str, str],
+        url: str = "",
     ):
         """
         Initialize FeedItem.
@@ -77,16 +76,16 @@ class FeedItem(Monzo):
             Dictionary of parameters only containing valid keys
         """
         if self._feed_type.lower() not in FEED_ITEM_TYPES:
-            raise MonzoArgumentError('Feed type appears invalid')
+            raise MonzoArgumentError("Feed type appears invalid")
 
         parameters_clean = {}
 
-        for parameter in FEED_ITEM_PARAMS[self._feed_type.lower()]['required']:
+        for parameter in FEED_ITEM_PARAMS[self._feed_type.lower()]["required"]:
             if parameter not in self._params:
-                raise MonzoArgumentError(f'{parameter} is a required parameter for self._feed_type.lower()')
+                raise MonzoArgumentError(f"{parameter} is a required parameter for self._feed_type.lower()")
             parameters_clean[parameter] = self._params[parameter]
 
-        for parameter in FEED_ITEM_PARAMS[self._feed_type.lower()]['optional']:
+        for parameter in FEED_ITEM_PARAMS[self._feed_type.lower()]["optional"]:
             if parameter in self._params:
                 parameters_clean[parameter] = self._params[parameter]
 
@@ -96,23 +95,23 @@ class FeedItem(Monzo):
         """Create the feed item record."""
         parameters = self._validate_feed_params()
         data = {
-            'account_id': self._account_id,
-            'type': self._feed_type,
+            "account_id": self._account_id,
+            "type": self._feed_type,
         }
         if self._url:
-            data['url'] = self._url
+            data["url"] = self._url
         for parameter in parameters.keys():
-            data[f'params[{parameter}]'] = parameters[parameter]
-        self._monzo_auth.make_request(path='/feed', method='POST', data=data)
+            data[f"params[{parameter}]"] = parameters[parameter]
+        self._monzo_auth.make_request(path="/feed", method="POST", data=data)
 
     @classmethod
     def create(
-            cls,
-            auth: Authentication,
-            account_id: str,
-            feed_type: str,
-            params: Dict[str, str],
-            url: str = ''
+        cls,
+        auth: Authentication,
+        account_id: str,
+        feed_type: str,
+        params: Dict[str, str],
+        url: str = "",
     ) -> FeedItem:
         """
         Create a new feed item.
@@ -124,6 +123,12 @@ class FeedItem(Monzo):
             params: Parameters for the feed item.
             url: Optional URL for feed item
         """
-        feed_item = FeedItem(auth=auth, account_id=account_id, feed_type=feed_type, params=params, url=url)
+        feed_item = FeedItem(
+            auth=auth,
+            account_id=account_id,
+            feed_type=feed_type,
+            params=params,
+            url=url,
+        )
         feed_item._create()
         return feed_item
