@@ -20,7 +20,6 @@ class Storage(ABC):
         Returns:
             Dictionary containing access token, expiry and refresh token
         """
-        pass
 
     @abstractmethod
     def store(
@@ -41,4 +40,3 @@ class Storage(ABC):
             expiry: Access token expiry as a unix timestamp
             refresh_token: Refresh token that can be used to renew an access token
         """
-        pass

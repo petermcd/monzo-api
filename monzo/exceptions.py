@@ -8,8 +8,6 @@ class MonzoError(Exception):
     Exception all other Monzo exceptions inherit from
     """
 
-    pass
-
 
 class MonzoAuthenticationError(MonzoError):
     """
@@ -17,8 +15,6 @@ class MonzoAuthenticationError(MonzoError):
 
     Exception to be thrown when Authentication failure has occurred at any point in dealing with the API
     """
-
-    pass
 
 
 class MonzoHTTPError(MonzoError):
@@ -28,8 +24,6 @@ class MonzoHTTPError(MonzoError):
     Exception to be thrown when an HTTP error occurs during an API call
     """
 
-    pass
-
 
 class MonzoArgumentError(MonzoError):
     """
@@ -37,8 +31,6 @@ class MonzoArgumentError(MonzoError):
 
     Exception to be thrown when an invalid value has been passed as an argument to an endpoint
     """
-
-    pass
 
 
 class MonzoServerError(MonzoError):
@@ -48,8 +40,6 @@ class MonzoServerError(MonzoError):
     Exception usually caused by an issue on the Monzo servers
     """
 
-    pass
-
 
 class MonzoPermissionsError(MonzoError):
     """
@@ -57,8 +47,6 @@ class MonzoPermissionsError(MonzoError):
 
     The API is logged in but does not have enough permissions to perform the query
     """
-
-    pass
 
 
 class MonzoRateError(MonzoError):
@@ -68,8 +56,6 @@ class MonzoRateError(MonzoError):
     Exception to be thrown when a Monzo advises you are exceeding the rate limit for the API
     """
 
-    pass
-
 
 class MonzoGeneralError(MonzoError):
     """
@@ -77,5 +63,3 @@ class MonzoGeneralError(MonzoError):
 
     Exception to be thrown when a general error occurs that does not fit into other exception types
     """
-
-    pass
