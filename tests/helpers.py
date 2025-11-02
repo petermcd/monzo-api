@@ -1,4 +1,5 @@
 """Helper functions and classes for testing."""
+
 import pathlib
 from datetime import datetime, timedelta
 from json import loads
@@ -18,7 +19,7 @@ def load_data(path: str, filename: str):
     Returns:
         JSON Content
     """
-    content = pathlib.Path(f'./tests/{path}/{filename}.json').read_text()
+    content = pathlib.Path(f"./tests/{path}/{filename}.json").read_text()
     return loads(content)
 
 
@@ -26,22 +27,22 @@ class Handler(Storage):
     """Class to use as a handler for testing."""
 
     __slots__ = (
-        '_access_token',
-        '_client_id',
-        '_client_secret',
-        '_expiry',
-        '_refresh_token'
+        "_access_token",
+        "_client_id",
+        "_client_secret",
+        "_expiry",
+        "_refresh_token",
     )
 
     def __init__(self):
         """Initialise Handler."""
         expiry = int((datetime.now() + timedelta(days=1)).timestamp())
 
-        self._access_token = 'abc123'
-        self._client_id = 'cde456'
-        self._client_secret = 'fgh789'
+        self._access_token = "abc123"
+        self._client_id = "cde456"
+        self._client_secret = "fgh789"
         self._expiry = expiry
-        self._refresh_token = 'ijk012'
+        self._refresh_token = "ijk012"
 
     def fetch(self) -> Dict[str, Union[int, str]]:
         """
@@ -51,20 +52,20 @@ class Handler(Storage):
             Dictionary containing access token, expiry and refresh token
         """
         return {
-            'access_token': self._access_token,
-            'client_id': self._client_id,
-            'client_secret': self._client_secret,
-            'expiry': self._expiry,
-            'refresh_token': self._refresh_token
+            "access_token": self._access_token,
+            "client_id": self._client_id,
+            "client_secret": self._client_secret,
+            "expiry": self._expiry,
+            "refresh_token": self._refresh_token,
         }
 
     def store(
-            self,
-            access_token: str,
-            client_id: str,
-            client_secret: str,
-            expiry: int,
-            refresh_token: str = ''
+        self,
+        access_token: str,
+        client_id: str,
+        client_secret: str,
+        expiry: int,
+        refresh_token: str = "",
     ) -> None:
         """
         Store the Monzo credentials.

@@ -1,4 +1,5 @@
 """Class to manage transactions."""
+
 from __future__ import annotations
 
 from datetime import datetime
@@ -8,9 +9,7 @@ from monzo.authentication import Authentication
 from monzo.endpoints.monzo import Monzo
 from monzo.helpers import create_date, format_date
 
-EXPAND_VALID_VALUES = [
-    'merchant'
-]
+EXPAND_VALID_VALUES = ["merchant"]
 
 
 class Transaction(Monzo):
@@ -21,47 +20,43 @@ class Transaction(Monzo):
     """
 
     __slots__ = [
-        '_account_id',
-        '_amount',
-        '_amount_is_pending',
-        '_atm_fees_detailed',
-        '_attachments',
-        '_can_add_to_tab',
-        '_can_be_excluded_from_breakdown',
-        '_can_be_made_subscription',
-        '_can_match_transactions_in_categorization',
-        '_can_split_the_bill',
-        '_categories',
-        '_category',
-        '_counterparty',
-        '_created',
-        '_currency',
-        '_decline_reason',
-        '_dedupe_id',
-        '_description',
-        '_fees',
-        '_include_in_spending',
-        '_international',
-        '_is_load',
-        '_labels',
-        '_local_amount',
-        '_local_currency',
-        '_merchant',
-        '_metadata',
-        '_notes',
-        '_originator',
-        '_scheme',
-        '_settled',
-        '_transaction_id',
-        '_updated',
-        '_user_id'
+        "_account_id",
+        "_amount",
+        "_amount_is_pending",
+        "_atm_fees_detailed",
+        "_attachments",
+        "_can_add_to_tab",
+        "_can_be_excluded_from_breakdown",
+        "_can_be_made_subscription",
+        "_can_match_transactions_in_categorization",
+        "_can_split_the_bill",
+        "_categories",
+        "_category",
+        "_counterparty",
+        "_created",
+        "_currency",
+        "_decline_reason",
+        "_dedupe_id",
+        "_description",
+        "_fees",
+        "_include_in_spending",
+        "_international",
+        "_is_load",
+        "_labels",
+        "_local_amount",
+        "_local_currency",
+        "_merchant",
+        "_metadata",
+        "_notes",
+        "_originator",
+        "_scheme",
+        "_settled",
+        "_transaction_id",
+        "_updated",
+        "_user_id",
     ]
 
-    def __init__(
-            self,
-            auth: Authentication,
-            transaction_data: Dict[str, Any]
-    ):
+    def __init__(self, auth: Authentication, transaction_data: Dict[str, Any]):
         """
         Initialize Transaction.
 
@@ -69,43 +64,44 @@ class Transaction(Monzo):
             auth: Monzo authentication object
             transaction_data: Data returned from an API call
         """
-        self._account_id: str = transaction_data['account_id']
-        self._amount: int = transaction_data['amount']
-        self._amount_is_pending: bool = transaction_data['amount_is_pending']
-        self._atm_fees_detailed: str = transaction_data['atm_fees_detailed']
-        self._attachments: str = transaction_data['attachments']
-        self._can_add_to_tab: bool = transaction_data['can_add_to_tab']
-        self._can_be_excluded_from_breakdown: bool = transaction_data['can_be_excluded_from_breakdown']
-        self._can_be_made_subscription: bool = transaction_data['can_be_made_subscription']
-        self._can_match_transactions_in_categorization: bool = \
-            transaction_data['can_match_transactions_in_categorization']
-        self._can_split_the_bill: bool = transaction_data['can_split_the_bill']
-        self._categories: Dict[str, Union[int, str]] = transaction_data['categories']
-        self._category: str = transaction_data['category']
-        self._counterparty = transaction_data['counterparty']
-        self._created: datetime = create_date(transaction_data['created'])
-        self._currency: str = transaction_data['currency']
-        self._dedupe_id: str = transaction_data['dedupe_id']
-        self._decline_reason: str = transaction_data.get('decline_reason', '')
-        self._description: str = transaction_data['description']
-        self._fees: Dict[str, Any] = transaction_data['fees']
-        self._include_in_spending: bool = transaction_data['include_in_spending']
-        self._international: Optional[str] = transaction_data['international']
-        self._is_load: bool = transaction_data['is_load']
-        self._labels: str = transaction_data['labels']
-        self._local_amount: int = transaction_data['local_amount']
-        self._local_currency: str = transaction_data['local_currency']
-        self._merchant: str = transaction_data['merchant']
-        self._metadata: Dict[str, str] = transaction_data['metadata']
-        self._notes: str = transaction_data['notes']
-        self._originator: bool = transaction_data['originator']
-        self._scheme: str = transaction_data['scheme']
+        self._account_id: str = transaction_data["account_id"]
+        self._amount: int = transaction_data["amount"]
+        self._amount_is_pending: bool = transaction_data["amount_is_pending"]
+        self._atm_fees_detailed: str = transaction_data["atm_fees_detailed"]
+        self._attachments: str = transaction_data["attachments"]
+        self._can_add_to_tab: bool = transaction_data["can_add_to_tab"]
+        self._can_be_excluded_from_breakdown: bool = transaction_data["can_be_excluded_from_breakdown"]
+        self._can_be_made_subscription: bool = transaction_data["can_be_made_subscription"]
+        self._can_match_transactions_in_categorization: bool = transaction_data[
+            "can_match_transactions_in_categorization"
+        ]
+        self._can_split_the_bill: bool = transaction_data["can_split_the_bill"]
+        self._categories: Dict[str, Union[int, str]] = transaction_data["categories"]
+        self._category: str = transaction_data["category"]
+        self._counterparty = transaction_data["counterparty"]
+        self._created: datetime = create_date(transaction_data["created"])
+        self._currency: str = transaction_data["currency"]
+        self._dedupe_id: str = transaction_data["dedupe_id"]
+        self._decline_reason: str = transaction_data.get("decline_reason", "")
+        self._description: str = transaction_data["description"]
+        self._fees: Dict[str, Any] = transaction_data["fees"]
+        self._include_in_spending: bool = transaction_data["include_in_spending"]
+        self._international: Optional[str] = transaction_data["international"]
+        self._is_load: bool = transaction_data["is_load"]
+        self._labels: str = transaction_data["labels"]
+        self._local_amount: int = transaction_data["local_amount"]
+        self._local_currency: str = transaction_data["local_currency"]
+        self._merchant: str = transaction_data["merchant"]
+        self._metadata: Dict[str, str] = transaction_data["metadata"]
+        self._notes: str = transaction_data["notes"]
+        self._originator: bool = transaction_data["originator"]
+        self._scheme: str = transaction_data["scheme"]
         self._settled: Optional[datetime] = None
-        if transaction_data['settled']:
-            self._settled = create_date(transaction_data['settled'])
-        self._transaction_id: str = transaction_data['id']
-        self._updated: datetime = create_date(transaction_data['updated'])
-        self._user_id: str = transaction_data['user_id']
+        if transaction_data["settled"]:
+            self._settled = create_date(transaction_data["settled"])
+        self._transaction_id: str = transaction_data["id"]
+        self._updated: datetime = create_date(transaction_data["updated"])
+        self._user_id: str = transaction_data["user_id"]
 
         super().__init__(auth=auth)
 
@@ -458,9 +454,9 @@ class Transaction(Monzo):
         return self._user_id
 
     def annotate(
-            self,
-            key: str,
-            value: str = '',
+        self,
+        key: str,
+        value: str = "",
     ):
         """
         Annotate the transaction.
@@ -472,20 +468,17 @@ class Transaction(Monzo):
             key: Key for the annotation.
             value: Value for annotation, if left blank, it will remove the annotation.
         """
-        path = f'/transactions/{self.transaction_id}'
+        path = f"/transactions/{self.transaction_id}"
         data = {
-            f'metadata[{key}]': value,
+            f"metadata[{key}]": value,
         }
-        res = self._monzo_auth.make_request(path=path, method='PATCH', data=data)
-        self._notes = res['data']['transaction']['notes']
-        self._metadata = res['data']['transaction']['metadata']
+        res = self._monzo_auth.make_request(path=path, method="PATCH", data=data)
+        self._notes = res["data"]["transaction"]["notes"]
+        self._metadata = res["data"]["transaction"]["metadata"]
 
     @classmethod
     def fetch_single(
-            cls,
-            auth: Authentication,
-            transaction_id: str,
-            expand_on: str = 'merchant'
+        cls, auth: Authentication, transaction_id: str, expand_on: str = "merchant"
     ) -> Optional[Transaction]:
         """
         Fetch a transaction with a specific ID.
@@ -501,23 +494,23 @@ class Transaction(Monzo):
         data = {}
         if expand_on and expand_on.lower() in EXPAND_VALID_VALUES:
             data = {
-                'expand[]': expand_on,
+                "expand[]": expand_on,
             }
-        path = f'/transactions/{transaction_id}'
+        path = f"/transactions/{transaction_id}"
         res = auth.make_request(path=path, data=data)
-        if len(res['data'].get('transaction', {})) == 0:
+        if len(res["data"].get("transaction", {})) == 0:
             return None
-        return Transaction(auth=auth, transaction_data=res['data']['transaction'])
+        return Transaction(auth=auth, transaction_data=res["data"]["transaction"])
 
     @classmethod
     def fetch(
-            cls,
-            auth: Authentication,
-            account_id: str,
-            since: Optional[datetime] = None,
-            before: Optional[datetime] = None,
-            expand=None,
-            limit=30,
+        cls,
+        auth: Authentication,
+        account_id: str,
+        since: Optional[datetime | str] = None,
+        before: Optional[datetime] = None,
+        expand=None,
+        limit=30,
     ) -> List[Transaction]:
         """
         Fetch a list of transaction.
@@ -536,21 +529,24 @@ class Transaction(Monzo):
         if expand is None:
             expand = []
         data = {
-            'account_id': account_id,
+            "account_id": account_id,
         }
         if expand:
             # TODO fix so that this works on the list
-            data['expand'] = expand[0]
+            data["expand"] = expand[0]
         if since:
-            data['since'] = format_date(since)
+            if isinstance(since, datetime):
+                data["since"] = format_date(since)
+            elif isinstance(since, str):
+                data["since"] = since
         if before:
-            data['before'] = format_date(before)
+            data["before"] = format_date(before)
         if limit:
-            data['limit'] = min(limit, 100)
-        path = '/transactions'
+            data["limit"] = min(limit, 100)
+        path = "/transactions"
         res = auth.make_request(path=path, data=data)
         transactions = []
-        for transaction_data in res['data']['transactions']:
+        for transaction_data in res["data"]["transactions"]:
             transaction = Transaction(auth=auth, transaction_data=transaction_data)
             transactions.append(transaction)
         return transactions

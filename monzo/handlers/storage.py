@@ -1,4 +1,5 @@
 """Abstract class for credential storage."""
+
 from abc import ABC, abstractmethod
 from typing import Dict, Union
 
@@ -19,16 +20,15 @@ class Storage(ABC):
         Returns:
             Dictionary containing access token, expiry and refresh token
         """
-        pass
 
     @abstractmethod
     def store(
-            self,
-            access_token: str,
-            client_id: str,
-            client_secret: str,
-            expiry: int,
-            refresh_token: str = ''
+        self,
+        access_token: str,
+        client_id: str,
+        client_secret: str,
+        expiry: int,
+        refresh_token: str = "",
     ) -> None:
         """
         Abstract method that needs to be implemented to store credentials from Monzo.
@@ -40,4 +40,3 @@ class Storage(ABC):
             expiry: Access token expiry as a unix timestamp
             refresh_token: Refresh token that can be used to renew an access token
         """
-        pass

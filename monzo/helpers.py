@@ -1,4 +1,5 @@
 """Helper functions."""
+
 from datetime import datetime
 
 
@@ -12,7 +13,7 @@ def create_date(date_str: str) -> datetime:
     Returns:
         Converted date and time
     """
-    return datetime.strptime(date_str[:19], '%Y-%m-%dT%H:%M:%S')
+    return datetime.strptime(date_str[:19], "%Y-%m-%dT%H:%M:%S")
 
 
 def format_date(date: datetime) -> str:
@@ -25,4 +26,4 @@ def format_date(date: datetime) -> str:
     Returns:
         Converted date and time
     """
-    return date.strftime('%Y-%m-%dT%H:%M:%SZ')
+    return date.strftime("%Y-%m-%dT%H:%M:%SZ")

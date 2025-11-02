@@ -1,4 +1,5 @@
 """Class to manage Accounts."""
+
 from __future__ import annotations
 
 from datetime import datetime
@@ -11,15 +12,15 @@ from monzo.exceptions import MonzoHTTPError, MonzoPermissionsError
 from monzo.helpers import create_date
 
 ACCOUNT_TYPES = [
-    'uk_retail',
-    'uk_retail_joint',
+    "uk_retail",
+    "uk_retail_joint",
 ]
 
 MONZO_ACCOUNT_TYPES = {
-    'user_': 'Current Account',
-    'monzoflex_': 'Flex',
-    'monzoflexbackingloan_': 'Loan (Flex)',
-    'loan_': 'Loan',
+    "user_": "Current Account",
+    "monzoflex_": "Flex",
+    "monzoflexbackingloan_": "Loan (Flex)",
+    "loan_": "Loan",
 }
 
 
@@ -31,9 +32,24 @@ class Account(Monzo):
     method should be used.
     """
 
-    __slots__ = ['_account_id', '_auth', '_balance', '_created', '_description', '_has_balance', '_closed']
+    __slots__ = [
+        "_account_id",
+        "_auth",
+        "_balance",
+        "_created",
+        "_description",
+        "_has_balance",
+        "_closed",
+    ]
 
-    def __init__(self, auth: Authentication, account_id: str, description: str, created: datetime, closed: bool):
+    def __init__(
+        self,
+        auth: Authentication,
+        account_id: str,
+        description: str,
+        created: datetime,
+        closed: bool,
+    ):
         """
         Initialize Account.
 
@@ -76,7 +92,7 @@ class Account(Monzo):
                 for account_type in MONZO_ACCOUNT_TYPES.keys()
                 if self.description.lower().startswith(account_type)
             ),
-            'UNKNOWN',
+            "UNKNOWN",
         )
 
     def fetch_balance(self) -> Optional[Balance]:
@@ -142,7 +158,7 @@ class Account(Monzo):
         return self._closed
 
     @classmethod
-    def fetch(cls, auth: Authentication, account_type: str = '') -> List[Account]:
+    def fetch(cls, auth: Authentication, account_type: str = "") -> List[Account]:
         """
         Implement and instantiates an Account object.
 
@@ -155,16 +171,16 @@ class Account(Monzo):
         """
         data = {}
         if account_type and account_type.lower() in ACCOUNT_TYPES:
-            data['account_type'] = account_type.lower()
-        res = auth.make_request(path='/accounts', data=data)
+            data["account_type"] = account_type.lower()
+        res = auth.make_request(path="/accounts", data=data)
         account_list = []
-        for account_item in res['data']['accounts']:
+        for account_item in res["data"]["accounts"]:
             account = Account(
                 auth=auth,
-                account_id=account_item['id'],
-                description=account_item['description'],
-                created=create_date(account_item['created']),
-                closed=account_item['closed'],
+                account_id=account_item["id"],
+                description=account_item["description"],
+                created=create_date(account_item["created"]),
+                closed=account_item["closed"],
             )
             account_list.append(account)
         return account_list

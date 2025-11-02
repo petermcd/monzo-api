@@ -1,4 +1,5 @@
 """Class to allow authentication on the Monzo API."""
+
 import logging
 import os
 import secrets
@@ -11,8 +12,8 @@ from monzo.exceptions import MonzoAuthenticationError, MonzoError, MonzoHTTPErro
 from monzo.handlers.storage import Storage
 from monzo.httpio import DEFAULT_TIMEOUT, REQUEST_RESPONSE_TYPE, HttpIO
 
-MONZO_AUTH_URL = 'https://auth.monzo.com'
-MONZO_API_URL = 'https://api.monzo.com'
+MONZO_AUTH_URL = "https://auth.monzo.com"
+MONZO_API_URL = "https://api.monzo.com"
 
 
 class Authentication(object):
@@ -24,23 +25,23 @@ class Authentication(object):
     """
 
     __slots__ = [
-        '_access_token',
-        '_access_token_expiry',
-        '_client_id',
-        '_client_secret',
-        '_handlers',
-        '_redirect_url',
-        '_refresh_token',
+        "_access_token",
+        "_access_token_expiry",
+        "_client_id",
+        "_client_secret",
+        "_handlers",
+        "_redirect_url",
+        "_refresh_token",
     ]
 
     def __init__(
-            self,
-            client_id: str,
-            client_secret: str,
-            redirect_url: str,
-            access_token: str = '',
-            access_token_expiry: int = 0,
-            refresh_token: str = ''
+        self,
+        client_id: str,
+        client_secret: str,
+        redirect_url: str,
+        access_token: str = "",
+        access_token_expiry: int = 0,
+        refresh_token: str = "",
     ):
         """
         Initialize Authentication.
@@ -72,31 +73,31 @@ class Authentication(object):
         Raises:
             MonzoAuthenticationError On missing authorization token or mismatching state tokens
         """
-        logging.debug('Attempting authentication')
+        logging.debug("Attempting authentication")
         if not authorization_token:
-            logging.debug('Authentication - Missing token')
-            raise MonzoAuthenticationError('Code missing from response')
+            logging.debug("Authentication - Missing token")
+            raise MonzoAuthenticationError("Code missing from response")
         if state_token != self.state_token:
-            logging.debug('Authentication - state token mismatch')
-            raise MonzoAuthenticationError('State tokens do not match')
-        tmp_file_name = 'monzo'
+            logging.debug("Authentication - state token mismatch")
+            raise MonzoAuthenticationError("State tokens do not match")
+        tmp_file_name = "monzo"
         tmp_file_path = PurePath(gettempdir(), tmp_file_name)
         os.remove(tmp_file_path)
         self._exchange_token(authorization_token=authorization_token)
 
     def logout(self) -> None:
         """Invalidate the access token."""
-        logging.debug('Invalidating token')
-        self.make_request(path='/oauth2/logout', method='post')
+        logging.debug("Invalidating token")
+        self.make_request(path="/oauth2/logout", method="post")
 
     def make_request(
-            self,
-            path: str,
-            authenticated: bool = True,
-            method: str = 'GET',
-            data=None,
-            headers=None,
-            timeout: int = DEFAULT_TIMEOUT
+        self,
+        path: str,
+        authenticated: bool = True,
+        method: str = "GET",
+        data=None,
+        headers=None,
+        timeout: int = DEFAULT_TIMEOUT,
     ) -> REQUEST_RESPONSE_TYPE:
         """
         Make an API call to Monzo.
@@ -122,13 +123,13 @@ class Authentication(object):
         if headers is None:
             headers = {}
         if authenticated:
-            headers['Authorization'] = f'Bearer {self.access_token}'
+            headers["Authorization"] = f"Bearer {self.access_token}"
         conn = HttpIO(MONZO_API_URL)
         method = method.lower()
         try:
             connection = getattr(conn, method)
         except AttributeError as exc:
-            raise MonzoHTTPError('Specified HTTP method is not supported') from exc
+            raise MonzoHTTPError("Specified HTTP method is not supported") from exc
         return connection(path=path, data=data, headers=headers, timeout=timeout)
 
     def refresh_access(self) -> None:
@@ -140,23 +141,23 @@ class Authentication(object):
         Raises:
             MonzoAuthenticationError: On lack of refresh token or failure to refresh a token
         """
-        logging.debug('Fetching new token')
+        logging.debug("Fetching new token")
         if not self.refresh_token:
-            logging.debug('Unable to fetch new token without a refresh token')
-            raise MonzoAuthenticationError('Unable to refresh without a refresh token')
+            logging.debug("Unable to fetch new token without a refresh token")
+            raise MonzoAuthenticationError("Unable to refresh without a refresh token")
         data = {
-            'grant_type': 'refresh_token',
-            'client_id': self._client_id,
-            'client_secret': self._client_secret,
-            'refresh_token': self.refresh_token,
+            "grant_type": "refresh_token",
+            "client_id": self._client_id,
+            "client_secret": self._client_secret,
+            "refresh_token": self.refresh_token,
         }
         conn = HttpIO(MONZO_API_URL)
         try:
-            res = conn.post(path='/oauth2/token', data=data)
+            res = conn.post(path="/oauth2/token", data=data)
             self._populate_tokens(res)
         except MonzoError as exc:
-            logging.debug('Failed to fetch new token')
-            raise MonzoAuthenticationError('Could not refresh the access token') from exc
+            logging.debug("Failed to fetch new token")
+            raise MonzoAuthenticationError("Could not refresh the access token") from exc
 
     @property
     def access_token(self) -> str:
@@ -166,7 +167,7 @@ class Authentication(object):
         Returns:
             Access token if one exists, otherwise an empty string
         """
-        return self._access_token or ''
+        return self._access_token or ""
 
     @property
     def access_token_expiry(self) -> int:
@@ -196,8 +197,10 @@ class Authentication(object):
         Returns:
             URL for Monzo authentication
         """
-        return f'{MONZO_AUTH_URL}?client_id={self._client_id}&redirect_uri={self._redirect_url}' \
-               f'&response_type=code&state={self.state_token}'
+        return (
+            f"{MONZO_AUTH_URL}?client_id={self._client_id}&redirect_uri={self._redirect_url}"
+            f"&response_type=code&state={self.state_token}"
+        )
 
     @property
     def refresh_token(self) -> str:
@@ -217,14 +220,14 @@ class Authentication(object):
         Returns:
             A state token used for authentication requests.
         """
-        tmp_file_name = 'monzo'
+        tmp_file_name = "monzo"
         tmp_file_path = PurePath(gettempdir(), tmp_file_name)
         if not Path(tmp_file_path).is_file():
-            with open(tmp_file_path, 'w') as fh:
+            with open(tmp_file_path, "w") as fh:
                 state_token = secrets.token_urlsafe(64)
                 fh.write(state_token)
                 fh.flush()
-        with open(tmp_file_path, 'r') as fh:
+        with open(tmp_file_path, "r") as fh:
             state_token = fh.read()
         return state_token
 
@@ -238,20 +241,20 @@ class Authentication(object):
         Raises:
             MonzoAuthenticationError On failure to create a token
         """
-        logging.debug('Authentication - swapping authorization token for an access token')
+        logging.debug("Authentication - swapping authorization token for an access token")
         data = {
-            'grant_type': 'authorization_code',
-            'client_id': self._client_id,
-            'client_secret': self._client_secret,
-            'redirect_uri': self._redirect_url,
-            'code': authorization_token,
+            "grant_type": "authorization_code",
+            "client_id": self._client_id,
+            "client_secret": self._client_secret,
+            "redirect_uri": self._redirect_url,
+            "code": authorization_token,
         }
         try:
-            res = self.make_request('/oauth2/token', authenticated=False, method='post', data=data)
+            res = self.make_request("/oauth2/token", authenticated=False, method="post", data=data)
             self._populate_tokens(res)
         except MonzoError as exc:
-            logging.debug(f'Could not fetch access token {exc}')
-            raise MonzoAuthenticationError('Could not fetch a valid access token') from exc
+            logging.debug(f"Could not fetch access token {exc}")
+            raise MonzoAuthenticationError("Could not fetch a valid access token") from exc
 
     def _populate_tokens(self, response: REQUEST_RESPONSE_TYPE) -> None:
         """
@@ -260,12 +263,12 @@ class Authentication(object):
         Args:
             response: Response from an auth request.
         """
-        logging.debug('Populating tokens')
-        self._access_token = response['data']['access_token']
-        self.access_token_expiry = response['data']['expires_in']
-        self._refresh_token = ''
-        if 'refresh_token' in response['data']:
-            self._refresh_token = response['data']['refresh_token']
+        logging.debug("Populating tokens")
+        self._access_token = response["data"]["access_token"]
+        self.access_token_expiry = response["data"]["expires_in"]
+        self._refresh_token = ""
+        if "refresh_token" in response["data"]:
+            self._refresh_token = response["data"]["refresh_token"]
 
         for handler in self._handlers:
             handler.store(
@@ -273,7 +276,7 @@ class Authentication(object):
                 client_id=self._client_id,
                 client_secret=self._client_secret,
                 expiry=self._access_token_expiry,
-                refresh_token=self._refresh_token
+                refresh_token=self._refresh_token,
             )
 
     def register_callback_handler(self, handler: Storage) -> None:
@@ -283,5 +286,5 @@ class Authentication(object):
         Args:
             handler: Credential handler implementing Storage
         """
-        logging.debug('Registered a new callback handler')
+        logging.debug("Registered a new callback handler")
         self._handlers.append(handler)

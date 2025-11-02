@@ -1,4 +1,5 @@
 """Tests for endpoints."""
+
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 
@@ -18,22 +19,27 @@ class TestEndPoints(object):
     """Tests for the endpoints."""
 
     @pytest.mark.parametrize(
-        'mock_file,expected_account_id,expected_account_type,expected_description',
+        "mock_file,expected_account_id,expected_account_type,expected_description",
         [
-            ('Accounts', 'acc_123ABC', 'Current Account', 'user_123ABC'),
-            ('Accounts_Flex_Type', 'acc_123ABC', 'Flex', 'monzoflex_123ABC'),
-            ('Accounts_Flex_Loan_Type', 'acc_123ABC', 'Loan (Flex)', 'monzoflexbackingloan_123ABC'),
-            ('Accounts_Loan_Type', 'acc_123ABC', 'Loan', 'loan_123ABC'),
-            ('Accounts_Unknown_Type', 'acc_123ABC', 'UNKNOWN', 'random_123ABC'),
+            ("Accounts", "acc_123ABC", "Current Account", "user_123ABC"),
+            ("Accounts_Flex_Type", "acc_123ABC", "Flex", "monzoflex_123ABC"),
+            (
+                "Accounts_Flex_Loan_Type",
+                "acc_123ABC",
+                "Loan (Flex)",
+                "monzoflexbackingloan_123ABC",
+            ),
+            ("Accounts_Loan_Type", "acc_123ABC", "Loan", "loan_123ABC"),
+            ("Accounts_Unknown_Type", "acc_123ABC", "UNKNOWN", "random_123ABC"),
         ],
     )
     def test_account(
-            self,
-            mock_file: str,
-            expected_account_id: str,
-            expected_account_type: str,
-            expected_description: str,
-            mocker
+        self,
+        mock_file: str,
+        expected_account_id: str,
+        expected_account_type: str,
+        expected_description: str,
+        mocker,
     ):
         """
         Test Account endpoint.
@@ -47,8 +53,8 @@ class TestEndPoints(object):
         """
         mocker.patch.object(
             authentication.HttpIO,
-            'get',
-            return_value=load_data(path='mock_responses', filename=mock_file)
+            "get",
+            return_value=load_data(path="mock_responses", filename=mock_file),
         )
 
         handler = Handler()
@@ -56,12 +62,12 @@ class TestEndPoints(object):
         credentials = handler.fetch()
 
         auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
+            client_id=str(credentials["client_id"]),
+            client_secret=str(credentials["client_secret"]),
+            redirect_url="",
+            access_token=str(credentials["access_token"]),
+            access_token_expiry=int(credentials["expiry"]),
+            refresh_token=str(credentials["refresh_token"]),
         )
 
         auth.register_callback_handler(handler)
@@ -74,19 +80,19 @@ class TestEndPoints(object):
         assert accounts[0].description == expected_description
 
     @pytest.mark.parametrize(
-        'mock_file,expected_balance,expected_currency,expected_spend_today,expected_total_balance',
+        "mock_file,expected_balance,expected_currency,expected_spend_today,expected_total_balance",
         [
-            ('Balance', 40000, 'GBP', -3000, 60000),
+            ("Balance", 40000, "GBP", -3000, 60000),
         ],
     )
     def test_balance(
-            self,
-            mock_file: str,
-            expected_balance: int,
-            expected_currency: str,
-            expected_spend_today: int,
-            expected_total_balance: int,
-            mocker
+        self,
+        mock_file: str,
+        expected_balance: int,
+        expected_currency: str,
+        expected_spend_today: int,
+        expected_total_balance: int,
+        mocker,
     ):
         """
         Test Balance endpoint.
@@ -101,8 +107,8 @@ class TestEndPoints(object):
         """
         mocker.patch.object(
             authentication.HttpIO,
-            'get',
-            return_value=load_data(path='mock_responses', filename=mock_file)
+            "get",
+            return_value=load_data(path="mock_responses", filename=mock_file),
         )
 
         handler = Handler()
@@ -110,17 +116,17 @@ class TestEndPoints(object):
         credentials = handler.fetch()
 
         auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
+            client_id=str(credentials["client_id"]),
+            client_secret=str(credentials["client_secret"]),
+            redirect_url="",
+            access_token=str(credentials["access_token"]),
+            access_token_expiry=int(credentials["expiry"]),
+            refresh_token=str(credentials["refresh_token"]),
         )
 
         auth.register_callback_handler(handler)
 
-        balance = Balance.fetch(auth=auth, account_id='123ABC')
+        balance = Balance.fetch(auth=auth, account_id="123ABC")
 
         assert balance.balance == expected_balance
         assert balance.total_balance == expected_total_balance
@@ -128,32 +134,23 @@ class TestEndPoints(object):
         assert balance.spend_today == expected_spend_today
 
     @pytest.mark.parametrize(
-        'mock_file,expected_external_id,expected_receipt_currency,expected_receipt_merchant,expected_receipt_payments,'
-        + 'expected_receipt_taxes,expected_receipt_total,expected_transaction_id,',
+        "mock_file,expected_external_id,expected_receipt_currency,expected_receipt_merchant,expected_receipt_payments,"
+        + "expected_receipt_taxes,expected_receipt_total,expected_transaction_id,",
         [
-            (
-                    'Receipt',
-                    '123ABC',
-                    'GBP',
-                    {},
-                    [],
-                    [],
-                    665,
-                    'tx_123ABC'
-            ),
+            ("Receipt", "123ABC", "GBP", {}, [], [], 665, "tx_123ABC"),
         ],
     )
     def test_create_receipt(
-            self,
-            mock_file: str,
-            expected_external_id: str,
-            expected_receipt_currency: str,
-            expected_receipt_merchant: MERCHANT_TYPE,
-            expected_receipt_payments: List[PAYMENT_TYPE],
-            expected_receipt_taxes: List[TAX_TYPE],
-            expected_receipt_total: int,
-            expected_transaction_id: str,
-            mocker
+        self,
+        mock_file: str,
+        expected_external_id: str,
+        expected_receipt_currency: str,
+        expected_receipt_merchant: MERCHANT_TYPE,
+        expected_receipt_payments: List[PAYMENT_TYPE],
+        expected_receipt_taxes: List[TAX_TYPE],
+        expected_receipt_total: int,
+        expected_transaction_id: str,
+        mocker,
     ):
         """
         Test Receipt endpoint.
@@ -171,8 +168,8 @@ class TestEndPoints(object):
         """
         mocker.patch.object(
             authentication.HttpIO,
-            'get',
-            return_value=load_data(path='mock_responses', filename=mock_file)
+            "get",
+            return_value=load_data(path="mock_responses", filename=mock_file),
         )
 
         handler = Handler()
@@ -180,17 +177,17 @@ class TestEndPoints(object):
         credentials = handler.fetch()
 
         auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
+            client_id=str(credentials["client_id"]),
+            client_secret=str(credentials["client_secret"]),
+            redirect_url="",
+            access_token=str(credentials["access_token"]),
+            access_token_expiry=int(credentials["expiry"]),
+            refresh_token=str(credentials["refresh_token"]),
         )
 
         auth.register_callback_handler(handler)
 
-        receipt = Receipt.fetch(auth=auth, external_id='123ABC')
+        receipt = Receipt.fetch(auth=auth, external_id="123ABC")
 
         assert len(receipt) == 1
         assert len(receipt[0].receipt_items) == 1
@@ -204,101 +201,100 @@ class TestEndPoints(object):
         assert receipt[0].transaction_id == expected_transaction_id
 
     @pytest.mark.parametrize(
-        'mock_file,expected_account_id,expected_amount,expected_amount_is_pending,expected_atm_fees_detailed,'
-        + 'expected_attachments,expected_can_add_to_tab,expected_can_be_excluded_from_breakdown,'
-        + 'expected_can_be_made_subscription,expected_can_match_transactions_in_categorization,'
-        + 'expected_can_split_the_bill,expected_categories,expected_category,expected_counterparty,expected_created,'
-        + 'expected_currency,expected_dedupe_id,expected_decline_reason,expected_description,expected_fees,'
-        + 'expected_include_in_spending,expected_international,expected_is_load,expected_labels,expected_local_amount,'
-        + 'expected_local_currency,expected_merchant,expected_metadata,expected_notes,expected_originator,'
-        + 'expected_scheme,expected_settled,expected_transaction_id,expected_updated,expected_user_id',
+        "mock_file,expected_account_id,expected_amount,expected_amount_is_pending,expected_atm_fees_detailed,"
+        + "expected_attachments,expected_can_add_to_tab,expected_can_be_excluded_from_breakdown,"
+        + "expected_can_be_made_subscription,expected_can_match_transactions_in_categorization,"
+        + "expected_can_split_the_bill,expected_categories,expected_category,expected_counterparty,expected_created,"
+        + "expected_currency,expected_dedupe_id,expected_decline_reason,expected_description,expected_fees,"
+        + "expected_include_in_spending,expected_international,expected_is_load,expected_labels,expected_local_amount,"
+        + "expected_local_currency,expected_merchant,expected_metadata,expected_notes,expected_originator,"
+        + "expected_scheme,expected_settled,expected_transaction_id,expected_updated,expected_user_id",
         [
             (
-                    'Transaction',
-                    'acc_123ABC',
-                    -2775,
-                    False,
-                    None,
-                    None,
-                    True,
-                    True,
-                    True,
-                    True,
-                    True,
-                    {
-                        'bills': -2775
-                    },
-                    'bills',
-                    {},
-                    datetime(2022, 8, 9, 14, 15, 1),
-                    'GBP',
-                    '123ABC',
-                    '',
-                    'Company                   INTERNET      GBR',
-                    {},
-                    True,
-                    None,
-                    False,
-                    None,
-                    -2775,
-                    'GBP',
-                    'merch_123ABC',
-                    {
-                        "coin_jar_transaction": "tx_123ABC",
-                        "ledger_insertion_id": "entryset_123ABC",
-                        "mastercard_approval_type": "full",
-                        "mastercard_auth_message_id": "mcauthmsg_123ABC",
-                        "mastercard_card_id": "mccard_123ABC",
-                        "mastercard_lifecycle_id": "mclifecycle_123ABC", "mcc": "1234"
-                    },
-                    '',
-                    False,
-                    'mastercard',
-                    datetime(2022, 8, 10, 0, 30, 40),
-                    'tx_123ABC1',
-                    datetime(2022, 8, 10, 0, 30, 40),
-                    'user_ABC123',
+                "Transaction",
+                "acc_123ABC",
+                -2775,
+                False,
+                None,
+                None,
+                True,
+                True,
+                True,
+                True,
+                True,
+                {"bills": -2775},
+                "bills",
+                {},
+                datetime(2022, 8, 9, 14, 15, 1),
+                "GBP",
+                "123ABC",
+                "",
+                "Company                   INTERNET      GBR",
+                {},
+                True,
+                None,
+                False,
+                None,
+                -2775,
+                "GBP",
+                "merch_123ABC",
+                {
+                    "coin_jar_transaction": "tx_123ABC",
+                    "ledger_insertion_id": "entryset_123ABC",
+                    "mastercard_approval_type": "full",
+                    "mastercard_auth_message_id": "mcauthmsg_123ABC",
+                    "mastercard_card_id": "mccard_123ABC",
+                    "mastercard_lifecycle_id": "mclifecycle_123ABC",
+                    "mcc": "1234",
+                },
+                "",
+                False,
+                "mastercard",
+                datetime(2022, 8, 10, 0, 30, 40),
+                "tx_123ABC1",
+                datetime(2022, 8, 10, 0, 30, 40),
+                "user_ABC123",
             ),
         ],
     )
     def test_multiple_transaction(
-            self,
-            mock_file: str,
-            expected_account_id: str,
-            expected_amount: int,
-            expected_amount_is_pending: bool,
-            expected_atm_fees_detailed: str,
-            expected_attachments: str,
-            expected_can_add_to_tab: bool,
-            expected_can_be_excluded_from_breakdown: bool,
-            expected_can_be_made_subscription: bool,
-            expected_can_match_transactions_in_categorization: bool,
-            expected_can_split_the_bill: bool,
-            expected_categories: Dict[str, Union[int, str]],
-            expected_category: str,
-            expected_counterparty: str,
-            expected_created: datetime,
-            expected_currency: str,
-            expected_dedupe_id: str,
-            expected_decline_reason: str,
-            expected_description: str,
-            expected_fees: Dict[str, Any],
-            expected_include_in_spending: bool,
-            expected_international: Optional[str],
-            expected_is_load: bool,
-            expected_labels: str,
-            expected_local_amount: int,
-            expected_local_currency: str,
-            expected_merchant: str,
-            expected_metadata: Dict[str, str],
-            expected_notes: str,
-            expected_originator: bool,
-            expected_scheme: str,
-            expected_settled: Optional[datetime],
-            expected_transaction_id: str,
-            expected_updated: Optional[datetime],
-            expected_user_id: bool,
-            mocker
+        self,
+        mock_file: str,
+        expected_account_id: str,
+        expected_amount: int,
+        expected_amount_is_pending: bool,
+        expected_atm_fees_detailed: str,
+        expected_attachments: str,
+        expected_can_add_to_tab: bool,
+        expected_can_be_excluded_from_breakdown: bool,
+        expected_can_be_made_subscription: bool,
+        expected_can_match_transactions_in_categorization: bool,
+        expected_can_split_the_bill: bool,
+        expected_categories: Dict[str, Union[int, str]],
+        expected_category: str,
+        expected_counterparty: str,
+        expected_created: datetime,
+        expected_currency: str,
+        expected_dedupe_id: str,
+        expected_decline_reason: str,
+        expected_description: str,
+        expected_fees: Dict[str, Any],
+        expected_include_in_spending: bool,
+        expected_international: Optional[str],
+        expected_is_load: bool,
+        expected_labels: str,
+        expected_local_amount: int,
+        expected_local_currency: str,
+        expected_merchant: str,
+        expected_metadata: Dict[str, str],
+        expected_notes: str,
+        expected_originator: bool,
+        expected_scheme: str,
+        expected_settled: Optional[datetime],
+        expected_transaction_id: str,
+        expected_updated: Optional[datetime],
+        expected_user_id: bool,
+        mocker,
     ):
         """
         Test Transaction endpoint.
@@ -343,8 +339,8 @@ class TestEndPoints(object):
         """
         mocker.patch.object(
             authentication.HttpIO,
-            'get',
-            return_value=load_data(path='mock_responses', filename=mock_file)
+            "get",
+            return_value=load_data(path="mock_responses", filename=mock_file),
         )
 
         handler = Handler()
@@ -352,12 +348,12 @@ class TestEndPoints(object):
         credentials = handler.fetch()
 
         auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
+            client_id=str(credentials["client_id"]),
+            client_secret=str(credentials["client_secret"]),
+            redirect_url="",
+            access_token=str(credentials["access_token"]),
+            access_token_expiry=int(credentials["expiry"]),
+            refresh_token=str(credentials["refresh_token"]),
         )
 
         auth.register_callback_handler(handler)
@@ -402,20 +398,26 @@ class TestEndPoints(object):
         assert transaction.user_id == expected_user_id
 
     @pytest.mark.parametrize(
-        'mock_file,expected_account_id,expected_url,expected_webhook_id,expected_count',
+        "mock_file,expected_account_id,expected_url,expected_webhook_id,expected_count",
         [
-            ('WebhooksNone', 'acc_123ABC', None, None, 0),
-            ('WebhooksOne', 'acc_123ABC', 'https://some-url.co.uk', 'webhook_123ABC', 1),
+            ("WebhooksNone", "acc_123ABC", None, None, 0),
+            (
+                "WebhooksOne",
+                "acc_123ABC",
+                "https://some-url.co.uk",
+                "webhook_123ABC",
+                1,
+            ),
         ],
     )
     def test_webhooks(
-            self,
-            mock_file: str,
-            expected_account_id: str,
-            expected_url: Optional[str],
-            expected_webhook_id: Optional[str],
-            expected_count: int,
-            mocker
+        self,
+        mock_file: str,
+        expected_account_id: str,
+        expected_url: Optional[str],
+        expected_webhook_id: Optional[str],
+        expected_count: int,
+        mocker,
     ):
         """
         Test Webhook endpoint.
@@ -430,8 +432,8 @@ class TestEndPoints(object):
         """
         mocker.patch.object(
             authentication.HttpIO,
-            'get',
-            return_value=load_data(path='mock_responses', filename=mock_file)
+            "get",
+            return_value=load_data(path="mock_responses", filename=mock_file),
         )
 
         handler = Handler()
@@ -439,12 +441,12 @@ class TestEndPoints(object):
         credentials = handler.fetch()
 
         auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
+            client_id=str(credentials["client_id"]),
+            client_secret=str(credentials["client_secret"]),
+            redirect_url="",
+            access_token=str(credentials["access_token"]),
+            access_token_expiry=int(credentials["expiry"]),
+            refresh_token=str(credentials["refresh_token"]),
         )
 
         auth.register_callback_handler(handler)
@@ -459,18 +461,16 @@ class TestEndPoints(object):
             assert webhook[0].url == expected_url
 
     @pytest.mark.parametrize(
-        'mock_file, expected_authenticated, expected_client_id, expected_user_id',
-        [
-            ('WhoAmI', True, 'client123', 'user123')
-        ],
+        "mock_file, expected_authenticated, expected_client_id, expected_user_id",
+        [("WhoAmI", True, "client123", "user123")],
     )
     def test_whoami(
-            self,
-            mock_file: str,
-            expected_authenticated: str,
-            expected_client_id: str,
-            expected_user_id: str,
-            mocker
+        self,
+        mock_file: str,
+        expected_authenticated: str,
+        expected_client_id: str,
+        expected_user_id: str,
+        mocker,
     ):
         """
         Test WhoAmI endpoint.
@@ -484,8 +484,8 @@ class TestEndPoints(object):
         """
         mocker.patch.object(
             authentication.HttpIO,
-            'get',
-            return_value=load_data(path='mock_responses', filename=mock_file)
+            "get",
+            return_value=load_data(path="mock_responses", filename=mock_file),
         )
 
         handler = Handler()
@@ -493,12 +493,12 @@ class TestEndPoints(object):
         credentials = handler.fetch()
 
         auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
+            client_id=str(credentials["client_id"]),
+            client_secret=str(credentials["client_secret"]),
+            redirect_url="",
+            access_token=str(credentials["access_token"]),
+            access_token_expiry=int(credentials["expiry"]),
+            refresh_token=str(credentials["refresh_token"]),
         )
 
         auth.register_callback_handler(handler)

@@ -1,12 +1,19 @@
-﻿"""Class that handles HTTP requests."""
+"""Class that handles HTTP requests."""
+
 from json import loads
 from typing import Any, Dict, Optional
 from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from monzo.exceptions import (MonzoAuthenticationError, MonzoGeneralError, MonzoHTTPError, MonzoPermissionsError,
-                              MonzoRateError, MonzoServerError)
+from monzo.exceptions import (
+    MonzoAuthenticationError,
+    MonzoGeneralError,
+    MonzoHTTPError,
+    MonzoPermissionsError,
+    MonzoRateError,
+    MonzoServerError,
+)
 
 DEFAULT_TIMEOUT = 10
 
@@ -60,7 +67,13 @@ class HttpIO(object):
         if data is None:
             data = {}
         parameters = urlencode(data).encode() if data else None
-        return self._perform_request(method='DELETE', path=path, data=parameters, headers=headers, timeout=timeout)
+        return self._perform_request(
+            method="DELETE",
+            path=path,
+            data=parameters,
+            headers=headers,
+            timeout=timeout,
+        )
 
     def get(self, path: str, data=None, headers=None, timeout: int = DEFAULT_TIMEOUT) -> REQUEST_RESPONSE_TYPE:
         """
@@ -81,16 +94,10 @@ class HttpIO(object):
             headers = {}
         parameters = urlencode(data) if data else None
         if parameters:
-            path += f'?{parameters}'
-        return self._perform_request(method='GET', path=path, data=None, headers=headers, timeout=timeout)
+            path += f"?{parameters}"
+        return self._perform_request(method="GET", path=path, data=None, headers=headers, timeout=timeout)
 
-    def patch(
-            self,
-            path: str,
-            data=None,
-            headers=None,
-            timeout: int = DEFAULT_TIMEOUT
-    ) -> REQUEST_RESPONSE_TYPE:
+    def patch(self, path: str, data=None, headers=None, timeout: int = DEFAULT_TIMEOUT) -> REQUEST_RESPONSE_TYPE:
         """
         Perform a PATCH request.
 
@@ -108,15 +115,9 @@ class HttpIO(object):
         if data is None:
             data = {}
         parameters = urlencode(data).encode() if data else None
-        return self._perform_request(method='PATCH', path=path, data=parameters, headers=headers, timeout=timeout)
+        return self._perform_request(method="PATCH", path=path, data=parameters, headers=headers, timeout=timeout)
 
-    def post(
-            self,
-            path: str,
-            data=None,
-            headers=None,
-            timeout: int = DEFAULT_TIMEOUT
-    ) -> REQUEST_RESPONSE_TYPE:
+    def post(self, path: str, data=None, headers=None, timeout: int = DEFAULT_TIMEOUT) -> REQUEST_RESPONSE_TYPE:
         """
         Perform a POST request.
 
@@ -134,15 +135,9 @@ class HttpIO(object):
         if data is None:
             data = {}
         parameters = urlencode(data).encode() if data else None
-        return self._perform_request(method='POST', path=path, data=parameters, headers=headers, timeout=timeout)
+        return self._perform_request(method="POST", path=path, data=parameters, headers=headers, timeout=timeout)
 
-    def put(
-            self,
-            path: str,
-            data=None,
-            headers=None,
-            timeout: int = DEFAULT_TIMEOUT
-    ) -> REQUEST_RESPONSE_TYPE:
+    def put(self, path: str, data=None, headers=None, timeout: int = DEFAULT_TIMEOUT) -> REQUEST_RESPONSE_TYPE:
         """
         Perform a PUT request.
 
@@ -162,16 +157,16 @@ class HttpIO(object):
         if type(data) is dict:
             parameters = urlencode(data).encode() if data else None
         else:
-            parameters = data.encode('utf8')
-        return self._perform_request(method='PUT', path=path, data=parameters, headers=headers, timeout=timeout)
+            parameters = data.encode("utf8")  # type: ignore
+        return self._perform_request(method="PUT", path=path, data=parameters, headers=headers, timeout=timeout)
 
     def _perform_request(
-            self,
-            method: str,
-            path: str,
-            data: Optional[bytes],
-            headers: Dict[str, Any],
-            timeout
+        self,
+        method: str,
+        path: str,
+        data: Optional[bytes],
+        headers: Dict[str, Any],
+        timeout,
     ) -> REQUEST_RESPONSE_TYPE:
         """
         Perform a given request.
@@ -186,19 +181,19 @@ class HttpIO(object):
         Returns:
              Dictionary containing the response code, headers and content
         """
-        full_url = f'{self._url}{path}'
+        full_url = f"{self._url}{path}"
         try:
             request = Request(url=full_url, data=data, headers=headers)
             request.method = method
-            content: str = ''
+            content: str = ""
             response = urlopen(request, timeout=timeout)
             with response as fh:
-                content += fh.read().decode('utf-8')
+                content += fh.read().decode("utf-8")
         except HTTPError as error:
             exception_cls = MONZO_ERROR_MAP.get(error.code, MonzoGeneralError)
             raise exception_cls() from error
         return {
-            'code': response.code,
-            'headers': response.headers,
-            'data': loads(content) if len(content) > 0 else '',
+            "code": response.code,
+            "headers": response.headers,
+            "data": loads(content) if len(content) > 0 else "",
         }

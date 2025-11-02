@@ -1,4 +1,5 @@
 """Class to store credentials on the file system."""
+
 from json import dumps, loads
 from typing import Dict, Union
 
@@ -8,7 +9,7 @@ from monzo.handlers.storage import Storage
 class FileSystem(Storage):
     """Class that will store credentials on the file system."""
 
-    __slots__ = ['_file']
+    __slots__ = ["_file"]
 
     def __init__(self, file: str):
         """
@@ -27,7 +28,7 @@ class FileSystem(Storage):
             Dictionary containing access token, expiry and refresh token
         """
         try:
-            with open(self._file, 'r') as handler:
+            with open(self._file, "r") as handler:
                 content = loads(handler.read())
         except FileNotFoundError:
             content = {}
@@ -35,12 +36,12 @@ class FileSystem(Storage):
         return content
 
     def store(
-            self,
-            access_token: str,
-            client_id: str,
-            client_secret: str,
-            expiry: int,
-            refresh_token: str = ''
+        self,
+        access_token: str,
+        client_id: str,
+        client_secret: str,
+        expiry: int,
+        refresh_token: str = "",
     ) -> None:
         """
         Store the Monzo credentials.
@@ -53,11 +54,11 @@ class FileSystem(Storage):
             refresh_token: Refresh token that can be used to renew an access token
         """
         content = {
-            'access_token': access_token,
-            'client_id': client_id,
-            'client_secret': client_secret,
-            'expiry': expiry,
-            'refresh_token': refresh_token
+            "access_token": access_token,
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "expiry": expiry,
+            "refresh_token": refresh_token,
         }
-        with open(self._file, 'w') as handler:
+        with open(self._file, "w") as handler:
             handler.write(dumps(content))

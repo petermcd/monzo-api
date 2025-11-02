@@ -1,4 +1,5 @@
 """Tests for authentication."""
+
 import pytest
 
 from monzo import authentication
@@ -18,8 +19,8 @@ class TestEndPoints(object):
         """
         httpio_capture = mocker.patch.object(
             authentication.HttpIO,
-            'post',
-            return_value=load_data(path='mock_responses', filename='Logout')
+            "post",
+            return_value=load_data(path="mock_responses", filename="Logout"),
         )
 
         handler = Handler()
@@ -27,25 +28,25 @@ class TestEndPoints(object):
         credentials = handler.fetch()
 
         auth = authentication.Authentication(
-            client_id=credentials['client_id'],
-            client_secret=credentials['client_secret'],
-            redirect_url='',
-            access_token=credentials['access_token'],
-            access_token_expiry=credentials['expiry'],
-            refresh_token=credentials['refresh_token'],
+            client_id=str(credentials["client_id"]),
+            client_secret=str(credentials["client_secret"]),
+            redirect_url="",
+            access_token=str(credentials["access_token"]),
+            access_token_expiry=int(credentials["expiry"]),
+            refresh_token=str(credentials["refresh_token"]),
         )
 
         auth.register_callback_handler(handler)
 
         auth.logout()
 
-        expected_data = load_data(path='mock_payloads', filename='Logout')
+        expected_data = load_data(path="mock_payloads", filename="Logout")
 
         httpio_capture.assert_called_with(
-            data=expected_data['data'],
-            headers=expected_data['headers'],
-            path=expected_data['path'],
-            timeout=expected_data['timeout']
+            data=expected_data["data"],
+            headers=expected_data["headers"],
+            path=expected_data["path"],
+            timeout=expected_data["timeout"],
         )
 
     def test_authenticate_with_empty_token(self):
@@ -53,13 +54,13 @@ class TestEndPoints(object):
         Test authenticate raises an error when the authorization token is empty.
         """
         auth = authentication.Authentication(
-            client_id='client_id',
-            client_secret='client_secret',
-            redirect_url='',
+            client_id="client_id",
+            client_secret="client_secret",
+            redirect_url="",
         )
 
         with pytest.raises(MonzoAuthenticationError):
-            auth.authenticate(authorization_token='', state_token='state_token')
+            auth.authenticate(authorization_token="", state_token="state_token")
 
     def test_authenticate_state_token_mismatch(self, tmp_path, mocker):
         """
@@ -69,16 +70,16 @@ class TestEndPoints(object):
             tmp_path: Pytest fixture for temporary directory.
             mocker: Pytest mocker fixture.
         """
-        mocker.patch('monzo.authentication.gettempdir', return_value=str(tmp_path))
+        mocker.patch("monzo.authentication.gettempdir", return_value=str(tmp_path))
         auth = authentication.Authentication(
-            client_id='client_id',
-            client_secret='client_secret',
-            redirect_url='',
+            client_id="client_id",
+            client_secret="client_secret",
+            redirect_url="",
         )
         state_token = auth.state_token
 
         with pytest.raises(MonzoAuthenticationError):
             auth.authenticate(
-                authorization_token='auth_token',
-                state_token=f'{state_token}invalid',
+                authorization_token="auth_token",
+                state_token=f"{state_token}invalid",
             )

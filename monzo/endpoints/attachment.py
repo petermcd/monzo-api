@@ -1,4 +1,5 @@
 """Class to manage Attachments."""
+
 from __future__ import annotations
 
 from datetime import datetime
@@ -11,9 +12,9 @@ from monzo.exceptions import MonzoGeneralError
 from monzo.helpers import create_date
 
 SUPPORTED_ATTACHMENT_EXTENSIONS = {
-    'jpeg': 'image/jpeg',
-    'jpg': 'image/jpg',
-    'png': 'image/png',
+    "jpeg": "image/jpeg",
+    "jpg": "image/jpg",
+    "png": "image/png",
 }
 
 
@@ -25,23 +26,23 @@ class Attachment(Monzo):
     """
 
     __slots__ = [
-        '_attachment_id',
-        '_user_id',
-        '_transaction_id',
-        '_url',
-        '_file_type',
-        '_created',
+        "_attachment_id",
+        "_user_id",
+        "_transaction_id",
+        "_url",
+        "_file_type",
+        "_created",
     ]
 
     def __init__(
-            self,
-            auth: Authentication,
-            attachment_id: str,
-            user_id: str,
-            transaction_id: str,
-            url: str,
-            file_type: str,
-            created: datetime
+        self,
+        auth: Authentication,
+        attachment_id: str,
+        user_id: str,
+        transaction_id: str,
+        url: str,
+        file_type: str,
+        created: datetime,
     ):
         """
         Initialize Attachment.
@@ -115,22 +116,15 @@ class Attachment(Monzo):
 
     def delete(self) -> None:
         """Delete the attachment."""
-        data = {
-            'id': self.attachment_id
-        }
+        data = {"id": self.attachment_id}
         self._monzo_auth.make_request(
-            path='/attachment/deregister',
-            method='POST',
+            path="/attachment/deregister",
+            method="POST",
             data=data,
         )
 
     @classmethod
-    def create_attachment(
-            cls,
-            auth: Authentication,
-            transaction_id: str,
-            url: str
-    ) -> Attachment:
+    def create_attachment(cls, auth: Authentication, transaction_id: str, url: str) -> Attachment:
         """
         Create a new image attachment.
 
@@ -147,33 +141,29 @@ class Attachment(Monzo):
         file_url = urlparse(url)
         _, file_extension = splitext(url)
         if file_extension not in SUPPORTED_ATTACHMENT_EXTENSIONS:
-            raise MonzoGeneralError('Unsupported file type')
+            raise MonzoGeneralError("Unsupported file type")
         file_type = SUPPORTED_ATTACHMENT_EXTENSIONS[file_extension]
         if file_url.netloc:
             file_type = Attachment._upload_file(auth=auth, url=url, file_type=file_type)
 
         data = {
-            'external_id': transaction_id,
-            'file_type': file_type,
-            'file_url': file_url,
+            "external_id": transaction_id,
+            "file_type": file_type,
+            "file_url": file_url,
         }
-        response = auth.make_request(
-            path='',
-            method='POST',
-            data=data
-        )
+        response = auth.make_request(path="", method="POST", data=data)
 
-        if response['code'] != 200:
-            raise MonzoGeneralError('Failed to create attachment')
+        if response["code"] != 200:
+            raise MonzoGeneralError("Failed to create attachment")
 
         return Attachment(
             auth=auth,
-            attachment_id=response['data']['attachment']['id'],
-            user_id=response['data']['attachment']['user_id'],
-            transaction_id=response['data']['attachment']['external_id'],
-            url=response['data']['attachment']['file_url'],
-            file_type=response['data']['attachment']['file_type'],
-            created=create_date(response['data']['attachment']['created']),
+            attachment_id=response["data"]["attachment"]["id"],
+            user_id=response["data"]["attachment"]["user_id"],
+            transaction_id=response["data"]["attachment"]["external_id"],
+            url=response["data"]["attachment"]["file_url"],
+            file_type=response["data"]["attachment"]["file_type"],
+            created=create_date(response["data"]["attachment"]["created"]),
         )
 
     @classmethod
@@ -190,17 +180,17 @@ class Attachment(Monzo):
             URL of the uploaded file
         """
         if not isfile(url):
-            raise MonzoGeneralError('File does not exist')
+            raise MonzoGeneralError("File does not exist")
         content_length = getsize(url)
         data = {
-            'file_name': None,
-            'file_type': file_type,
-            'content_length': content_length,
+            "file_name": None,
+            "file_type": file_type,
+            "content_length": content_length,
         }
         response = auth.make_request(
-            path='',
-            method='POST',
+            path="",
+            method="POST",
             data=data,
         )
         #  TODO upload file
-        return response['data']['file_url']
+        return response["data"]["file_url"]
