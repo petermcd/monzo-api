@@ -1,6 +1,6 @@
 [project]
 name = "Monzo-API"
-version = "1.2.2"
+version = "1.2.3"
 authors = [{ name = "Peter McDonald", email = "git@petermcdonald.co.uk"}]
 description = "Package to interact with the API provided by Monzo bank"
 keywords = ["monzo", "bank", "api"]
@@ -29,6 +29,7 @@ documentation = "https://monzo-api.readthedocs.io"
 
 [dependency-groups]
 dev = [
+    "pygments>=2.20.0", # To resolve security vulnerabilities in dependencies pytest sphinx
     "pytest>=8.4.2",
     "pytest-cov>=7.0.0",
     "pytest-mock>=3.15.1",
