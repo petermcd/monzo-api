@@ -1,3 +1,4 @@
+---
 name: "CodeQL"
 
 on:
@@ -10,27 +11,38 @@ on:
   schedule:
     - cron: '21 1 * * 2'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
     permissions:
-      actions: read
-      contents: read
-      security-events: write
+      actions: read # required for actions/checkout to work.
+      contents: read # required for CodeQL to analyze the repository's code.
+      security-events: write # required for CodeQL to create security events.
+
     strategy:
       fail-fast: false
       matrix:
         language:
           - 'python'
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+
       - name: Initialize CodeQL
         uses: github/codeql-action/init@16df4fbc19aea13d921737861d6c622bf3cefe23
         with:
           languages: ${{ matrix.language }}
+
       - name: Autobuild
         uses: github/codeql-action/autobuild@192325c86100d080feab897ff886c34abd4c83a3
+
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@192325c86100d080feab897ff886c34abd4c83a3

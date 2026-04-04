@@ -1,3 +1,4 @@
+---
 name: Zizmor
 
 on:
@@ -8,6 +9,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions: {}
 
 jobs:
@@ -15,9 +20,9 @@ jobs:
     name: Zizmor
     runs-on: ubuntu-latest
     permissions:
-      security-events: write
-      contents: read
-      actions: read
+      security-events: write # Allows zizmor to write security events.
+      contents: read # Required for private repositories.
+      actions: read # Required for private repositories.
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
@@ -26,4 +31,6 @@ jobs:
       - name: Run zizmor 🌈
         uses: zizmorcore/zizmor-action@71321a20a9ded102f6e9ce5718a2fcec2c4f70d8
         with:
-          inputs: .github/
+          inputs: |
+            .github/*.yml
+            .github/workflows/*.yml
