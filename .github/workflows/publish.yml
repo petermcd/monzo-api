@@ -11,7 +11,8 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  id-token: write # Allows actions/checkout to access the GitHub token for authentication.
+  contents: read # Required by actions/checkout to read the repository contents.
+  id-token: write # Required for OIDC authentication when publishing to PyPI.
 
 jobs:
   pypi-publish:

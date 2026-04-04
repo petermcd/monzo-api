@@ -18,7 +18,6 @@ env:
   SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
 permissions:
-  id-token: write # Allows actions/checkout to access the GitHub token for authentication.
   contents: read # Allows actions/checkout to read the repository contents.
 
 jobs:
@@ -54,5 +53,5 @@ jobs:
       - name: Run SonarQube
         uses: sonarsource/sonarqube-scan-action@299e4b793aaa83bf2aba7c9c14bedbb485688ec4
         env:
-          SONAR_TOKEN: $SONAR_TOKEN
-          SONAR_HOST_URL: $SONAR_HOST_URL
+          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
