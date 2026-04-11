@@ -27,7 +27,7 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - "3.10"
+          - "3.12"
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
@@ -48,8 +48,8 @@ jobs:
         run: uv run ruff format --diff --check
       - name: Ty
         run: uv run ty check
-      #- name: Troml
-      #  run: uv run troml check
+      - name: Troml
+        run: uv run troml check
       - name: Run SonarQube
         uses: sonarsource/sonarqube-scan-action@299e4b793aaa83bf2aba7c9c14bedbb485688ec4
         env:

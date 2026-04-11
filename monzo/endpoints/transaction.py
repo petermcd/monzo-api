@@ -528,7 +528,7 @@ class Transaction(Monzo):
         """
         if expand is None:
             expand = []
-        data = {
+        data: dict[str, int | str] = {
             "account_id": account_id,
         }
         if expand:
