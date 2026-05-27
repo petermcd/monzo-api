@@ -114,9 +114,9 @@ class Authentication(object):
             Dictionary containing headers and data from query response
 
         Raises:
-            MonzoHTTPError: On using invalid method
+            MonzoHTTPError: On using an invalid method
         """
-        if self._access_token and self._access_token_expiry - time() < 0:
+        if self._access_token and self._access_token_expiry - time() < 60:
             self.refresh_access()
         if data is None:
             data = {}
