@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 
 import pytest
 
@@ -12,5 +12,12 @@ def test_unknown_status_code_raises_monzogeneralerror():
     http = HttpIO("https://example.com")
     error = HTTPError(url="https://example.com/test", code=418, msg="teapot", hdrs=Message(), fp=None)
     with patch("monzo.httpio.urlopen", side_effect=error):
+        with pytest.raises(MonzoGeneralError):
+            http.get("/test")
+
+
+def test_url_error_raises_monzogeneralerror():
+    http = HttpIO("https://example.com")
+    with patch("monzo.httpio.urlopen", side_effect=URLError("connection refused")):
         with pytest.raises(MonzoGeneralError):
             http.get("/test")

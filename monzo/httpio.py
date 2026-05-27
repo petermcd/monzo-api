@@ -3,7 +3,7 @@
 import ssl
 from json import loads
 from typing import Any, Dict, Optional
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
@@ -195,6 +195,8 @@ class HttpIO(object):
         except HTTPError as error:
             exception_cls = MONZO_ERROR_MAP.get(error.code, MonzoGeneralError)
             raise exception_cls() from error
+        except URLError as error:
+            raise MonzoGeneralError("Network error communicating with Monzo API") from error
         return {
             "code": response.code,
             "headers": response.headers,
