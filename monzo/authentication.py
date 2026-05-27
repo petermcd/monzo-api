@@ -7,8 +7,9 @@ from pathlib import Path, PurePath
 from tempfile import gettempdir
 from time import time
 from typing import List
+from urllib.parse import urlparse
 
-from monzo.exceptions import MonzoAuthenticationError, MonzoError, MonzoHTTPError
+from monzo.exceptions import MonzoArgumentError, MonzoAuthenticationError, MonzoError, MonzoHTTPError
 from monzo.handlers.storage import Storage
 from monzo.httpio import DEFAULT_TIMEOUT, REQUEST_RESPONSE_TYPE, HttpIO
 
@@ -54,6 +55,13 @@ class Authentication(object):
             access_token_expiry: Token expiry as a unix timestamp
             refresh_token: Refresh token to renew access tokens
         """
+        if redirect_url:
+            parsed = urlparse(redirect_url)
+            is_localhost = parsed.hostname in ("localhost", "127.0.0.1")
+            if not parsed.netloc or parsed.scheme not in ("https", "http"):
+                raise MonzoArgumentError("redirect_url must be a valid URL")
+            if parsed.scheme == "http" and not is_localhost:
+                raise MonzoArgumentError("HTTP redirect URLs are only permitted for localhost")
         self._access_token: str = access_token
         self._access_token_expiry: int = access_token_expiry
         self._client_id: str = client_id

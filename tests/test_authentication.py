@@ -3,12 +3,58 @@
 import pytest
 
 from monzo import authentication
-from monzo.exceptions import MonzoAuthenticationError
+from monzo.exceptions import MonzoArgumentError, MonzoAuthenticationError
 from tests.helpers import Handler, load_data
 
 
 class TestEndPoints(object):
     """Tests for the authentication."""
+
+    def test_redirect_url_https_accepted(self):
+        """Test that a valid HTTPS redirect URL is accepted."""
+        auth = authentication.Authentication(
+            client_id="client_id",
+            client_secret="client_secret",
+            redirect_url="https://example.com/callback",
+        )
+        assert auth._redirect_url == "https://example.com/callback"
+
+    def test_redirect_url_localhost_http_accepted(self):
+        """Test that HTTP is accepted for localhost redirect URLs."""
+        for host in ("http://localhost/callback", "http://127.0.0.1/callback"):
+            auth = authentication.Authentication(
+                client_id="client_id",
+                client_secret="client_secret",
+                redirect_url=host,
+            )
+            assert auth._redirect_url == host
+
+    def test_redirect_url_http_non_localhost_rejected(self):
+        """Test that HTTP is rejected for non-localhost redirect URLs."""
+        with pytest.raises(MonzoArgumentError):
+            authentication.Authentication(
+                client_id="client_id",
+                client_secret="client_secret",
+                redirect_url="http://example.com/callback",
+            )
+
+    def test_redirect_url_invalid_rejected(self):
+        """Test that a malformed redirect URL is rejected."""
+        with pytest.raises(MonzoArgumentError):
+            authentication.Authentication(
+                client_id="client_id",
+                client_secret="client_secret",
+                redirect_url="not-a-url",
+            )
+
+    def test_redirect_url_empty_accepted(self):
+        """Test that an empty redirect URL is accepted (token-only usage)."""
+        auth = authentication.Authentication(
+            client_id="client_id",
+            client_secret="client_secret",
+            redirect_url="",
+        )
+        assert auth._redirect_url == ""
 
     def test_logout(self, mocker):
         """

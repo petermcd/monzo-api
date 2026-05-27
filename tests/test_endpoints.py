@@ -12,6 +12,7 @@ from monzo.endpoints.receipt import MERCHANT_TYPE, PAYMENT_TYPE, TAX_TYPE, Recei
 from monzo.endpoints.transaction import Transaction
 from monzo.endpoints.webhooks import Webhook
 from monzo.endpoints.whoami import WhoAmI
+from monzo.exceptions import MonzoArgumentError
 from tests.helpers import Handler, load_data
 
 
@@ -459,6 +460,56 @@ class TestEndPoints(object):
             assert webhook[0].account_id == expected_account_id
             assert webhook[0].webhook_id == expected_webhook_id
             assert webhook[0].url == expected_url
+
+    def test_webhook_create_rejects_non_https_url(self, mocker):
+        """Test that Webhook.create raises MonzoArgumentError for non-HTTPS URLs."""
+        handler = Handler()
+        credentials = handler.fetch()
+        auth = authentication.Authentication(
+            client_id="cde456",
+            client_secret="fgh789",
+            redirect_url="",
+            access_token=str(credentials["access_token"]),
+            access_token_expiry=int(credentials["expiry"]),
+            refresh_token=str(credentials["refresh_token"]),
+        )
+        with pytest.raises(MonzoArgumentError):
+            Webhook.create(auth=auth, account_id="acc_123ABC", url="http://example.com/webhook")
+
+    def test_webhook_create_rejects_invalid_url(self, mocker):
+        """Test that Webhook.create raises MonzoArgumentError for a non-URL string."""
+        handler = Handler()
+        credentials = handler.fetch()
+        auth = authentication.Authentication(
+            client_id="cde456",
+            client_secret="fgh789",
+            redirect_url="",
+            access_token=str(credentials["access_token"]),
+            access_token_expiry=int(credentials["expiry"]),
+            refresh_token=str(credentials["refresh_token"]),
+        )
+        with pytest.raises(MonzoArgumentError):
+            Webhook.create(auth=auth, account_id="acc_123ABC", url="not-a-url")
+
+    def test_webhook_create_accepts_https_url(self, mocker):
+        """Test that Webhook.create accepts a valid HTTPS URL."""
+        mocker.patch.object(
+            authentication.HttpIO,
+            "post",
+            return_value=load_data(path="mock_responses", filename="WebhooksCreated"),
+        )
+        handler = Handler()
+        credentials = handler.fetch()
+        auth = authentication.Authentication(
+            client_id="cde456",
+            client_secret="fgh789",
+            redirect_url="",
+            access_token=str(credentials["access_token"]),
+            access_token_expiry=int(credentials["expiry"]),
+            refresh_token=str(credentials["refresh_token"]),
+        )
+        webhook = Webhook.create(auth=auth, account_id="acc_123ABC", url="https://some-url.co.uk")
+        assert webhook.url == "https://some-url.co.uk"
 
     @pytest.mark.parametrize(
         "mock_file, expected_authenticated, expected_client_id, expected_user_id",

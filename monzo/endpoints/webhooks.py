@@ -3,16 +3,18 @@
 from __future__ import annotations
 
 from typing import List
+from urllib.parse import urlparse
 
 from monzo.authentication import Authentication
 from monzo.endpoints.monzo import Monzo
+from monzo.exceptions import MonzoArgumentError
 
 
 class Webhook(Monzo):
     """
     Class to manage webhooks.
 
-    Class provides methods to create, fetch and delete webhooks.
+    Class provides methods to create, fetch, and delete webhooks.
     """
 
     __slots__ = ["_account_id", "_url", "_webhook_id"]
@@ -88,7 +90,13 @@ class Webhook(Monzo):
 
         Returns:
             Created webhook
+
+        Raises:
+            MonzoArgumentError: On a non-HTTPS webhook URL
         """
+        parsed = urlparse(url)
+        if parsed.scheme != "https" or not parsed.netloc:
+            raise MonzoArgumentError("Webhook URL must be a valid HTTPS URL")
         webhook = Webhook(auth=auth, account_id=account_id, url=url, webhook_id="NEW")
         webhook._create()
         return webhook

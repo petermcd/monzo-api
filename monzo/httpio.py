@@ -7,8 +7,6 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-_SSL_CONTEXT = ssl.create_default_context()
-
 from monzo.exceptions import (
     MonzoAuthenticationError,
     MonzoGeneralError,
@@ -17,6 +15,8 @@ from monzo.exceptions import (
     MonzoRateError,
     MonzoServerError,
 )
+
+_SSL_CONTEXT = ssl.create_default_context()
 
 DEFAULT_TIMEOUT = 10
 
