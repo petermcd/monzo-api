@@ -62,6 +62,44 @@ class TestEndPoints(object):
         with pytest.raises(MonzoAuthenticationError):
             auth.authenticate(authorization_token="", state_token="state_token")
 
+    def test_is_authenticated_with_valid_token(self):
+        """Test is_authenticated returns True when a token exists and has not expired."""
+        from time import time
+
+        auth = authentication.Authentication(
+            client_id="client_id",
+            client_secret="client_secret",
+            redirect_url="",
+            access_token="valid_token",
+            access_token_expiry=int(time()) + 3600,
+        )
+
+        assert auth.is_authenticated is True
+
+    def test_is_authenticated_with_expired_token(self):
+        """Test is_authenticated returns False when the token has expired."""
+        from time import time
+
+        auth = authentication.Authentication(
+            client_id="client_id",
+            client_secret="client_secret",
+            redirect_url="",
+            access_token="expired_token",
+            access_token_expiry=int(time()) - 1,
+        )
+
+        assert auth.is_authenticated is False
+
+    def test_is_authenticated_with_no_token(self):
+        """Test is_authenticated returns False when no access token is set."""
+        auth = authentication.Authentication(
+            client_id="client_id",
+            client_secret="client_secret",
+            redirect_url="",
+        )
+
+        assert auth.is_authenticated is False
+
     def test_authenticate_state_token_mismatch(self, tmp_path, mocker):
         """
         Test authenticate raises an error when the provided state token does not match.

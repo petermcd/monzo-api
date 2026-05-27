@@ -170,6 +170,16 @@ class Authentication(object):
         return self._access_token or ""
 
     @property
+    def is_authenticated(self) -> bool:
+        """
+        Check whether a valid, non-expired access token is held.
+
+        Returns:
+            True if an access token exists and has not yet expired, otherwise False
+        """
+        return bool(self._access_token) and self._access_token_expiry - time() > 0
+
+    @property
     def access_token_expiry(self) -> int:
         """
         Property for access token expiry.
