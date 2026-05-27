@@ -28,6 +28,7 @@ documentation = "https://monzo-api.readthedocs.io"
 
 [dependency-groups]
 dev = [
+    "pip-audit>=2.9.0",
     "pygments>=2.20.0", # To resolve security vulnerabilities in dependencies pytest sphinx
     "pytest>=9.0.3",
     "pytest-cov>=7.1.0",
