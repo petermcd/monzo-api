@@ -140,10 +140,11 @@ class Attachment(Monzo):
         """
         file_url = urlparse(url)
         _, file_extension = splitext(url)
-        if file_extension not in SUPPORTED_ATTACHMENT_EXTENSIONS:
+        ext = file_extension.lstrip(".")
+        if ext not in SUPPORTED_ATTACHMENT_EXTENSIONS:
             raise MonzoGeneralError("Unsupported file type")
-        file_type = SUPPORTED_ATTACHMENT_EXTENSIONS[file_extension]
-        if file_url.netloc:
+        file_type = SUPPORTED_ATTACHMENT_EXTENSIONS[ext]
+        if not file_url.netloc:
             file_type = Attachment._upload_file(auth=auth, url=url, file_type=file_type)
 
         data = {
