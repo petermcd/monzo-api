@@ -1,10 +1,13 @@
 """Class that handles HTTP requests."""
 
+import ssl
 from json import loads
 from typing import Any, Dict, Optional
 from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
+
+_SSL_CONTEXT = ssl.create_default_context()
 
 from monzo.exceptions import (
     MonzoAuthenticationError,
@@ -186,7 +189,7 @@ class HttpIO(object):
             request = Request(url=full_url, data=data, headers=headers)
             request.method = method
             content: str = ""
-            response = urlopen(request, timeout=timeout)
+            response = urlopen(request, timeout=timeout, context=_SSL_CONTEXT)
             with response as fh:
                 content += fh.read().decode("utf-8")
         except HTTPError as error:
