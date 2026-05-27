@@ -1,5 +1,6 @@
 """Class to store credentials on the file system."""
 
+import os
 from json import dumps, loads
 from typing import Dict, Union
 
@@ -60,5 +61,7 @@ class FileSystem(Storage):
             "expiry": expiry,
             "refresh_token": refresh_token,
         }
-        with open(self._file, "w") as handler:
+        fd = os.open(self._file, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+        with os.fdopen(fd, "w") as handler:
             handler.write(dumps(content))
+        os.chmod(self._file, 0o600)
