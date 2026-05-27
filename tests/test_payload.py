@@ -79,8 +79,8 @@ class TestHttpIO(object):
         credentials = handler.fetch()
 
         auth = authentication.Authentication(
-            client_id=str(credentials["client_id"]),
-            client_secret=str(credentials["client_secret"]),
+            client_id="cde456",
+            client_secret="fgh789",
             redirect_url="",
             access_token=str(credentials["access_token"]),
             access_token_expiry=int(credentials["expiry"]),
@@ -143,8 +143,8 @@ class TestHttpIO(object):
         credentials = handler.fetch()
 
         auth = authentication.Authentication(
-            client_id=str(credentials["client_id"]),
-            client_secret=str(credentials["client_secret"]),
+            client_id="cde456",
+            client_secret="fgh789",
             redirect_url="",
             access_token=str(credentials["access_token"]),
             access_token_expiry=int(credentials["expiry"]),
@@ -219,8 +219,8 @@ class TestHttpIO(object):
         credentials = handler.fetch()
 
         auth = authentication.Authentication(
-            client_id=str(credentials["client_id"]),
-            client_secret=str(credentials["client_secret"]),
+            client_id="cde456",
+            client_secret="fgh789",
             redirect_url="",
             access_token=str(credentials["access_token"]),
             access_token_expiry=int(credentials["expiry"]),
@@ -283,8 +283,8 @@ class TestHttpIO(object):
         credentials = handler.fetch()
 
         auth = authentication.Authentication(
-            client_id=str(credentials["client_id"]),
-            client_secret=str(credentials["client_secret"]),
+            client_id="cde456",
+            client_secret="fgh789",
             redirect_url="",
             access_token=str(credentials["access_token"]),
             access_token_expiry=int(credentials["expiry"]),
@@ -371,8 +371,8 @@ class TestHttpIO(object):
         credentials = handler.fetch()
 
         auth = authentication.Authentication(
-            client_id=str(credentials["client_id"]),
-            client_secret=str(credentials["client_secret"]),
+            client_id="cde456",
+            client_secret="fgh789",
             redirect_url="",
             access_token=str(credentials["access_token"]),
             access_token_expiry=int(credentials["expiry"]),

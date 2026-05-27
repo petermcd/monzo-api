@@ -28,8 +28,6 @@ class Handler(Storage):
 
     __slots__ = (
         "_access_token",
-        "_client_id",
-        "_client_secret",
         "_expiry",
         "_refresh_token",
     )
@@ -39,8 +37,6 @@ class Handler(Storage):
         expiry = int((datetime.now() + timedelta(days=1)).timestamp())
 
         self._access_token = "abc123"
-        self._client_id = "cde456"
-        self._client_secret = "fgh789"
         self._expiry = expiry
         self._refresh_token = "ijk012"
 
@@ -53,8 +49,6 @@ class Handler(Storage):
         """
         return {
             "access_token": self._access_token,
-            "client_id": self._client_id,
-            "client_secret": self._client_secret,
             "expiry": self._expiry,
             "refresh_token": self._refresh_token,
         }
@@ -62,8 +56,6 @@ class Handler(Storage):
     def store(
         self,
         access_token: str,
-        client_id: str,
-        client_secret: str,
         expiry: int,
         refresh_token: str = "",
     ) -> None:
@@ -72,13 +64,9 @@ class Handler(Storage):
 
         Args:
             access_token: New access token
-            client_id: Monzo client ID
-            client_secret: Monzo client secret
             expiry: Access token expiry as a unix timestamp
             refresh_token: Refresh token that can be used to renew an access token
         """
         self._access_token = access_token
-        self._client_id = client_id
-        self._client_secret = client_secret
         self._expiry = expiry
         self._refresh_token = refresh_token

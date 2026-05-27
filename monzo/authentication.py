@@ -283,8 +283,6 @@ class Authentication(object):
         for handler in self._handlers:
             handler.store(
                 access_token=self._access_token,
-                client_id=self._client_id,
-                client_secret=self._client_secret,
                 expiry=self._access_token_expiry,
                 refresh_token=self._refresh_token,
             )

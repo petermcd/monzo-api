@@ -25,8 +25,6 @@ class Storage(ABC):
     def store(
         self,
         access_token: str,
-        client_id: str,
-        client_secret: str,
         expiry: int,
         refresh_token: str = "",
     ) -> None:
@@ -35,8 +33,6 @@ class Storage(ABC):
 
         Args:
             access_token: New access token
-            client_id: Monzo client ID
-            client_secret: Monzo client secret
             expiry: Access token expiry as a unix timestamp
             refresh_token: Refresh token that can be used to renew an access token
         """
