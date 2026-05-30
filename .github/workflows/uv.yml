@@ -59,6 +59,21 @@ jobs:
         run: uv run ty check
       - name: Troml
         run: uv run troml check
+  sonarqube:
+    name: sonarqube
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python-version:
+          - "3.12"
+        os:
+          - "ubuntu-latest"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          fetch-depth: 0
+          persist-credentials: false
       - name: Run SonarQube
         uses: sonarsource/sonarqube-scan-action@59db25f34e16620e48ab4bb9e4a5dce155cb5432
         env:
