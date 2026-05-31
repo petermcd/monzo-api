@@ -4,7 +4,7 @@ Change Log
 **1.2.5**
 
 - Added cosmic-ray configuration.
-- Added pip-audit test to Github actions.
+- Added pip-audit test to GitHub Actions.
 - Expanded testing to include 3.12 - 3.14 including free threading tests for 3.13 and 3.14.
 - Retroactively updated change log to include more detail on previous releases.
 
