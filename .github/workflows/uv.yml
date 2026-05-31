@@ -59,6 +59,8 @@ jobs:
         run: uv run ty check
       - name: Troml
         run: uv run troml check
+      - name: pip-audit
+        run: uv run --with pip-audit pip-audit --strict
   sonarqube:
     name: sonarqube
     runs-on: ${{ matrix.os }}
