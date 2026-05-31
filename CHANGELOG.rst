@@ -10,7 +10,7 @@ Change Log
 
 **1.2.4**
 
-- Updated python version from >=3.10 to >=3.12.
+- Updated Python version from >=3.10 to >=3.12.
 - Added Zizmor github action workflow to run tests on pull requests and pushes to main.
 - Updated dev dependencies to latest versions.
 - Updated github action workflow versions and branch names.
