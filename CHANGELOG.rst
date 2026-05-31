@@ -14,7 +14,7 @@ Change Log
 - Added Zizmor github action workflow to run tests on pull requests and pushes to main.
 - Updated dev dependencies to latest versions.
 - Updated github action workflow versions and branch names.
-- Corrected Sonarqube configuration.
+- Corrected SonarQube configuration.
 
 **1.2.3**
 
