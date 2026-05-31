@@ -1,6 +1,6 @@
 [project]
 name = "Monzo-API"
-version = "1.2.4"
+version = "1.2.5"
 authors = [{ name = "Peter McDonald", email = "git@petermcdonald.co.uk"}]
 description = "Package to interact with the API provided by Monzo bank"
 keywords = ["monzo", "bank", "api"]
@@ -28,7 +28,9 @@ documentation = "https://monzo-api.readthedocs.io"
 
 [dependency-groups]
 dev = [
+    "cosmic-ray>=8.4.6",
     "idna>=3.16", # To resolve security vulnerabilities in dependencies pip-audit
+    "pip-audit>=2.9.0",
     "pygments>=2.20.0", # To resolve security vulnerabilities in dependencies pytest sphinx
     "pytest>=9.0.3",
     "pytest-cov>=7.1.0",
@@ -46,3 +48,12 @@ addopts = "--cov=monzo --cov-report term-missing --cov-report xml:coverage.xml"
 
 [tool.ruff]
 line-length = 120
+
+[cosmic-ray]
+module-path = "monzo"
+timeout = 10.0
+excluded-modules = []
+test-command = "uv run pytest"
+
+[cosmic-ray.distributor]
+name = "local"

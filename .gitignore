@@ -2,6 +2,8 @@
 monzo.json
 .scannerwork/
 
+*.sqlite
+
 .idea/
 
 # Byte-compiled / optimized / DLL files

@@ -1,6 +1,33 @@
 Change Log
 =====================================
 
+**1.2.5**
+
+- Added cosmic-ray configuration.
+- Added pip-audit test to GitHub Actions.
+- Expanded testing to include 3.12 - 3.14 including free threading tests for 3.13 and 3.14.
+- Retroactively updated change log to include more detail on previous releases.
+
+**1.2.4**
+
+- Updated Python version from >=3.10 to >=3.12.
+- Added Zizmor github action workflow to run tests on pull requests and pushes to main.
+- Updated dev dependencies to latest versions.
+- Updated github action workflow versions and branch names.
+- Corrected SonarQube configuration.
+
+**1.2.3**
+
+- Updated dev dependencies to latest versions.
+- Updated github action workflow versions and branch names.
+
+**1.2.2**
+
+- Implemented pagination for transactions endpoint.
+- Formatting code fixes.
+- Updated github action workflow versions and branch names.
+- Improved testing for authentication and httpio.
+
 **1.2.1**
 
 - Updated errors in documentation and method definitions.
