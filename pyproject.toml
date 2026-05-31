@@ -1,6 +1,6 @@
 [project]
 name = "Monzo-API"
-version = "1.2.4"
+version = "1.2.5"
 authors = [{ name = "Peter McDonald", email = "git@petermcdonald.co.uk"}]
 description = "Package to interact with the API provided by Monzo bank"
 keywords = ["monzo", "bank", "api"]
