@@ -1,7 +1,7 @@
 """Class that handles HTTP requests."""
 
 from json import loads
-from typing import Any, Dict, Optional
+from typing import Any
 from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -17,7 +17,7 @@ from monzo.exceptions import (
 
 DEFAULT_TIMEOUT = 10
 
-REQUEST_RESPONSE_TYPE = Dict[str, Any]
+REQUEST_RESPONSE_TYPE = dict[str, Any]
 
 MONZO_ERROR_MAP = {
     400: MonzoHTTPError,
@@ -32,7 +32,7 @@ MONZO_ERROR_MAP = {
 }
 
 
-class HttpIO(object):
+class HttpIO:
     """
     Class to facilitate http requests.
 
@@ -164,8 +164,8 @@ class HttpIO(object):
         self,
         method: str,
         path: str,
-        data: Optional[bytes],
-        headers: Dict[str, Any],
+        data: bytes | None,
+        headers: dict[str, Any],
         timeout,
     ) -> REQUEST_RESPONSE_TYPE:
         """

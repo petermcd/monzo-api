@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
-
 from monzo.authentication import Authentication
 from monzo.endpoints.monzo import Monzo
 from monzo.exceptions import MonzoArgumentError
@@ -46,7 +44,7 @@ class FeedItem(Monzo):
         auth: Authentication,
         account_id: str,
         feed_type: str,
-        params: Dict[str, str],
+        params: dict[str, str],
         url: str = "",
     ):
         """
@@ -57,15 +55,15 @@ class FeedItem(Monzo):
             account_id: ID for the account to create the feed item for
             feed_type: Type of feed item to create (must be in FEED_ITEM_TYPES)
             params: Parameters for the feed item.
-            url: Optional URL for feed item
+            url: Optional URL for a feed item
         """
         self._account_id: str = account_id
         self._feed_type: str = feed_type
-        self._params: Dict[str, str] = params
-        self._url: Optional[str] = url
+        self._params: dict[str, str] = params
+        self._url: str | None = url
         super().__init__(auth=auth)
 
-    def _validate_feed_params(self) -> Dict[str, str]:
+    def _validate_feed_params(self) -> dict[str, str]:
         """
         Clean the params dictionary with the valid params for the feed type.
 
@@ -73,7 +71,7 @@ class FeedItem(Monzo):
             MonzoArgumentError: On missing required parameters
 
         Returns:
-            Dictionary of parameters only containing valid keys
+            Dictionary of parameters only contains valid keys
         """
         if self._feed_type.lower() not in FEED_ITEM_TYPES:
             raise MonzoArgumentError("Feed type appears invalid")
@@ -110,7 +108,7 @@ class FeedItem(Monzo):
         auth: Authentication,
         account_id: str,
         feed_type: str,
-        params: Dict[str, str],
+        params: dict[str, str],
         url: str = "",
     ) -> FeedItem:
         """
@@ -121,7 +119,7 @@ class FeedItem(Monzo):
             account_id: ID for the account to create the feed item for
             feed_type: Type of feed item to create (must be in FEED_ITEM_TYPES)
             params: Parameters for the feed item.
-            url: Optional URL for feed item
+            url: Optional URL for a feed item
         """
         feed_item = FeedItem(
             auth=auth,

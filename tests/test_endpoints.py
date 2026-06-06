@@ -1,7 +1,7 @@
 """Tests for endpoints."""
 
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 import pytest
 
@@ -15,7 +15,7 @@ from monzo.endpoints.whoami import WhoAmI
 from tests.helpers import Handler, load_data
 
 
-class TestEndPoints(object):
+class TestEndPoints:
     """Tests for the endpoints."""
 
     @pytest.mark.parametrize(
@@ -146,8 +146,8 @@ class TestEndPoints(object):
         expected_external_id: str,
         expected_receipt_currency: str,
         expected_receipt_merchant: MERCHANT_TYPE,
-        expected_receipt_payments: List[PAYMENT_TYPE],
-        expected_receipt_taxes: List[TAX_TYPE],
+        expected_receipt_payments: list[PAYMENT_TYPE],
+        expected_receipt_taxes: list[TAX_TYPE],
         expected_receipt_total: int,
         expected_transaction_id: str,
         mocker,
@@ -270,7 +270,7 @@ class TestEndPoints(object):
         expected_can_be_made_subscription: bool,
         expected_can_match_transactions_in_categorization: bool,
         expected_can_split_the_bill: bool,
-        expected_categories: Dict[str, Union[int, str]],
+        expected_categories: dict[str, int | str],
         expected_category: str,
         expected_counterparty: str,
         expected_created: datetime,
@@ -278,21 +278,21 @@ class TestEndPoints(object):
         expected_dedupe_id: str,
         expected_decline_reason: str,
         expected_description: str,
-        expected_fees: Dict[str, Any],
+        expected_fees: dict[str, Any],
         expected_include_in_spending: bool,
-        expected_international: Optional[str],
+        expected_international: str | None,
         expected_is_load: bool,
         expected_labels: str,
         expected_local_amount: int,
         expected_local_currency: str,
         expected_merchant: str,
-        expected_metadata: Dict[str, str],
+        expected_metadata: dict[str, str],
         expected_notes: str,
         expected_originator: bool,
         expected_scheme: str,
-        expected_settled: Optional[datetime],
+        expected_settled: datetime | None,
         expected_transaction_id: str,
-        expected_updated: Optional[datetime],
+        expected_updated: datetime | None,
         expected_user_id: bool,
         mocker,
     ):
@@ -414,8 +414,8 @@ class TestEndPoints(object):
         self,
         mock_file: str,
         expected_account_id: str,
-        expected_url: Optional[str],
-        expected_webhook_id: Optional[str],
+        expected_url: str | None,
+        expected_webhook_id: str | None,
         expected_count: int,
         mocker,
     ):

@@ -7,7 +7,7 @@ from monzo.exceptions import MonzoAuthenticationError
 from tests.helpers import Handler, load_data
 
 
-class TestEndPoints(object):
+class TestEndPoints:
     """Tests for the authentication."""
 
     def test_logout(self, mocker):

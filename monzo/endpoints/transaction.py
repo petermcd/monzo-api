@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 from monzo.authentication import Authentication
 from monzo.endpoints.monzo import Monzo
@@ -56,7 +56,7 @@ class Transaction(Monzo):
         "_user_id",
     ]
 
-    def __init__(self, auth: Authentication, transaction_data: Dict[str, Any]):
+    def __init__(self, auth: Authentication, transaction_data: dict[str, Any]):
         """
         Initialize Transaction.
 
@@ -76,7 +76,7 @@ class Transaction(Monzo):
             "can_match_transactions_in_categorization"
         ]
         self._can_split_the_bill: bool = transaction_data["can_split_the_bill"]
-        self._categories: Dict[str, Union[int, str]] = transaction_data["categories"]
+        self._categories: dict[str, int | str] = transaction_data["categories"]
         self._category: str = transaction_data["category"]
         self._counterparty = transaction_data["counterparty"]
         self._created: datetime = create_date(transaction_data["created"])
@@ -84,19 +84,19 @@ class Transaction(Monzo):
         self._dedupe_id: str = transaction_data["dedupe_id"]
         self._decline_reason: str = transaction_data.get("decline_reason", "")
         self._description: str = transaction_data["description"]
-        self._fees: Dict[str, Any] = transaction_data["fees"]
+        self._fees: dict[str, Any] = transaction_data["fees"]
         self._include_in_spending: bool = transaction_data["include_in_spending"]
-        self._international: Optional[str] = transaction_data["international"]
+        self._international: str | None = transaction_data["international"]
         self._is_load: bool = transaction_data["is_load"]
         self._labels: str = transaction_data["labels"]
         self._local_amount: int = transaction_data["local_amount"]
         self._local_currency: str = transaction_data["local_currency"]
         self._merchant: str = transaction_data["merchant"]
-        self._metadata: Dict[str, str] = transaction_data["metadata"]
+        self._metadata: dict[str, str] = transaction_data["metadata"]
         self._notes: str = transaction_data["notes"]
         self._originator: bool = transaction_data["originator"]
         self._scheme: str = transaction_data["scheme"]
-        self._settled: Optional[datetime] = None
+        self._settled: datetime | None = None
         if transaction_data["settled"]:
             self._settled = create_date(transaction_data["settled"])
         self._transaction_id: str = transaction_data["id"]
@@ -131,12 +131,12 @@ class Transaction(Monzo):
         Property to identify if the amount is pending.
 
         Returns:
-            True if transaction is pending
+            True if a transaction is pending
         """
         return self._amount_is_pending
 
     @property
-    def atm_fees_detailed(self) -> Optional[str]:
+    def atm_fees_detailed(self) -> str | None:
         """
         Property for detailed atm fees.
 
@@ -146,7 +146,7 @@ class Transaction(Monzo):
         return self._atm_fees_detailed
 
     @property
-    def attachments(self) -> Optional[str]:
+    def attachments(self) -> str | None:
         """
         Property for attachments.
 
@@ -206,7 +206,7 @@ class Transaction(Monzo):
         return self._can_split_the_bill
 
     @property
-    def categories(self) -> Dict[str, Union[int, str]]:
+    def categories(self) -> dict[str, int | str]:
         """
         Property to identify categories a transaction is a member of.
 
@@ -226,7 +226,7 @@ class Transaction(Monzo):
         return self._category
 
     @property
-    def counterparty(self) -> Dict[str, str]:
+    def counterparty(self) -> dict[str, str]:
         """
         Property to identify counterparty.
 
@@ -288,7 +288,7 @@ class Transaction(Monzo):
         return self._description
 
     @property
-    def fees(self) -> Dict[str, Any]:
+    def fees(self) -> dict[str, Any]:
         """
         Property for transaction fees.
 
@@ -308,7 +308,7 @@ class Transaction(Monzo):
         return self._include_in_spending
 
     @property
-    def international(self) -> Optional[str]:
+    def international(self) -> str | None:
         """
         UNCLEAR.
 
@@ -370,7 +370,7 @@ class Transaction(Monzo):
         return self._merchant
 
     @property
-    def metadata(self) -> Dict[str, str]:
+    def metadata(self) -> dict[str, str]:
         """
         Property for metadata associated with a transaction.
 
@@ -395,7 +395,7 @@ class Transaction(Monzo):
         Property to identify if you are the originator of a transaction.
 
         Returns:
-            True if you are the originator of a transaction otherwise False
+            True if you are the originator of a transaction, otherwise False
         """
         return self._originator
 
@@ -412,7 +412,7 @@ class Transaction(Monzo):
         return self._scheme
 
     @property
-    def settled(self) -> Optional[datetime]:
+    def settled(self) -> datetime | None:
         """
         Property for when a transaction was settled.
 
@@ -432,7 +432,7 @@ class Transaction(Monzo):
         return self._transaction_id
 
     @property
-    def updated(self) -> Optional[datetime]:
+    def updated(self) -> datetime | None:
         """
         Property for when a transaction was updated.
 
@@ -477,9 +477,7 @@ class Transaction(Monzo):
         self._metadata = res["data"]["transaction"]["metadata"]
 
     @classmethod
-    def fetch_single(
-        cls, auth: Authentication, transaction_id: str, expand_on: str = "merchant"
-    ) -> Optional[Transaction]:
+    def fetch_single(cls, auth: Authentication, transaction_id: str, expand_on: str = "merchant") -> Transaction | None:
         """
         Fetch a transaction with a specific ID.
 
@@ -507,11 +505,11 @@ class Transaction(Monzo):
         cls,
         auth: Authentication,
         account_id: str,
-        since: Optional[datetime | str] = None,
-        before: Optional[datetime] = None,
+        since: datetime | str | None = None,
+        before: datetime | None = None,
         expand=None,
         limit=30,
-    ) -> List[Transaction]:
+    ) -> list[Transaction]:
         """
         Fetch a list of transaction.
 
@@ -524,7 +522,7 @@ class Transaction(Monzo):
             limit: Number of transactions to return per request, max 100, default 30.
 
         Returns:
-            List of transaction
+            List of transactions
         """
         if expand is None:
             expand = []

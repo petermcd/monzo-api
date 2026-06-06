@@ -3,7 +3,6 @@
 import pathlib
 from datetime import datetime, timedelta
 from json import loads
-from typing import Dict, Union
 
 from monzo.handlers.storage import Storage
 
@@ -44,7 +43,7 @@ class Handler(Storage):
         self._expiry = expiry
         self._refresh_token = "ijk012"
 
-    def fetch(self) -> Dict[str, Union[int, str]]:
+    def fetch(self) -> dict[str, int | str]:
         """
         Fetch Monzo credentials previously stored.
 
