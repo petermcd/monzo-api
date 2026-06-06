@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import List, Optional
 
 from monzo.authentication import Authentication
 from monzo.endpoints.balance import Balance
@@ -62,7 +61,7 @@ class Account(Monzo):
         """
         self._auth: Authentication = auth
         self._account_id: str = account_id
-        self._balance: Optional[Balance] = None
+        self._balance: Balance | None = None
         self._created: datetime = created
         self._description: str = description
         self._has_balance: bool = True
@@ -95,7 +94,7 @@ class Account(Monzo):
             "UNKNOWN",
         )
 
-    def fetch_balance(self) -> Optional[Balance]:
+    def fetch_balance(self) -> Balance | None:
         """
         Fetch the live balance.
 
@@ -113,7 +112,7 @@ class Account(Monzo):
         return self._balance
 
     @property
-    def balance(self) -> Optional[Balance]:
+    def balance(self) -> Balance | None:
         """
         Property for balance.
 
@@ -158,7 +157,7 @@ class Account(Monzo):
         return self._closed
 
     @classmethod
-    def fetch(cls, auth: Authentication, account_type: str = "") -> List[Account]:
+    def fetch(cls, auth: Authentication, account_type: str = "") -> list[Account]:
         """
         Implement and instantiates an Account object.
 

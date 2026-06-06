@@ -1,7 +1,6 @@
 """Tests for HttpIO."""
 
 from json import dumps
-from typing import Dict
 
 import pytest
 
@@ -16,7 +15,7 @@ from monzo.endpoints.whoami import WhoAmI
 from tests.helpers import Handler, load_data
 
 
-class TestHttpIO(object):
+class TestHttpIO:
     """Tests for the HttpIO class."""
 
     @pytest.mark.parametrize(
@@ -54,7 +53,7 @@ class TestHttpIO(object):
         http_method: str,
         data_filename: str,
         response_filename: str,
-        extra_data: Dict[str, str],
+        extra_data: dict[str, str],
         mocker,
     ):
         """
@@ -194,7 +193,7 @@ class TestHttpIO(object):
         http_method: str,
         data_filename: str,
         response_filename: str,
-        extra_data: Dict[str, str],
+        extra_data: dict[str, str],
         mocker,
     ):
         """
@@ -258,7 +257,7 @@ class TestHttpIO(object):
         http_method: str,
         data_filename: str,
         response_filename: str,
-        extra_data: Dict[str, str],
+        extra_data: dict[str, str],
         mocker,
     ):
         """

@@ -10,7 +10,6 @@ import datetime
 import os
 import sys
 from configparser import ConfigParser
-from typing import List
 
 # -- Path setup --------------------------------------------------------------
 
@@ -35,19 +34,19 @@ release = config["metadata"]["version"]
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions: List[str] = [
+extensions: list[str] = [
     "sphinx.ext.autodoc",
     "sphinx.ext.coverage",
     "sphinx.ext.doctest",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path: List[str] = ["_templates"]
+templates_path: list[str] = ["_templates"]
 
 # List of patterns, relative to the source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns: List[str] = []
+exclude_patterns: list[str] = []
 
 
 # -- Options for HTML output -------------------------------------------------

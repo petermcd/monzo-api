@@ -4,7 +4,7 @@ from monzo.authentication import Authentication
 from monzo.exceptions import MonzoAuthenticationError
 
 
-class Monzo(object):
+class Monzo:
     """
     Abstract base class all endpoints will inherit from.
 

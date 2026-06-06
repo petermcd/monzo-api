@@ -1,7 +1,6 @@
 """Abstract class for credential storage."""
 
 from abc import ABC, abstractmethod
-from typing import Dict, Union
 
 
 class Storage(ABC):
@@ -13,7 +12,7 @@ class Storage(ABC):
     """
 
     @abstractmethod
-    def fetch(self) -> Dict[str, Union[int, str]]:
+    def fetch(self) -> dict[str, int | str]:
         """
         Abstract method that needs to be implemented to Fetch Monzo credentials previously stored.
 

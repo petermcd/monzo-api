@@ -1,6 +1,10 @@
 Change Log
 =====================================
 
+**1.2.6**
+
+- Replaced typing import with builtin types.
+
 **1.2.5**
 
 - Added cosmic-ray configuration.

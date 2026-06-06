@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from monzo.authentication import Authentication
 from monzo.endpoints.balance import Balance
@@ -186,7 +186,7 @@ class Pot(Monzo):
         Property for the pot round up multiplier.
 
         Returns:
-            int object for the pots round up multiplier else None object if roundup is disabled
+            int object for the pot round up multiplier else None object if roundup is disabled
         """
         return self._round_up_multiplier
 
@@ -270,7 +270,7 @@ class Pot(Monzo):
         return cls._update_pot(pot=pot, data=res["data"])
 
     @classmethod
-    def fetch(cls, auth: Authentication, account_id: str) -> List[Pot]:
+    def fetch(cls, auth: Authentication, account_id: str) -> list[Pot]:
         """
         Fetch a list of pots associated with an account.
 
@@ -309,7 +309,7 @@ class Pot(Monzo):
         return pot_list
 
     @classmethod
-    def fetch_single(cls, auth: Authentication, account_id: str, pot_id: str) -> Optional[Pot]:
+    def fetch_single(cls, auth: Authentication, account_id: str, pot_id: str) -> Pot | None:
         """
         Fetch a pot associated with an account with the given pot id.
 
@@ -361,7 +361,7 @@ class Pot(Monzo):
         return cls._update_pot(pot=pot, data=res["data"])
 
     @classmethod
-    def _update_pot(cls, pot: Pot, data: Dict[str, Any]) -> Pot:
+    def _update_pot(cls, pot: Pot, data: dict[str, Any]) -> Pot:
         """
         Update a provided pot from a result received from a request.
 

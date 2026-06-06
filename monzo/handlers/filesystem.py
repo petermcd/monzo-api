@@ -1,7 +1,6 @@
 """Class to store credentials on the file system."""
 
 from json import dumps, loads
-from typing import Dict, Union
 
 from monzo.handlers.storage import Storage
 
@@ -20,7 +19,7 @@ class FileSystem(Storage):
         """
         self._file = file
 
-    def fetch(self) -> Dict[str, Union[int, str]]:
+    def fetch(self) -> dict[str, int | str]:
         """
         Fetch Monzo credentials previously stored.
 

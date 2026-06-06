@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import List
-
 from monzo.authentication import Authentication
 from monzo.endpoints.monzo import Monzo
 
@@ -12,7 +10,7 @@ class Webhook(Monzo):
     """
     Class to manage webhooks.
 
-    Class provides methods to create, fetch and delete webhooks.
+    Class provides methods to create, fetch, and delete webhooks.
     """
 
     __slots__ = ["_account_id", "_url", "_webhook_id"]
@@ -104,7 +102,7 @@ class Webhook(Monzo):
         webhook._delete()
 
     @classmethod
-    def fetch(cls, auth: Authentication, account_id: str) -> List[Webhook]:
+    def fetch(cls, auth: Authentication, account_id: str) -> list[Webhook]:
         """
         Fetch webhooks for an account.
 

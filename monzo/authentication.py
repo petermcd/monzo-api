@@ -6,7 +6,6 @@ import secrets
 from pathlib import Path, PurePath
 from tempfile import gettempdir
 from time import time
-from typing import List
 
 from monzo.exceptions import MonzoAuthenticationError, MonzoError, MonzoHTTPError
 from monzo.handlers.storage import Storage
@@ -16,7 +15,7 @@ MONZO_AUTH_URL = "https://auth.monzo.com"
 MONZO_API_URL = "https://api.monzo.com"
 
 
-class Authentication(object):
+class Authentication:
     """
     Class to manage authentication.
 
@@ -58,7 +57,7 @@ class Authentication(object):
         self._access_token_expiry: int = access_token_expiry
         self._client_id: str = client_id
         self._client_secret: str = client_secret
-        self._handlers: List[Storage] = []
+        self._handlers: list[Storage] = []
         self._redirect_url: str = redirect_url
         self._refresh_token: str = refresh_token
 
@@ -68,7 +67,7 @@ class Authentication(object):
 
         Args:
             authorization_token: Authorization code provided by Monzo
-            state_token: Pre agreed state token to validate against
+            state_token: Pre-agreed state token to validate against
 
         Raises:
             MonzoAuthenticationError On missing authorization token or mismatching state tokens
@@ -111,10 +110,10 @@ class Authentication(object):
             timeout: Timeout in seconds for the request
 
         Returns:
-            Dictionary containing headers and data from query response
+            Dictionary containing headers and data from a query response
 
         Raises:
-            MonzoHTTPError: On using invalid method
+            MonzoHTTPError: On using an invalid method
         """
         if self._access_token and self._access_token_expiry - time() < 0:
             self.refresh_access()
@@ -182,7 +181,7 @@ class Authentication(object):
     @access_token_expiry.setter
     def access_token_expiry(self, expires_in: int) -> None:
         """
-        Setter for access token expiry property.
+        Setter for the access token expiry property.
 
         Args:
             expires_in: number of seconds until the token expires
