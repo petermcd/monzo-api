@@ -1,6 +1,6 @@
 """Tests for endpoints."""
 
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any
 
 import pytest
@@ -225,7 +225,7 @@ class TestEndPoints:
                 {"bills": -2775},
                 "bills",
                 {},
-                datetime(2022, 8, 9, 14, 15, 1),
+                datetime(year=2022, month=8, day=9, hour=14, minute=15, second=1, tzinfo=UTC),
                 "GBP",
                 "123ABC",
                 "",
@@ -250,9 +250,9 @@ class TestEndPoints:
                 "",
                 False,
                 "mastercard",
-                datetime(2022, 8, 10, 0, 30, 40),
+                datetime(year=2022, month=8, day=10, hour=0, minute=30, second=40, tzinfo=UTC),
                 "tx_123ABC1",
-                datetime(2022, 8, 10, 0, 30, 40),
+                datetime(year=2022, month=8, day=10, hour=0, minute=30, second=40, tzinfo=UTC),
                 "user_ABC123",
             ),
         ],
@@ -358,7 +358,11 @@ class TestEndPoints:
 
         auth.register_callback_handler(handler)
 
-        transactions = Transaction.fetch(auth=auth, account_id=expected_account_id, since=datetime.now())
+        transactions = Transaction.fetch(
+            auth=auth,
+            account_id=expected_account_id,
+            since=datetime.now(tz=UTC),
+        )
         assert len(transactions) == 1
         transaction = transactions[0]
 

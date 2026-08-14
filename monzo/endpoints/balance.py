@@ -14,7 +14,7 @@ class Balance(Monzo):
     along with the balance property. Otherwise, you can fetch an account balance using the fetch class method.
     """
 
-    __slots__ = ["_balance", "_total_balance", "_currency", "_spend_today"]
+    __slots__ = ("_balance", "_currency", "_spend_today", "_total_balance")
 
     def __init__(
         self,
