@@ -9,24 +9,24 @@ https://www.sphinx-doc.org/en/master/usage/configuration.html
 import datetime
 import os
 import sys
-from configparser import ConfigParser
+import tomllib
 
 # -- Path setup --------------------------------------------------------------
 
-sys.path.insert(0, os.path.abspath("../"))
-config = ConfigParser()
-config.read("../../setup.cfg")
+sys.path.insert(0, os.path.abspath(path="../"))
+with open(file="../../pyproject.toml", mode="rb") as f:
+    config = tomllib.load(f)
 
 # -- Project information -----------------------------------------------------
 
-copyright_year = datetime.datetime.now(tz=datetime.UTC).year
-author = config["metadata"]["author"]
-project = config["metadata"]["name"]
-copyright = f"{copyright_year}, {author}"
+copyright_year: int = datetime.datetime.now(tz=datetime.UTC).year
+author: str = config["project"]["authors"][0]["name"]
+project: str = config["project"]["name"]
+copyright: str = f"{copyright_year}, {author}"
 
 # The full version, including alpha/beta/rc tags
 
-release = config["metadata"]["version"]
+release: str = config["project"]["version"]
 
 
 # -- General configuration ---------------------------------------------------
@@ -59,4 +59,4 @@ html_theme = "sphinx_rtd_theme"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
+html_static_path: list[str] = ["_static"]
