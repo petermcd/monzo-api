@@ -60,7 +60,7 @@ jobs:
       - name: Troml
         run: uvx troml check
       - name: uv audit
-        run: uvx uv audit
+        run: uv audit
   sonarqube:
     name: sonarqube
     runs-on: ${{ matrix.os }}

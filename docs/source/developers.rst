@@ -19,7 +19,7 @@ request will help ensure that the code meets the standards.
     uvx ruff check
     uvx ruff format --check
     uvx ty check
-    uvx uv audit
+    uv audit
 
 Building Documentation
 -------------------------------------
@@ -31,8 +31,7 @@ documentation from source the following steps can be taken:
 .. code-block:: bash
 
     cd docs
-    pip install -e .[dev]
-    sphinx-build -b html source/ build/html
+    uv run sphinx-build -b html source/ build/html
 
 Tagging
 -------------------------------------
@@ -53,5 +52,5 @@ x.x.x with the version in setup.cfg:
 Distributing Package
 -------------------------------------
 
-Distributing the package is no longer be required. A Github action
+Distributing the package is no longer required. A Github action
 automatically uploads the generated .tar.gz and .whl files.

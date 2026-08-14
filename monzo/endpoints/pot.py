@@ -19,22 +19,22 @@ class Pot(Monzo):
     Class provides methods to fetch pots as well as depositing and withdrawing from pots.
     """
 
-    __slots__ = [
-        "_pot_id",
-        "_name",
-        "_style",
+    __slots__ = (
         "_balance",
-        "_currency",
         "_created",
-        "_updated",
+        "_currency",
         "_deleted",
         "_goal_amount",
         "_has_round_up",
-        "_round_up_multiplier",
-        "_pot_type",
         "_locked",
         "_locked_until",
-    ]
+        "_name",
+        "_pot_id",
+        "_pot_type",
+        "_round_up_multiplier",
+        "_style",
+        "_updated",
+    )
 
     def __init__(
         self,

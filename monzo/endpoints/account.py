@@ -35,10 +35,10 @@ class Account(Monzo):
         "_account_id",
         "_auth",
         "_balance",
+        "_closed",
         "_created",
         "_description",
         "_has_balance",
-        "_closed",
     ]
 
     def __init__(
@@ -88,7 +88,7 @@ class Account(Monzo):
         return next(
             (
                 MONZO_ACCOUNT_TYPES[account_type]
-                for account_type in MONZO_ACCOUNT_TYPES.keys()
+                for account_type in MONZO_ACCOUNT_TYPES
                 if self.description.lower().startswith(account_type)
             ),
             "UNKNOWN",

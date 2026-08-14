@@ -98,7 +98,7 @@ class FeedItem(Monzo):
         }
         if self._url:
             data["url"] = self._url
-        for parameter in parameters.keys():
+        for parameter in parameters:
             data[f"params[{parameter}]"] = parameters[parameter]
         self._monzo_auth.make_request(path="/feed", method="POST", data=data)
 
