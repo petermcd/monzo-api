@@ -14,6 +14,8 @@ from monzo.httpio import DEFAULT_TIMEOUT, REQUEST_RESPONSE_TYPE, HttpIO
 MONZO_AUTH_URL = "https://auth.monzo.com"
 MONZO_API_URL = "https://api.monzo.com"
 
+logger: logging.Logger = logging.getLogger(name=__name__)
+
 
 class Authentication:
     """
@@ -72,12 +74,12 @@ class Authentication:
         Raises:
             MonzoAuthenticationError On missing authorization token or mismatching state tokens
         """
-        logging.debug("Attempting authentication")
+        logger.debug(msg="Attempting authentication")
         if not authorization_token:
-            logging.debug("Authentication - Missing token")
+            logger.debug(msg="Authentication - Missing token")
             raise MonzoAuthenticationError("Code missing from response")
         if state_token != self.state_token:
-            logging.debug("Authentication - state token mismatch")
+            logger.debug(msg="Authentication - state token mismatch")
             raise MonzoAuthenticationError("State tokens do not match")
         tmp_file_name = "monzo"
         tmp_file_path = PurePath(gettempdir(), tmp_file_name)
@@ -86,7 +88,7 @@ class Authentication:
 
     def logout(self) -> None:
         """Invalidate the access token."""
-        logging.debug("Invalidating token")
+        logger.debug(msg="Invalidating token")
         self.make_request(path="/oauth2/logout", method="post")
 
     def make_request(
@@ -140,9 +142,9 @@ class Authentication:
         Raises:
             MonzoAuthenticationError: On lack of refresh token or failure to refresh a token
         """
-        logging.debug("Fetching new token")
+        logger.debug(msg="Fetching new token")
         if not self.refresh_token:
-            logging.debug("Unable to fetch new token without a refresh token")
+            logger.debug(msg="Unable to fetch new token without a refresh token")
             raise MonzoAuthenticationError("Unable to refresh without a refresh token")
         data = {
             "grant_type": "refresh_token",
@@ -153,9 +155,9 @@ class Authentication:
         conn = HttpIO(MONZO_API_URL)
         try:
             res = conn.post(path="/oauth2/token", data=data)
-            self._populate_tokens(res)
+            self._populate_tokens(response=res)
         except MonzoError as exc:
-            logging.debug("Failed to fetch new token")
+            logger.debug(msg="Failed to fetch new token")
             raise MonzoAuthenticationError("Could not refresh the access token") from exc
 
     @property
@@ -240,7 +242,7 @@ class Authentication:
         Raises:
             MonzoAuthenticationError On failure to create a token
         """
-        logging.debug("Authentication - swapping authorization token for an access token")
+        logger.debug(msg="Authentication - swapping authorization token for an access token")
         data = {
             "grant_type": "authorization_code",
             "client_id": self._client_id,
@@ -249,10 +251,10 @@ class Authentication:
             "code": authorization_token,
         }
         try:
-            res = self.make_request("/oauth2/token", authenticated=False, method="post", data=data)
-            self._populate_tokens(res)
+            res = self.make_request(path="/oauth2/token", authenticated=False, method="post", data=data)
+            self._populate_tokens(response=res)
         except MonzoError as exc:
-            logging.debug(f"Could not fetch access token {exc}")
+            logger.debug(msg=f"Could not fetch access token {exc}")
             raise MonzoAuthenticationError("Could not fetch a valid access token") from exc
 
     def _populate_tokens(self, response: REQUEST_RESPONSE_TYPE) -> None:
@@ -262,7 +264,7 @@ class Authentication:
         Args:
             response: Response from an auth request.
         """
-        logging.debug("Populating tokens")
+        logger.debug(msg="Populating tokens")
         self._access_token = response["data"]["access_token"]
         self.access_token_expiry = response["data"]["expires_in"]
         self._refresh_token = ""
@@ -285,5 +287,5 @@ class Authentication:
         Args:
             handler: Credential handler implementing Storage
         """
-        logging.debug("Registered a new callback handler")
+        logger.debug(msg="Registered a new callback handler")
         self._handlers.append(handler)

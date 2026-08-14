@@ -27,11 +27,11 @@ class Attachment(Monzo):
 
     __slots__ = [
         "_attachment_id",
-        "_user_id",
+        "_created",
+        "_file_type",
         "_transaction_id",
         "_url",
-        "_file_type",
-        "_created",
+        "_user_id",
     ]
 
     def __init__(
