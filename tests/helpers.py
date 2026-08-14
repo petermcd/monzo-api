@@ -1,7 +1,7 @@
 """Helper functions and classes for testing."""
 
 import pathlib
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from json import loads
 
 from monzo.handlers.storage import Storage
@@ -35,7 +35,7 @@ class Handler(Storage):
 
     def __init__(self):
         """Initialise Handler."""
-        expiry = int((datetime.now() + timedelta(days=1)).timestamp())
+        expiry = int((datetime.now(tz=UTC) + timedelta(days=1)).timestamp())
 
         self._access_token = "abc123"
         self._client_id = "cde456"

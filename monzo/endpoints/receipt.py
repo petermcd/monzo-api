@@ -103,14 +103,14 @@ class Receipt(Monzo):
     """
 
     __slots__ = (
-        "_external_id",
-        "_transaction_id",
-        "_total",
         "_currency",
+        "_external_id",
         "_items",
-        "_taxes",
-        "_payments",
         "_merchant",
+        "_payments",
+        "_taxes",
+        "_total",
+        "_transaction_id",
     )
 
     def __init__(
@@ -363,9 +363,9 @@ class Receipt(Monzo):
         receipt_data = res["data"]["receipt"]
         receipt_items: list[ReceiptItem] = []
         for item in receipt_data["items"]:
-            quantity = float(item["quantity"]) if "quantity" in item else 0.0
-            tax = item["tax"] if "tax" in item else 0
-            unit = item["unit"] if "unit" in item else ""
+            quantity = float(item.get("quantity", 0.0)) if "quantity" in item else 0.0
+            tax = item.get("tax", 0) if "tax" in item else 0
+            unit = item.get("unit", "") if "unit" in item else ""
             receipt_item: ReceiptItem = ReceiptItem(
                 description=item["description"],
                 amount=item["amount"],
@@ -376,9 +376,9 @@ class Receipt(Monzo):
             )
 
             for sub_item in item["sub_items"]:
-                sub_item_quantity = sub_item["quantity"] if "quantity" in sub_item else 0.0
-                sub_item_tax = sub_item["tax"] if "tax" in sub_item else 0
-                sub_item_unit = sub_item["unit"] if "unit" in sub_item else ""
+                sub_item_quantity = sub_item.get("quantity", 0.0) if "quantity" in sub_item else 0.0
+                sub_item_tax = sub_item.get("tax", 0) if "tax" in sub_item else 0
+                sub_item_unit = sub_item.get("unit", "") if "unit" in sub_item else ""
                 receipt_sub_item = ReceiptItem(
                     description=sub_item["description"],
                     amount=sub_item["amount"],
