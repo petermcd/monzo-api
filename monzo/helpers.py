@@ -1,6 +1,6 @@
 """Helper functions."""
 
-from datetime import datetime
+from datetime import UTC, datetime
 
 
 def create_date(date_str: str) -> datetime:
@@ -13,7 +13,7 @@ def create_date(date_str: str) -> datetime:
     Returns:
         Converted date and time
     """
-    return datetime.strptime(date_str[:19], "%Y-%m-%dT%H:%M:%S")
+    return datetime.strptime(date_str[:19], "%Y-%m-%dT%H:%M:%S").replace(tzinfo=UTC)
 
 
 def format_date(date: datetime) -> str:

@@ -10,25 +10,16 @@ The Monzo API package helps simplify usage of the API.
 CICD and Code Standards
 -------------------------------------
 
-We have attempted to reduce the work required to ensure the code conforms to
-our coding standards. You can help ensure that any code changes will pass
-CICD by making use of pre-commit. The following steps will set this up for you:
+Prior to committing code you should ensure that the code meets the coding standards.
+During CICD the following tools are run, running these prior to submitting a merge
+request will help ensure that the code meets the standards.
 
 .. code-block:: bash
 
-    pip install pre-commit
-    pre-commit install
-
-The above commands will create pre-commit hooks, this will test the code prior
-to code being committed by Git. Some of the tasks will even correct the data
-instead of throwing an error.
-
-If you would like to run the checks without committing code you can run the
-following command:
-
-.. code-block:: bash
-
-    pre-commit run --all-file
+    uvx ruff check
+    uvx ruff format --check
+    uvx ty check
+    uv audit
 
 Building Documentation
 -------------------------------------
@@ -40,8 +31,7 @@ documentation from source the following steps can be taken:
 .. code-block:: bash
 
     cd docs
-    pip install -e .[docs]
-    sphinx-build -b html source/ build/html
+    uv run sphinx-build -b html source/ build/html
 
 Tagging
 -------------------------------------
@@ -62,24 +52,5 @@ x.x.x with the version in setup.cfg:
 Distributing Package
 -------------------------------------
 
-Distributing the package should no longer be required. A Github action
+Distributing the package is no longer required. A Github action
 automatically uploads the generated .tar.gz and .whl files.
-
-Prior to being able to upload a package to Pypi you first need to create an
-API key, once obtained create a file called .pypirc in %homepath% with the
-following details, replacing API_TOKEN with the real API token.
-
-.. code-block:: yaml
-
-    [pypi]
-      username = __token__
-      password = API_TOKEN
-
-You can now run the following to upload the package.
-
-.. code-block:: bash
-
-    git checkout main
-    git pull
-    pip install -e .[build]
-    twine upload dist/*
