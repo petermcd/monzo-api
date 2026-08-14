@@ -1,3 +1,4 @@
+from email.message import Message
 from unittest.mock import patch
 from urllib.error import HTTPError
 
@@ -5,12 +6,10 @@ import pytest
 
 from monzo.exceptions import MonzoGeneralError
 from monzo.httpio import HttpIO
-from email.message import Message
 
 
 def test_unknown_status_code_raises_monzogeneralerror():
     http = HttpIO("https://example.com")
     error = HTTPError(url="https://example.com/test", code=418, msg="teapot", hdrs=Message(), fp=None)
-    with patch("monzo.httpio.urlopen", side_effect=error):
-        with pytest.raises(MonzoGeneralError):
-            http.get("/test")
+    with patch("monzo.httpio.urlopen", side_effect=error), pytest.raises(MonzoGeneralError):
+        http.get("/test")

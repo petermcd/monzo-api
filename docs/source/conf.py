@@ -19,7 +19,7 @@ config.read("../../setup.cfg")
 
 # -- Project information -----------------------------------------------------
 
-copyright_year = datetime.datetime.now().year
+copyright_year = datetime.datetime.now(tz=datetime.UTC).year
 author = config["metadata"]["author"]
 project = config["metadata"]["name"]
 copyright = f"{copyright_year}, {author}"
