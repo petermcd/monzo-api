@@ -24,12 +24,12 @@ jobs:
           - "3.12"
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
           fetch-depth: 0
           persist-credentials: false
       - name: Install uv
-        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
+        uses: astral-sh/setup-uv@d31148d669074a8d0a63714ba94f3201e7020bc3
         with:
           python-version: ${{ matrix.python-version }}
           enable-cache: false

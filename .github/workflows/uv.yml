@@ -36,12 +36,12 @@ jobs:
           - "ubuntu-latest"
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
           fetch-depth: 0
           persist-credentials: false
       - name: Install uv
-        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
+        uses: astral-sh/setup-uv@d31148d669074a8d0a63714ba94f3201e7020bc3
         with:
           python-version: ${{ matrix.python-version }}
       - name: Set PYTHON_GIL
@@ -72,12 +72,12 @@ jobs:
           - "ubuntu-latest"
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
           fetch-depth: 0
           persist-credentials: false
       - name: Run SonarQube
-        uses: sonarsource/sonarqube-scan-action@7006c4492b2e0ee0f816d36501671557c97f5995
+        uses: sonarsource/sonarqube-scan-action@713881670b6b3676cda39549040e2d88c70d582e
         env:
           SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
