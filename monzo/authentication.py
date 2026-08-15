@@ -219,7 +219,7 @@ class Authentication:
         Returns:
             True if an access token exists and has not yet expired, otherwise False
         """
-        return bool(self._access_token) and self._access_token_expiry - time() > 0
+        return bool(self._access_token) and self._access_token_expiry - time() > 60
 
     @property
     def refresh_token(self) -> str:
@@ -242,10 +242,12 @@ class Authentication:
         tmp_file_name = "monzo"
         tmp_file_path = PurePath(gettempdir(), tmp_file_name)
         if not Path(tmp_file_path).is_file():
-            with open(file=tmp_file_path, mode="w") as fh:
+            fd: int = os.open(path=tmp_file_path, flags=os.O_WRONLY | os.O_CREAT | os.O_TRUNC, mode=0o600)
+            with os.fdopen(fd, mode="w") as handler:
                 state_token: str = secrets.token_urlsafe(64)
-                fh.write(state_token)
-                fh.flush()
+                handler.write(state_token)
+                handler.flush()
+            os.chmod(path=tmp_file_path, mode=0o600)
         with open(file=tmp_file_path, mode="r") as fh:
             state_token: str = fh.read()
         return state_token

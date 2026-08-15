@@ -28,7 +28,7 @@ auth_step_01.py.
 In the above code you need to assign the Client ID and Client Secret and then
 execute the script. This will output a URL similar to:
 
-https://auth.monzo.com?client_id=oauth2client_REDACTEDredirect_uri=http://127.0.0.1/monzo&response_type=code&state=e7aF6mtU6MFNovkxUGfCsic6Kt7GUClBQWi0KkZY1YJuULK2QVEEujcfkLnF2Jxh
+https://auth.monzo.com?client_id=oauth2client_REDACTED&redirect_uri=http://127.0.0.1/monzo&response_type=code&state=e7aF6mtU6MFNovkxUGfCsic6Kt7GUClBQWi0KkZY1YJuULK2QVEEujcfkLnF2Jxh
 
 So that we know what is going on here, lets break this URL down a bit:
 

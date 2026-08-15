@@ -28,7 +28,7 @@ issues = "https://github.com/petermcd/monzo-api/issues"
 documentation = "https://monzo-api.readthedocs.io"
 
 [build-system]
-requires = ["setuptools>=42"]
+requires = ["setuptools>=84", "setuptools_scm>=8.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [dependency-groups]
