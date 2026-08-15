@@ -3,12 +3,47 @@
 import pytest
 
 from monzo import authentication
-from monzo.exceptions import MonzoAuthenticationError
+from monzo.exceptions import MonzoArgumentError, MonzoAuthenticationError
 from tests.helpers import Handler, load_data
 
 
 class TestEndPoints:
     """Tests for the authentication."""
+
+    def test_authenticate_with_empty_token(self):
+        """
+        Test authenticate raises an error when the authorization token is empty.
+        """
+        auth = authentication.Authentication(
+            client_id="client_id",
+            client_secret="client_secret",
+            redirect_url="",
+        )
+
+        with pytest.raises(MonzoAuthenticationError):
+            auth.authenticate(authorization_token="", state_token="state_token")
+
+    def test_authenticate_state_token_mismatch(self, tmp_path, mocker):
+        """
+        Test authenticate raises an error when the provided state token does not match.
+
+        Args:
+            tmp_path: Pytest fixture for temporary directory.
+            mocker: Pytest mocker fixture.
+        """
+        mocker.patch("monzo.authentication.gettempdir", return_value=str(tmp_path))
+        auth = authentication.Authentication(
+            client_id="client_id",
+            client_secret="client_secret",
+            redirect_url="",
+        )
+        state_token = auth.state_token
+
+        with pytest.raises(MonzoAuthenticationError):
+            auth.authenticate(
+                authorization_token="auth_token",
+                state_token=f"{state_token}invalid",
+            )
 
     def test_logout(self, mocker):
         """
@@ -49,37 +84,65 @@ class TestEndPoints:
             timeout=expected_data["timeout"],
         )
 
-    def test_authenticate_with_empty_token(self):
+    @pytest.mark.parametrize(
+        "redirect_url, expected_exception, expected_message",
+        [
+            ("invalid_url", MonzoArgumentError, "redirect_url must be a valid URL"),
+            ("http://example.com", MonzoArgumentError, "HTTP redirect URLs are only permitted for localhost"),
+        ],
+    )
+    def test_invalid_redirect_url(self, redirect_url: str, expected_exception: type[Exception], expected_message: str):
         """
-        Test authenticate raises an error when the authorization token is empty.
-        """
-        auth = authentication.Authentication(
-            client_id="client_id",
-            client_secret="client_secret",
-            redirect_url="",
-        )
-
-        with pytest.raises(MonzoAuthenticationError):
-            auth.authenticate(authorization_token="", state_token="state_token")
-
-    def test_authenticate_state_token_mismatch(self, tmp_path, mocker):
-        """
-        Test authenticate raises an error when the provided state token does not match.
+        Test that an invalid redirect URL raises the correct exception.
 
         Args:
-            tmp_path: Pytest fixture for temporary directory.
-            mocker: Pytest mocker fixture.
+            redirect_url (str): The redirect URL to test.
+            expected_exception (type[Exception]): The expected exception type.
+            expected_message (str): The expected exception message.
         """
-        mocker.patch("monzo.authentication.gettempdir", return_value=str(tmp_path))
+        with pytest.raises(expected_exception=expected_exception) as exc_info:
+            authentication.Authentication(
+                client_id="client_id",
+                client_secret="client_secret",
+                redirect_url=redirect_url,
+            )
+
+        assert str(exc_info.value) == expected_message
+
+    def test_is_authenticated_with_expired_token(self):
+        """Test is_authenticated returns False when the token has expired."""
+        from time import time
+
+        auth = authentication.Authentication(
+            client_id="client_id",
+            client_secret="client_secret",
+            redirect_url="",
+            access_token="expired_token",
+            access_token_expiry=int(time()) - 1,
+        )
+
+        assert auth.is_authenticated is False
+
+    def test_is_authenticated_with_no_token(self):
+        """Test is_authenticated returns False when no access token is set."""
         auth = authentication.Authentication(
             client_id="client_id",
             client_secret="client_secret",
             redirect_url="",
         )
-        state_token = auth.state_token
 
-        with pytest.raises(MonzoAuthenticationError):
-            auth.authenticate(
-                authorization_token="auth_token",
-                state_token=f"{state_token}invalid",
-            )
+        assert auth.is_authenticated is False
+
+    def test_is_authenticated_with_valid_token(self):
+        """Test is_authenticated returns True when a token exists and has not expired."""
+        from time import time
+
+        auth = authentication.Authentication(
+            client_id="client_id",
+            client_secret="client_secret",
+            redirect_url="",
+            access_token="valid_token",
+            access_token_expiry=int(time()) + 3600,
+        )
+
+        assert auth.is_authenticated is True
