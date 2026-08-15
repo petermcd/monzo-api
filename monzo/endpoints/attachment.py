@@ -56,12 +56,12 @@ class Attachment(Monzo):
             file_type: File type for attachment
             created: Datetime object identifying whe the attachment was created
         """
-        self._attachment_id = attachment_id
-        self._user_id = user_id
-        self._transaction_id = transaction_id
-        self._url = url
-        self._file_type = file_type
-        self._created = created
+        self._attachment_id: str = attachment_id
+        self._user_id: str = user_id
+        self._transaction_id: str = transaction_id
+        self._url: str = url
+        self._file_type: str = file_type
+        self._created: datetime = created
         super().__init__(auth=auth)
 
     @property
@@ -116,7 +116,7 @@ class Attachment(Monzo):
 
     def delete(self) -> None:
         """Delete the attachment."""
-        data = {"id": self.attachment_id}
+        data: dict[str, str] = {"id": self.attachment_id}
         self._monzo_auth.make_request(
             path="/attachment/deregister",
             method="POST",
@@ -140,11 +140,12 @@ class Attachment(Monzo):
         """
         file_url = urlparse(url)
         _, file_extension = splitext(url)
-        if file_extension not in SUPPORTED_ATTACHMENT_EXTENSIONS:
+        ext: str = file_extension.lstrip(".")
+        if ext not in SUPPORTED_ATTACHMENT_EXTENSIONS:
             raise MonzoGeneralError("Unsupported file type")
-        file_type = SUPPORTED_ATTACHMENT_EXTENSIONS[file_extension]
-        if file_url.netloc:
-            file_type = Attachment._upload_file(auth=auth, url=url, file_type=file_type)
+        file_type: str = SUPPORTED_ATTACHMENT_EXTENSIONS[ext]
+        if not file_url.netloc:
+            file_type: str = Attachment._upload_file(auth=auth, url=url, file_type=file_type)
 
         data = {
             "external_id": transaction_id,
