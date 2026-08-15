@@ -1,6 +1,15 @@
 Change Log
 =====================================
 
+**1.3.0**
+
+- Various security enhancements.
+- Improved testing for authentication and httpio.
+
+**1.2.7**
+
+- Updated cicd to further utilise UV.
+
 **1.2.6**
 
 - Replaced typing import with builtin types.
