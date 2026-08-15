@@ -12,6 +12,7 @@ from monzo.endpoints.receipt import MERCHANT_TYPE, PAYMENT_TYPE, TAX_TYPE, Recei
 from monzo.endpoints.transaction import Transaction
 from monzo.endpoints.webhooks import Webhook
 from monzo.endpoints.whoami import WhoAmI
+from monzo.exceptions import MonzoArgumentError
 from tests.helpers import Handler, load_data
 
 
@@ -463,6 +464,55 @@ class TestEndPoints:
             assert webhook[0].account_id == expected_account_id
             assert webhook[0].webhook_id == expected_webhook_id
             assert webhook[0].url == expected_url
+
+    @pytest.mark.parametrize(
+        "webhook_url,expected_exception,expected_message",
+        [
+            (
+                "http://some-url.co.uk",
+                MonzoArgumentError,
+                "Webhook URL must be a valid HTTPS URL",
+            ),
+            (
+                "ftp://some-url.co.uk",
+                MonzoArgumentError,
+                "Webhook URL must be a valid HTTPS URL",
+            ),
+            (
+                "some-url.co.uk",
+                MonzoArgumentError,
+                "Webhook URL must be a valid HTTPS URL",
+            ),
+        ],
+    )
+    def test_webhooks_invalid(
+        self,
+        webhook_url: str,
+        expected_exception: type[Exception],
+        expected_message: str,
+    ):
+        """
+        Test that an invalid webhook URL raises the correct exception.
+
+        Args:
+            webhook_url: The webhook URL to test.
+            expected_exception: The expected exception type.
+            expected_message: The expected exception message.
+        """
+
+        auth = authentication.Authentication(
+            client_id="client_id",
+            client_secret="client_secret",
+            redirect_url="",
+            access_token="access_token",
+            access_token_expiry=120,
+            refresh_token="refresh_token",
+        )
+
+        with pytest.raises(expected_exception=expected_exception) as exc_info:
+            Webhook.create(auth=auth, account_id="", url=webhook_url)
+
+        assert str(exc_info.value) == expected_message
 
     @pytest.mark.parametrize(
         "mock_file, expected_authenticated, expected_client_id, expected_user_id",

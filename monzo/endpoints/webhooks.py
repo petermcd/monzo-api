@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+from urllib.parse import urlparse
+
 from monzo.authentication import Authentication
 from monzo.endpoints.monzo import Monzo
+from monzo.exceptions import MonzoArgumentError
 
 
 class Webhook(Monzo):
@@ -13,7 +16,7 @@ class Webhook(Monzo):
     Class provides methods to create, fetch, and delete webhooks.
     """
 
-    __slots__ = ["_account_id", "_url", "_webhook_id"]
+    __slots__ = ("_account_id", "_url", "_webhook_id")
 
     def __init__(self, auth: Authentication, account_id: str, url: str, webhook_id: str):
         """
@@ -25,21 +28,21 @@ class Webhook(Monzo):
             url: URL to receive account updates
             webhook_id: Webhook ID
         """
-        self._account_id = account_id
-        self._url = url
-        self._webhook_id = webhook_id
+        self._account_id: str = account_id
+        self._url: str = url
+        self._webhook_id: str = webhook_id
         super().__init__(auth=auth)
 
     def _create(self) -> None:
         """Create the webhook."""
-        data = {
+        data: dict[str, str] = {
             "account_id": self._account_id,
             "url": self._url,
         }
         res = self._monzo_auth.make_request(path="/webhooks", method="POST", data=data)
         self._webhook_id = res["data"]["webhook"]["id"]
 
-    def _delete(self):
+    def _delete(self) -> None:
         """Delete the current webhook."""
         path = f"/webhooks/{self._webhook_id}"
         self._monzo_auth.make_request(path=path, method="DELETE")
@@ -84,9 +87,16 @@ class Webhook(Monzo):
             account_id: Account ID a webhook should be associated with
             url: URL transaction data should be sent too
 
+        Raises:
+            MonzoArgumentError: On a non-HTTPS webhook URL
+
         Returns:
             Created webhook
         """
+        parsed = urlparse(url)
+        if parsed.scheme != "https" or not parsed.netloc:
+            raise MonzoArgumentError("Webhook URL must be a valid HTTPS URL")
+
         webhook = Webhook(auth=auth, account_id=account_id, url=url, webhook_id="NEW")
         webhook._create()
         return webhook
@@ -113,9 +123,9 @@ class Webhook(Monzo):
         Returns:
             List of webhook objects for the account
         """
-        data = {"account_id": account_id}
+        data: dict[str, str] = {"account_id": account_id}
         res = auth.make_request(path="/webhooks", data=data)
-        webhooks = []
+        webhooks: list[Webhook] = []
         for webhook_item in res["data"]["webhooks"]:
             webhook = Webhook(
                 auth=auth,

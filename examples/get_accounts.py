@@ -9,7 +9,7 @@ client_secret = ""  # Client secret obtained when creating a Monzo client
 redirect_uri = "http://127.0.0.1/monzo"  # URL requests via Monzo will be redirected in a browser
 access_token = ""  # access_token retrieved in step 2
 expiry = 0  # access_token_expiry retrieved in step 2
-refresh_token = ""  # refresh_token retrieved in step 2\
+refresh_token = ""  # refresh_token retrieved in step 2
 
 monzo = Authentication(
     client_id=client_id,
