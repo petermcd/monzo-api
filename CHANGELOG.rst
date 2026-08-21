@@ -1,6 +1,10 @@
 Change Log
 =====================================
 
+**1.3.1**
+
+- Updated github action workflow versions.
+
 **1.3.0**
 
 - Various security enhancements.
