@@ -33,6 +33,8 @@ jobs:
       - name: Run zizmor 🌈
         uses: zizmorcore/zizmor-action@cc914d7f3750a2d13d75c7f184a1060aa0e9d482 # v0.6.4
         with:
+          # Fork and Dependabot PRs get a read-only token, so SARIF upload to code scanning is not possible.
+          advanced-security: ${{ github.event.pull_request.head.repo.fork != true && github.actor != 'dependabot[bot]' }}
           inputs: |
             .github/*.yml
             .github/workflows/*.yml
