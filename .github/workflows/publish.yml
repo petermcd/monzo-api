@@ -11,32 +11,56 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
-permissions:
-  contents: read # Required by actions/checkout to read the repository contents.
-  id-token: write # Required for OIDC authentication when publishing to PyPI.
+permissions: {}
 
 jobs:
-  pypi-publish:
-    name: Publish to PyPI
+  checks:
+    name: Checks
+    if: github.repository == 'petermcd/monzo-api'
+    uses: $/.github/workflows/uv.yml
+    permissions:
+      contents: read # Required by the called workflow to check out the repository.
+
+  build:
+    name: Build distributions
+    needs: checks
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    strategy:
-      matrix:
-        python-version:
-          - "3.12"
+    permissions:
+      contents: read # Required by actions/checkout to read the repository contents.
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 0
           persist-credentials: false
       - name: Install uv
         uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.12"
           enable-cache: false
       - name: UV Build
         run: uv build
+      - name: Upload distributions
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+
+  pypi-publish:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: pypi
+    permissions:
+      id-token: write # Required for OIDC authentication when publishing to PyPI.
+    steps:
+      - name: Download distributions
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: dist
+          path: dist/
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
         with:

@@ -19,6 +19,8 @@ concurrency:
 jobs:
   analyze:
     name: Analyze
+    # Fork and Dependabot PRs get a read-only token, so results cannot be uploaded; the push to main analyses merged code.
+    if: github.event.pull_request.head.repo.fork != true && github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
