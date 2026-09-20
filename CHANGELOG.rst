@@ -1,9 +1,13 @@
 Change Log
 =====================================
 
+**1.3.4**
+
+- Removed SonarQube lint config file.
+
 **1.3.3**
 
-- Removed Sonarqube from Github actions.
+- Removed SonarQube from Github actions.
 
 **1.3.2**
 
