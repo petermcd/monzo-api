@@ -1,6 +1,14 @@
 Change Log
 =====================================
 
+**1.3.3**
+
+- Removed Sonarqube from Github actions.
+
+**1.3.2**
+
+- Updated github action workflow.
+
 **1.3.1**
 
 - Updated github action workflow versions.
