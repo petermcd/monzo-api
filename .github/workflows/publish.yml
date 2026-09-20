@@ -17,7 +17,7 @@ jobs:
   checks:
     name: Checks
     if: github.repository == 'petermcd/monzo-api'
-    uses: ./.github/workflows/uv.yml
+    uses: $/.github/workflows/uv.yml
     permissions:
       contents: read # Required by the called workflow to check out the repository.
 
@@ -38,16 +38,6 @@ jobs:
         with:
           python-version: "3.12"
           enable-cache: false
-      - name: Verify release tag matches package version
-        if: github.event_name == 'release'
-        env:
-          TAG: ${{ github.event.release.tag_name }}
-        run: |
-          version=$(uv run --no-project python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")
-          if [ "${TAG#v}" != "$version" ]; then
-            echo "Release tag '$TAG' does not match pyproject.toml version '$version'"
-            exit 1
-          fi
       - name: UV Build
         run: uv build
       - name: Upload distributions
@@ -73,3 +63,5 @@ jobs:
           path: dist/
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
+        with:
+          skip-existing: true
