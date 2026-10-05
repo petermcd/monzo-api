@@ -1,6 +1,18 @@
 Change Log
 =====================================
 
+**1.3.6**
+
+- Updated dev dependencies to latest versions.
+- Updated github action workflow versions.
+- Removed Cosmic-Ray configuration.
+- Added Mut Mut configuration.
+- Various testing enhancements to improve coverage and overcome mutants.
+
+**1.3.5**
+
+- GitHub Actions enhancements.
+
 **1.3.4**
 
 - Removed SonarQube lint config file.

@@ -49,7 +49,7 @@ jobs:
         if: endsWith(matrix.python-version, 't')
         run: echo "PYTHON_GIL=0" >> "$GITHUB_ENV"
       - name: pyTest
-        run: uv run --locked pytest tests
+        run: uv run --locked --group dev pytest tests
   lint:
     name: lint
     runs-on: ubuntu-latest

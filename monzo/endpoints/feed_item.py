@@ -6,9 +6,9 @@ from monzo.authentication import Authentication
 from monzo.endpoints.monzo import Monzo
 from monzo.exceptions import MonzoArgumentError
 
-FEED_ITEM_TYPES = ["basic"]
+FEED_ITEM_TYPES: list[str] = ["basic"]
 
-FEED_ITEM_PARAMS = {
+FEED_ITEM_PARAMS: dict[str, dict[str, list[str]]] = {
     "basic": {
         "optional": [
             "body",
@@ -32,7 +32,7 @@ class FeedItem(Monzo):
     should be used.
     """
 
-    __slots__ = [
+    __slots__: list[str] = [
         "_account_id",
         "_feed_type",
         "_params",
@@ -76,11 +76,11 @@ class FeedItem(Monzo):
         if self._feed_type.lower() not in FEED_ITEM_TYPES:
             raise MonzoArgumentError("Feed type appears invalid")
 
-        parameters_clean = {}
+        parameters_clean: dict[str, str] = {}
 
         for parameter in FEED_ITEM_PARAMS[self._feed_type.lower()]["required"]:
             if parameter not in self._params:
-                raise MonzoArgumentError(f"{parameter} is a required parameter for self._feed_type.lower()")
+                raise MonzoArgumentError(f"{parameter} is a required parameter for {self._feed_type.lower()} feed type")
             parameters_clean[parameter] = self._params[parameter]
 
         for parameter in FEED_ITEM_PARAMS[self._feed_type.lower()]["optional"]:
@@ -91,15 +91,15 @@ class FeedItem(Monzo):
 
     def _create(self) -> None:
         """Create the feed item record."""
-        parameters = self._validate_feed_params()
-        data = {
+        parameters: dict[str, str] = self._validate_feed_params()
+        data: dict[str, str] = {
             "account_id": self._account_id,
             "type": self._feed_type,
         }
         if self._url:
             data["url"] = self._url
-        for parameter in parameters:
-            data[f"params[{parameter}]"] = parameters[parameter]
+        for parameter, value in parameters.items():
+            data[f"params[{parameter}]"] = value
         self._monzo_auth.make_request(path="/feed", method="POST", data=data)
 
     @classmethod
