@@ -437,7 +437,6 @@ source = { editable = "." }
 
 [package.dev-dependencies]
 dev = [
-    { name = "mutmut" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "pytest-mock" },
@@ -450,12 +449,14 @@ lint = [
     { name = "troml" },
     { name = "ty" },
 ]
+mutations = [
+    { name = "mutmut" },
+]
 
 [package.metadata]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "mutmut", specifier = ">=3.8.0" },
     { name = "pytest", specifier = ">=9.1.1" },
     { name = "pytest-cov", specifier = ">=7.1.0" },
     { name = "pytest-mock", specifier = ">=3.16.0" },
@@ -468,6 +469,7 @@ lint = [
     { name = "troml", specifier = ">=0.4.1" },
     { name = "ty", specifier = ">=0.0.84" },
 ]
+mutations = [{ name = "mutmut", specifier = ">=3.8.0" }]
 
 [[package]]
 name = "mutmut"
