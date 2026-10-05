@@ -1,6 +1,7 @@
 /dev
 monzo.json
 .scannerwork/
+mutants/*
 
 *.sqlite
 
